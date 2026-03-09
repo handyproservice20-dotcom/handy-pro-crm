@@ -27,9 +27,12 @@ html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--bd);font-size:15px}
 
 /* ── LOGIN ── */
-#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:24px;background:radial-gradient(ellipse at 50% 0%,#1E1E1E,#090909)}
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:24px;overflow-y:auto;background:radial-gradient(ellipse at 50% 0%,#1E1E1E,#090909)}
 .login-logo{font-family:var(--hd);font-size:46px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-bottom:6px;line-height:1}
 .login-logo span{color:var(--orange)}
+.login-tab{display:flex;background:var(--surf2);border-radius:10px;padding:3px;margin-bottom:20px;gap:3px}
+.login-tab-btn{flex:1;padding:8px;border-radius:7px;border:none;background:none;color:var(--muted);font-family:var(--hd);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;transition:all .18s}
+.login-tab-btn.active{background:var(--orange);color:#fff}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100vh;overflow:hidden}
@@ -48,10 +51,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--bd);font-size:15px
 .fab{position:fixed;right:18px;bottom:76px;width:54px;height:54px;border-radius:27px;background:var(--orange);color:#fff;border:none;font-size:24px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(244,98,26,.6);z-index:150;transition:transform .15s}
 .fab:active{transform:scale(.92)}
 
+/* ── ONBOARDING ── */
+.onboard-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;align-items:center;justify-content:center;padding:20px}
+.onboard-overlay.open{display:flex}
+.onboard-box{background:var(--surf);border-radius:20px;padding:28px 22px;width:100%;max-width:360px;text-align:center}
+.onboard-step{display:none}
+.onboard-step.active{display:block}
+.step-dots{display:flex;justify-content:center;gap:7px;margin-bottom:24px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s}
+.step-dot.active{background:var(--orange)}
+
 /* ── CARDS ── */
 .card{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:12px;border:1px solid var(--border)}
-
-/* ── STATS ── */
 .stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:14px}
 .stat-box{background:var(--surf);border-radius:10px;padding:10px 4px;text-align:center;border:1px solid var(--border)}
 .stat-num{font-family:var(--hd);font-size:30px;font-weight:800;line-height:1}
@@ -65,25 +76,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--bd);font-size:15px
 .badge-won{background:rgba(39,174,96,.2);color:#52BE80}
 .badge-lost{background:rgba(192,57,43,.2);color:#EC7063}
 
-/* ── LEAD CARD ── */
+/* ── LEAD CARDS ── */
 .lead-card{background:var(--surf);border-radius:var(--r);padding:14px;margin-bottom:10px;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,transform .1s}
 .lead-card:active{transform:scale(.99);border-color:var(--orange)}
 
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;overflow-y:auto}
 .modal-overlay.open{display:block}
-.modal{background:var(--surf);border-radius:var(--r) var(--r) 0 0;padding:20px 16px;position:absolute;bottom:0;left:0;right:0;max-height:92vh;overflow-y:auto;animation:slideUp .26s ease}
+.modal{background:var(--surf);border-radius:var(--r) var(--r) 0 0;padding:20px 16px;position:absolute;bottom:0;left:0;right:0;max-height:93vh;overflow-y:auto;animation:slideUp .24s ease}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-
-/* ── ONBOARDING ── */
-.onboard-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:500;align-items:center;justify-content:center;padding:20px}
-.onboard-overlay.open{display:flex}
-.onboard-box{background:var(--surf);border-radius:20px;padding:28px 22px;width:100%;max-width:360px;text-align:center}
-.onboard-step{display:none}
-.onboard-step.active{display:block}
-.step-dots{display:flex;justify-content:center;gap:7px;margin-bottom:24px}
-.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s}
-.step-dot.active{background:var(--orange)}
 
 /* ── FORMS ── */
 input,select,textarea{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--bd);font-size:15px;padding:10px 12px;outline:none;transition:border-color .2s;-webkit-appearance:none}
@@ -91,6 +92,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--orange)}
 select option{background:var(--surf2)}
 label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
 .form-group{margin-bottom:14px}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:42px}
+.pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:2px}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;border-radius:8px;font-family:var(--hd);font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .1s;text-decoration:none;white-space:nowrap}
@@ -101,10 +105,10 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .btn-red{background:var(--red);color:#fff}
 .btn-blue{background:var(--blue);color:#fff}
 .btn-full{width:100%;justify-content:center}
-.btn:hover{opacity:.85}
+.btn:hover{opacity:.87}
 .btn-sm{padding:7px 12px;font-size:13px}
 
-/* ── STATUS PILLS ── */
+/* ── STATUS ── */
 .status-pills{display:flex;gap:6px;flex-wrap:wrap}
 .status-pill{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;border:2px solid transparent;cursor:pointer;background:var(--surf2);color:var(--muted);transition:all .18s}
 .sp-new{background:rgba(41,128,185,.18);border-color:#5DADE2;color:#5DADE2}
@@ -142,7 +146,13 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .activity-who{font-size:11px;color:var(--orange);font-weight:700;margin-bottom:2px}
 .activity-text{font-size:13px;line-height:1.45}
 .activity-time{font-size:10px;color:var(--muted);margin-top:3px}
-.activity-line{width:2px;background:var(--border);margin:0 auto;height:8px;margin-bottom:2px}
+
+/* ── MY CALL LOG ── */
+.my-call-item{background:var(--surf2);border-radius:8px;padding:11px 13px;margin-bottom:8px;border-left:3px solid var(--blue)}
+.my-call-item.inbound{border-left-color:var(--green)}
+.call-lead-name{font-family:var(--hd);font-size:16px;font-weight:700}
+.call-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.call-notes-text{font-size:13px;margin-top:5px;line-height:1.45}
 
 /* ── CONTACT BUTTONS ── */
 .contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
@@ -154,14 +164,9 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .cal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 
 /* ── MAP ── */
-.map-embed{width:100%;height:180px;border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px;background:var(--surf2)}
+#map-container{margin-bottom:10px}
+.map-embed{width:100%;height:190px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--surf2)}
 .map-embed iframe{width:100%;height:100%;border:none}
-
-/* ── INLINE EDIT ── */
-.editable-field{display:flex;align-items:center;gap:8px}
-.editable-field span{flex:1;font-size:15px}
-.edit-ico{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;transition:color .18s}
-.edit-ico:hover{color:var(--orange)}
 
 /* ── TEMPLATE ── */
 .tmpl-section{background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
@@ -178,7 +183,7 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .dir-btn.active-in{border-color:var(--green);color:var(--green);background:rgba(39,174,96,.1)}
 .dir-btn.active-out{border-color:#5DADE2;color:#5DADE2;background:rgba(41,128,185,.1)}
 
-/* ── REC CARD ── */
+/* ── REC CARDS ── */
 .rec-card{background:rgba(244,98,26,.07);border:1px solid rgba(244,98,26,.22);border-radius:var(--r);padding:14px;margin-bottom:10px}
 .rec-card h4{font-family:var(--hd);font-size:15px;font-weight:800;text-transform:uppercase;color:var(--orange);margin-bottom:5px;letter-spacing:.04em}
 
@@ -186,16 +191,18 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .lang-btns{display:flex;gap:7px;margin-bottom:14px}
 .lang-btn{flex:1;padding:10px 6px;border-radius:8px;border:2px solid var(--border);background:var(--surf2);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .18s}
 .lang-btn.active{border-color:var(--orange);color:var(--orange);background:rgba(244,98,26,.1)}
-
-/* ── REV GRID ── */
 .rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 
 /* ── NOTIF BADGE ── */
 .notif-badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 5px;min-width:17px;text-align:center;display:none;pointer-events:none}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:30px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
-#toast.show{opacity:1}
+/* ── SETTINGS ── */
+.settings-section{background:var(--surf);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:12px}
+.settings-section-title{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;font-weight:700;padding:13px 16px 0}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
+.settings-row:last-child{border-bottom:none}
+.settings-row-label{font-size:14px;font-weight:500}
+.settings-row-sub{font-size:12px;color:var(--muted);margin-top:2px}
 
 /* ── TOGGLE ── */
 .toggle{position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0}
@@ -210,28 +217,63 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
 .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty-state i{font-size:46px;margin-bottom:12px;display:block;opacity:.3}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.settings-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
-.settings-row:last-child{border-bottom:none}
+#toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:30px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-logo"><span>Handy Pro</span><br/>CRM</div>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:30px;text-align:center">Lead Management · Hunterdon County, NJ</p>
-  <div style="width:100%;max-width:340px">
-    <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="you@email.com" autocomplete="email"/></div>
-    <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-    <div id="login-err" style="font-size:13px;margin-bottom:10px;display:none"></div>
-    <button class="btn btn-orange btn-full" onclick="doLogin()" id="login-btn"><i class="fa fa-sign-in-alt"></i> Sign In</button>
-    <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">First time? <span style="color:var(--orange);cursor:pointer" onclick="doRegister()">Create account</span></p>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:24px;text-align:center">Lead Management · Hunterdon County, NJ</p>
+  <div style="width:100%;max-width:360px">
+
+    <div class="login-tab">
+      <button class="login-tab-btn active" id="tab-signin" onclick="switchLoginTab('signin')">Sign In</button>
+      <button class="login-tab-btn" id="tab-register" onclick="switchLoginTab('register')">Create Account</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div id="signin-form">
+      <div class="form-group"><label>Email</label><input type="email" id="si-email" placeholder="you@email.com" autocomplete="email"/></div>
+      <div class="form-group"><label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="si-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+          <button class="pw-eye" type="button" onclick="togglePw('si-password',this)"><i class="fa fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn btn-ghost" style="background:none;border:none;color:var(--orange);font-size:13px;padding:0 0 14px;text-transform:none;letter-spacing:0;font-family:var(--bd)" onclick="showForgotPassword()">Forgot password?</button>
+      <div id="si-err" style="font-size:13px;margin-bottom:10px;display:none"></div>
+      <button class="btn btn-orange btn-full" onclick="doLogin()" id="si-btn"><i class="fa fa-sign-in-alt"></i> Sign In</button>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="register-form" style="display:none">
+      <div class="form-group"><label>Your Name *</label><input type="text" id="reg-name" placeholder="e.g. Damian"/></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="reg-email" placeholder="you@email.com" autocomplete="email"/></div>
+      <div class="form-group"><label>Password * (min 6 chars)</label>
+        <div class="pw-wrap">
+          <input type="password" id="reg-password" placeholder="Create a password" autocomplete="new-password"/>
+          <button class="pw-eye" type="button" onclick="togglePw('reg-password',this)"><i class="fa fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="form-group"><label>Confirm Password *</label>
+        <div class="pw-wrap">
+          <input type="password" id="reg-confirm" placeholder="Repeat password" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"/>
+          <button class="pw-eye" type="button" onclick="togglePw('reg-confirm',this)"><i class="fa fa-eye"></i></button>
+        </div>
+      </div>
+      <div id="reg-err" style="font-size:13px;margin-bottom:10px;display:none"></div>
+      <button class="btn btn-orange btn-full" onclick="doRegister()" id="reg-btn"><i class="fa fa-user-plus"></i> Create Account</button>
+    </div>
+
     <hr class="div" style="margin:18px 0"/>
     <button class="btn btn-ghost btn-full" onclick="enterDemoMode()"><i class="fa fa-eye"></i> Try Demo Mode</button>
   </div>
 </div>
 
-<!-- ONBOARDING OVERLAY -->
+<!-- ══ ONBOARDING ══ -->
 <div class="onboard-overlay" id="onboard-overlay">
   <div class="onboard-box">
     <div class="step-dots">
@@ -240,19 +282,17 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
       <div class="step-dot" id="dot-2"></div>
     </div>
 
-    <!-- Step 0: Welcome -->
     <div class="onboard-step active" id="ob-step-0">
       <div style="font-size:48px;margin-bottom:12px">👋</div>
       <div style="font-family:var(--hd);font-size:26px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Welcome to<br/><span style="color:var(--orange)">Handy Pro CRM</span></div>
-      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Let's set up your profile in 2 quick steps so your texts and emails look professional.</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Quick 2-step setup so your texts and emails look professional from day one.</p>
       <button class="btn btn-orange btn-full" onclick="obNext(1)">Let's Go <i class="fa fa-arrow-right"></i></button>
     </div>
 
-    <!-- Step 1: Your name & profile -->
     <div class="onboard-step" id="ob-step-1">
       <div style="font-size:40px;margin-bottom:12px">✍️</div>
-      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Your Profile</div>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5">This goes at the bottom of every text and email so customers know who they're talking to.</p>
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px">Your Profile</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">This goes at the bottom of every text and email — customers know exactly who's reaching out.</p>
       <div class="form-group"><label>Your First Name *</label><input type="text" id="ob-name" placeholder="e.g. Damian" autofocus/></div>
       <div class="form-group"><label>Company Name</label><input type="text" id="ob-company" placeholder="Handy Pro Services"/></div>
       <div class="form-group"><label>Business Phone</label><input type="tel" id="ob-phone" placeholder="(908) 312-6506"/></div>
@@ -260,18 +300,17 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
       <button class="btn btn-orange btn-full" onclick="obSaveProfile()">Save & Continue <i class="fa fa-arrow-right"></i></button>
     </div>
 
-    <!-- Step 2: Notifications -->
     <div class="onboard-step" id="ob-step-2">
       <div style="font-size:48px;margin-bottom:12px">🔔</div>
       <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Stay on Top<br/>of Follow-Ups</div>
-      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Turn on notifications so we can remind you when a follow-up is due. Never miss a lead again.</p>
-      <button class="btn btn-orange btn-full" onclick="obEnableNotifs()" id="ob-notif-btn"><i class="fa fa-bell"></i> Enable Notifications</button>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Get reminders when a follow-up is due so you never miss a lead again.</p>
+      <button class="btn btn-orange btn-full" id="ob-notif-btn" onclick="obEnableNotifs()"><i class="fa fa-bell"></i> Enable Notifications</button>
       <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="obFinish()">Skip for now</button>
     </div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ══ APP ══ -->
 <div id="app">
   <header class="app-header">
     <div class="app-logo"><span>HP</span> CRM</div>
@@ -283,9 +322,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
       <button class="btn btn-ghost btn-sm" onclick="doLogout()"><i class="fa fa-sign-out-alt"></i></button>
     </div>
   </header>
-  <main class="app-main" id="app-main">
-    <div class="empty-state"><i class="fa fa-circle-notch fa-spin"></i><div>Loading…</div></div>
-  </main>
+  <main class="app-main" id="app-main"></main>
   <button class="fab" id="fab" onclick="openAddLead()"><i class="fa fa-plus"></i></button>
   <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-dashboard" onclick="showTab('dashboard')"><i class="fa fa-chart-bar"></i><span>Dashboard</span></button>
@@ -296,10 +333,12 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
 </div>
 
 <!-- Modals -->
-<div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal('lead-modal')"><div class="modal" id="lead-modal-body"></div></div>
-<div class="modal-overlay" id="add-modal" onclick="if(event.target===this)closeModal('add-modal')"><div class="modal" id="add-modal-body"></div></div>
-<div class="modal-overlay" id="tmpl-modal" onclick="if(event.target===this)closeModal('tmpl-modal')"><div class="modal" id="tmpl-modal-body"></div></div>
-<div class="modal-overlay" id="edit-modal" onclick="if(event.target===this)closeModal('edit-modal')"><div class="modal" id="edit-modal-body"></div></div>
+<div class="modal-overlay" id="lead-modal"   onclick="if(event.target===this)closeModal('lead-modal')"><div class="modal" id="lead-modal-body"></div></div>
+<div class="modal-overlay" id="add-modal"    onclick="if(event.target===this)closeModal('add-modal')"><div class="modal" id="add-modal-body"></div></div>
+<div class="modal-overlay" id="tmpl-modal"   onclick="if(event.target===this)closeModal('tmpl-modal')"><div class="modal" id="tmpl-modal-body"></div></div>
+<div class="modal-overlay" id="edit-modal"   onclick="if(event.target===this)closeModal('edit-modal')"><div class="modal" id="edit-modal-body"></div></div>
+<div class="modal-overlay" id="mycalls-modal" onclick="if(event.target===this)closeModal('mycalls-modal')"><div class="modal" id="mycalls-modal-body"></div></div>
+<div class="modal-overlay" id="pw-modal"     onclick="if(event.target===this)closeModal('pw-modal')"><div class="modal" id="pw-modal-body"></div></div>
 
 <div id="toast"></div>
 
@@ -311,211 +350,235 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // ── STATE ──
 let sb = null, currentUser = null, leads = [], activeTab = 'dashboard';
 let activeFilter = 'all', searchQ = '', reportLang = 'en', demoMode = false;
-let callDirs = {};
+let callDirs = {}, currentLeadId = null;
 
-// ── PROFILE (localStorage per device) ──
-function getProfile() { try { return JSON.parse(localStorage.getItem('hp_profile')||'{}'); } catch(e){ return {}; } }
-function saveProfile(d) { try { localStorage.setItem('hp_profile', JSON.stringify({...getProfile(),...d})); } catch(e){} }
-function isOnboarded() { try { return !!localStorage.getItem('hp_onboarded'); } catch(e){ return true; } }
-function setOnboarded() { try { localStorage.setItem('hp_onboarded','1'); } catch(e){} }
+// ── PROFILE ──
+function getProfile(){ try{ return JSON.parse(localStorage.getItem('hp_profile')||'{}'); }catch(e){ return {}; } }
+function saveProfile(d){ try{ localStorage.setItem('hp_profile', JSON.stringify({...getProfile(),...d})); }catch(e){} }
+function isOnboarded(){ try{ return !!localStorage.getItem('hp_onboarded'); }catch(e){ return true; } }
+function setOnboarded(){ try{ localStorage.setItem('hp_onboarded','1'); }catch(e){} }
 
 // ── INIT ──
 try {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-  sb.auth.getSession().then(({ data: { session } }) => { if (session) { currentUser = session.user; onLoginSuccess(); } });
-  sb.auth.onAuthStateChange((_e, session) => {
-    if (session) { currentUser = session.user; onLoginSuccess(); }
-    else if (!demoMode) { currentUser = null; showLogin(); }
+  sb.auth.getSession().then(({data:{session}}) => { if(session){ currentUser=session.user; onLoginSuccess(); }});
+  sb.auth.onAuthStateChange((_e,session) => {
+    if(session){ currentUser=session.user; onLoginSuccess(); }
+    else if(!demoMode){ currentUser=null; showLogin(); }
   });
-} catch(e) { console.warn('Supabase init:', e.message); }
+} catch(e){ console.warn('Supabase:', e.message); }
 
-function onLoginSuccess() {
-  document.getElementById('login-screen').style.display = 'none';
-  if (!isOnboarded()) {
-    showOnboarding();
-  } else {
-    showApp();
+function onLoginSuccess(){
+  document.getElementById('login-screen').style.display='none';
+  if(!isOnboarded()) showOnboarding(); else showApp();
+}
+function showApp(){
+  document.getElementById('onboard-overlay').classList.remove('open');
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  loadLeads();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+function showLogin(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+}
+function enterDemoMode(){
+  demoMode=true; currentUser={email:'demo@handypro.com'}; leads=SAMPLE_LEADS;
+  document.getElementById('login-screen').style.display='none';
+  if(!isOnboarded()) showOnboarding(); else showApp();
+}
+
+// ── LOGIN TABS ──
+function switchLoginTab(tab){
+  document.getElementById('tab-signin').classList.toggle('active', tab==='signin');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('signin-form').style.display   = tab==='signin'   ? 'block':'none';
+  document.getElementById('register-form').style.display = tab==='register' ? 'block':'none';
+}
+function togglePw(id, btn){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const show = el.type==='password';
+  el.type = show ? 'text' : 'password';
+  btn.innerHTML = show ? '<i class="fa fa-eye-slash"></i>' : '<i class="fa fa-eye"></i>';
+}
+
+// ── AUTH ──
+async function doLogin(){
+  const email = document.getElementById('si-email').value.trim();
+  const pwd   = document.getElementById('si-password').value;
+  const err   = document.getElementById('si-err');
+  const btn   = document.getElementById('si-btn');
+  err.style.display='none'; btn.textContent='Signing in…'; btn.disabled=true;
+  const {error} = await sb.auth.signInWithPassword({email, password:pwd});
+  btn.innerHTML='<i class="fa fa-sign-in-alt"></i> Sign In'; btn.disabled=false;
+  if(error){ err.style.color='var(--red)'; err.textContent=error.message; err.style.display='block'; }
+}
+async function doRegister(){
+  const name    = document.getElementById('reg-name').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  const pwd     = document.getElementById('reg-password').value;
+  const confirm = document.getElementById('reg-confirm').value;
+  const err     = document.getElementById('reg-err');
+  const btn     = document.getElementById('reg-btn');
+  err.style.display='none';
+  if(!name){ err.style.color='var(--red)'; err.textContent='Please enter your name.'; err.style.display='block'; return; }
+  if(!email){ err.style.color='var(--red)'; err.textContent='Please enter your email.'; err.style.display='block'; return; }
+  if(pwd.length<6){ err.style.color='var(--red)'; err.textContent='Password must be at least 6 characters.'; err.style.display='block'; return; }
+  if(pwd!==confirm){ err.style.color='var(--red)'; err.textContent='Passwords do not match.'; err.style.display='block'; return; }
+  btn.textContent='Creating account…'; btn.disabled=true;
+  const {error} = await sb.auth.signUp({email, password:pwd});
+  btn.innerHTML='<i class="fa fa-user-plus"></i> Create Account'; btn.disabled=false;
+  if(error){ err.style.color='var(--red)'; err.textContent=error.message; err.style.display='block'; }
+  else {
+    // Save name immediately to profile
+    saveProfile({yourName: name, company:'Handy Pro Services', phone:'(908) 312-6506', email:'handyproservice20@gmail.com'});
+    err.style.color='var(--green)'; err.textContent='Account created! Signing you in…'; err.style.display='block';
   }
 }
-
-function showApp() {
-  document.getElementById('onboard-overlay').classList.remove('open');
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  loadLeads();
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+async function showForgotPassword(){
+  const email = document.getElementById('si-email').value.trim();
+  if(!email){ showToast('Enter your email first'); return; }
+  const {error} = await sb.auth.resetPasswordForEmail(email);
+  if(error) showToast('Error: '+error.message);
+  else showToast('Password reset email sent!');
 }
-function showLogin() {
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-}
-function enterDemoMode() {
-  demoMode = true; currentUser = { email: 'demo@handypro.com' }; leads = SAMPLE_LEADS;
-  document.getElementById('login-screen').style.display = 'none';
-  if (!isOnboarded()) { showOnboarding(); } else { showApp(); }
+function doLogout(){
+  demoMode=false; leads=[]; currentUser=null;
+  if(sb) sb.auth.signOut(); showLogin();
 }
 
 // ── ONBOARDING ──
-let obStep = 0;
-function showOnboarding() {
+let obStep=0;
+function showOnboarding(){
   document.getElementById('onboard-overlay').classList.add('open');
-  // Pre-fill if profile exists
-  const p = getProfile();
-  if (p.yourName) document.getElementById('ob-name').value = p.yourName;
-  if (p.company)  document.getElementById('ob-company').value = p.company;
-  if (p.phone)    document.getElementById('ob-phone').value = p.phone;
-  if (p.email)    document.getElementById('ob-email').value = p.email;
+  const p=getProfile();
+  if(p.yourName) document.getElementById('ob-name').value=p.yourName;
+  if(p.company)  document.getElementById('ob-company').value=p.company;
+  if(p.phone)    document.getElementById('ob-phone').value=p.phone;
+  if(p.email)    document.getElementById('ob-email').value=p.email;
 }
-function obNext(step) {
+function obNext(step){
   document.getElementById('ob-step-'+obStep).classList.remove('active');
   document.getElementById('dot-'+obStep).classList.remove('active');
-  obStep = step;
+  obStep=step;
   document.getElementById('ob-step-'+step).classList.add('active');
   document.getElementById('dot-'+step).classList.add('active');
 }
-function obSaveProfile() {
-  const name = document.getElementById('ob-name').value.trim();
-  if (!name) { showToast('Please enter your name'); return; }
+function obSaveProfile(){
+  const name=document.getElementById('ob-name').value.trim();
+  if(!name){ showToast('Please enter your name'); return; }
   saveProfile({
     yourName: name,
-    company: document.getElementById('ob-company').value.trim() || 'Handy Pro Services',
-    phone: document.getElementById('ob-phone').value.trim() || '(908) 312-6506',
-    email: document.getElementById('ob-email').value.trim() || 'handyproservice20@gmail.com',
+    company:  document.getElementById('ob-company').value.trim() || 'Handy Pro Services',
+    phone:    document.getElementById('ob-phone').value.trim()   || '(908) 312-6506',
+    email:    document.getElementById('ob-email').value.trim()   || 'handyproservice20@gmail.com',
   });
   obNext(2);
 }
-async function obEnableNotifs() {
-  const btn = document.getElementById('ob-notif-btn');
-  if ('Notification' in window) {
-    const p = await Notification.requestPermission();
-    if (p === 'granted') {
-      btn.innerHTML = '<i class="fa fa-check"></i> Notifications Enabled!';
-      btn.style.background = 'var(--green)';
-      setTimeout(()=>obFinish(), 1200);
+async function obEnableNotifs(){
+  const btn=document.getElementById('ob-notif-btn');
+  if(!('Notification' in window)){ showToast('Notifications not supported on this browser'); obFinish(); return; }
+  if(Notification.permission==='granted'){ btn.innerHTML='<i class="fa fa-check"></i> Already Enabled!'; btn.style.background='var(--green)'; setTimeout(obFinish,1000); return; }
+  try {
+    const result = await Notification.requestPermission();
+    if(result==='granted'){
+      btn.innerHTML='<i class="fa fa-check"></i> Notifications Enabled!';
+      btn.style.background='var(--green)';
+      setTimeout(obFinish, 1200);
     } else {
-      obFinish();
+      showToast('Notifications blocked — you can enable in browser settings');
+      setTimeout(obFinish, 1500);
     }
-  } else { obFinish(); }
+  } catch(e){ obFinish(); }
 }
-function obFinish() {
+function obFinish(){
   setOnboarded();
   document.getElementById('onboard-overlay').classList.remove('open');
   showApp();
 }
 
-// ── AUTH ──
-async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pwd   = document.getElementById('login-password').value;
-  const errEl = document.getElementById('login-err');
-  const btn   = document.getElementById('login-btn');
-  errEl.style.display = 'none';
-  btn.textContent = 'Signing in…'; btn.disabled = true;
-  const { error } = await sb.auth.signInWithPassword({ email, password: pwd });
-  btn.innerHTML = '<i class="fa fa-sign-in-alt"></i> Sign In'; btn.disabled = false;
-  if (error) { errEl.style.color='var(--red)'; errEl.textContent=error.message; errEl.style.display='block'; }
-}
-async function doRegister() {
-  const email = document.getElementById('login-email').value.trim();
-  const pwd   = document.getElementById('login-password').value;
-  const errEl = document.getElementById('login-err');
-  errEl.style.display = 'none';
-  if (!email || pwd.length < 6) { errEl.style.color='var(--red)'; errEl.textContent='Enter email + password (min 6 chars)'; errEl.style.display='block'; return; }
-  const { error } = await sb.auth.signUp({ email, password: pwd });
-  if (error) { errEl.style.color='var(--red)'; errEl.textContent=error.message; errEl.style.display='block'; }
-  else { errEl.style.color='var(--green)'; errEl.textContent='Account created! Sign in below.'; errEl.style.display='block'; }
-}
-function doLogout() {
-  demoMode = false; leads = []; currentUser = null;
-  if (sb) sb.auth.signOut(); showLogin();
+// ── DATA ──
+async function loadLeads(){
+  if(demoMode||!sb){ renderTab(); updateBadge(); return; }
+  const {data,error} = await sb.from('leads').select('*').order('created_at',{ascending:false});
+  if(error){ showToast('Load error: '+error.message); return; }
+  leads=data||[]; renderTab(); updateBadge();
 }
 
-// ── DATA ──
-async function loadLeads() {
-  if (demoMode || !sb) { renderTab(); updateBadge(); return; }
-  const { data, error } = await sb.from('leads').select('*').order('created_at', { ascending: false });
-  if (error) { showToast('Load error: ' + error.message); return; }
-  leads = data || []; renderTab(); updateBadge();
+// updateLead: updates locally immediately, then syncs to Supabase
+async function updateLead(id, updates){
+  // Local update first so UI reflects changes instantly
+  const i=leads.findIndex(l=>l.id===id);
+  if(i>=0) leads[i]={...leads[i],...updates};
+  if(demoMode) return;
+  const {error}=await sb.from('leads').update({...updates, updated_at:new Date().toISOString()}).eq('id',id);
+  if(error){ showToast('Save error: '+error.message); }
 }
-async function saveLead(data) {
-  if (demoMode) { leads.unshift({ id: Date.now()+'', created_at: new Date().toISOString(), status:'new', notes:[], call_log:[], activity:[], ...data }); renderTab(); return; }
-  const { error } = await sb.from('leads').insert({ ...data, status:'new', notes:[], call_log:[], activity:[], created_by: currentUser?.email||'' });
-  if (error) { showToast('Save error: ' + error.message); return; }
+
+async function saveLead(data){
+  if(demoMode){ leads.unshift({id:Date.now()+'',created_at:new Date().toISOString(),status:'new',notes:[],call_log:[],activity:[],...data}); renderTab(); return; }
+  const {error}=await sb.from('leads').insert({...data,status:'new',notes:[],call_log:[],activity:[],created_by:currentUser?.email||''});
+  if(error){ showToast('Save error: '+error.message); return; }
   await loadLeads();
 }
-async function updateLead(id, updates) {
-  if (demoMode) { const i=leads.findIndex(l=>l.id===id); if(i>=0) leads[i]={...leads[i],...updates}; return; }
-  const { error } = await sb.from('leads').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', id);
-  if (error) { showToast('Update error: ' + error.message); return; }
-  await loadLeads();
-}
-async function deleteLead(id) {
-  if (!confirm('Delete this lead permanently?')) return;
-  if (demoMode) { leads = leads.filter(l=>l.id!==id); }
-  else { const { error } = await sb.from('leads').delete().eq('id', id); if(error){ showToast('Delete error'); return; } await loadLeads(); }
+async function deleteLead(id){
+  if(!confirm('Delete this lead permanently?')) return;
+  if(demoMode){ leads=leads.filter(l=>l.id!==id); }
+  else { const {error}=await sb.from('leads').delete().eq('id',id); if(error){ showToast('Delete error'); return; } await loadLeads(); }
   closeModal('lead-modal'); renderTab(); showToast('Lead deleted');
 }
-
-// ── ACTIVITY LOG helpers ──
-function getActivity(l) {
-  // Merge notes and call_log into one sorted timeline
-  const items = [];
-  (l.notes||[]).forEach(n => items.push({ type:'note', text: n.text, by: n.by, at: n.created_at }));
-  (l.call_log||[]).forEach(c => items.push({ type:'call', text: c.notes, by: c.by, at: c.called_at, dir: c.direction||'outbound' }));
-  (l.activity||[]).forEach(a => items.push({ type:'status', text: a.text, by: a.by, at: a.at }));
-  return items.sort((a,b) => new Date(b.at) - new Date(a.at));
+async function addNote(id, text){
+  if(!text.trim()) return;
+  const lead=leads.find(l=>l.id===id); if(!lead) return;
+  const p=getProfile();
+  const who=p.yourName||currentUser?.email||'Team';
+  const note={text:text.trim(), created_at:new Date().toISOString(), by:who};
+  await updateLead(id, {notes:[...(lead.notes||[]),note]});
+  renderLeadModal(leads.find(l=>l.id===id));
 }
-
-async function addNote(id, text) {
-  if (!text.trim()) return;
-  const lead = leads.find(l=>l.id===id); if (!lead) return;
-  const p = getProfile();
-  const who = p.yourName || currentUser?.email || 'Team';
-  const note = { text: text.trim(), created_at: new Date().toISOString(), by: who };
-  await updateLead(id, { notes: [...(lead.notes||[]), note] });
-  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
+async function logCall(id, notes, direction){
+  const lead=leads.find(l=>l.id===id); if(!lead) return;
+  const p=getProfile();
+  const who=p.yourName||currentUser?.email||'Team';
+  const entry={notes:notes.trim()||'(no notes)', called_at:new Date().toISOString(), by:who, direction:direction||'outbound'};
+  const act={type:'status', text:'Status changed to: called', by:who, at:new Date().toISOString()};
+  await updateLead(id, {call_log:[...(lead.call_log||[]),entry], status:'called', activity:[...(lead.activity||[]),act]});
+  renderLeadModal(leads.find(l=>l.id===id));
 }
-async function logCall(id, notes, direction) {
-  const lead = leads.find(l=>l.id===id); if (!lead) return;
-  const p = getProfile();
-  const who = p.yourName || currentUser?.email || 'Team';
-  const entry = { notes: notes.trim()||'(no notes)', called_at: new Date().toISOString(), by: who, direction: direction||'outbound' };
-  const actEntry = { type:'status', text: `Status changed to: called`, by: who, at: new Date().toISOString() };
-  await updateLead(id, { call_log: [...(lead.call_log||[]), entry], status:'called', activity: [...(lead.activity||[]), actEntry] });
-  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
-}
-async function changeStatus(id, status) {
-  const p = getProfile();
-  const who = p.yourName || currentUser?.email || 'Team';
-  const lead = leads.find(l=>l.id===id); if(!lead) return;
-  const actEntry = { type:'status', text:`Status changed to: ${status}`, by: who, at: new Date().toISOString() };
-  await updateLead(id, { status, activity: [...(lead.activity||[]), actEntry] });
-  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
-  renderTab(); showToast('Status → ' + status);
+async function changeStatus(id, status){
+  const p=getProfile();
+  const who=p.yourName||currentUser?.email||'Team';
+  const lead=leads.find(l=>l.id===id); if(!lead) return;
+  const act={type:'status', text:'Status changed to: '+status, by:who, at:new Date().toISOString()};
+  await updateLead(id, {status, activity:[...(lead.activity||[]),act]});
+  renderLeadModal(leads.find(l=>l.id===id));
+  renderTab(); showToast('Status → '+status);
 }
 
 // ── TABS ──
-function showTab(tab) {
-  activeTab = tab;
+function showTab(tab){
+  activeTab=tab;
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+tab).classList.add('active');
-  document.getElementById('fab').style.display = tab==='leads' ? 'flex' : 'none';
+  document.getElementById('fab').style.display = tab==='leads' ? 'flex':'none';
   renderTab();
 }
-function renderTab() {
-  if (activeTab==='dashboard') renderDashboard();
-  else if (activeTab==='leads') renderLeads();
-  else if (activeTab==='reports') renderReports();
+function renderTab(){
+  if(activeTab==='dashboard') renderDashboard();
+  else if(activeTab==='leads') renderLeads();
+  else if(activeTab==='reports') renderReports();
   else renderSettings();
 }
 
 // ── DASHBOARD ──
-function renderDashboard() {
-  const s = getStats();
-  const today = new Date().toISOString().split('T')[0];
-  const due = leads.filter(l=>l.follow_up_date&&l.follow_up_date<=today&&!['won','lost'].includes(l.status));
-  const recent = leads.slice(0,7);
-  set('app-main', `
+function renderDashboard(){
+  const s=getStats();
+  const today=new Date().toISOString().split('T')[0];
+  const due=leads.filter(l=>l.follow_up_date&&l.follow_up_date<=today&&!['won','lost'].includes(l.status));
+  const recent=leads.slice(0,7);
+  set('app-main',`
     <div class="stats-strip">
       <div class="stat-box"><div class="stat-num" style="color:#5DADE2">${s.new}</div><div class="stat-label">New</div></div>
       <div class="stat-box"><div class="stat-num" style="color:#F4A024">${s.called}</div><div class="stat-label">Called</div></div>
@@ -523,8 +586,7 @@ function renderDashboard() {
       <div class="stat-box"><div class="stat-num" style="color:var(--green)">${s.won}</div><div class="stat-label">Won</div></div>
       <div class="stat-box"><div class="stat-num" style="color:var(--red)">${s.lost}</div><div class="stat-label">Lost</div></div>
     </div>
-    ${due.length?`
-      <div class="section-title" style="font-size:14px;color:var(--amber)"><i class="fa fa-clock"></i> Follow-Ups Due (${due.length})</div>
+    ${due.length?`<div class="section-title" style="font-size:14px;color:var(--amber)"><i class="fa fa-clock"></i> Follow-Ups Due (${due.length})</div>
       ${due.map(l=>`<div class="lead-card" onclick="openLead('${l.id}')">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="font-family:var(--hd);font-size:18px;font-weight:700">${esc(l.name)}</div>
@@ -547,11 +609,11 @@ function renderDashboard() {
 }
 
 // ── LEADS LIST ──
-function renderLeads() {
-  let f = leads;
-  if (activeFilter!=='all') f=f.filter(l=>l.status===activeFilter);
-  if (searchQ) { const q=searchQ.toLowerCase(); f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.service||'').toLowerCase().includes(q)||(l.address||'').toLowerCase().includes(q)); }
-  set('app-main', `
+function renderLeads(){
+  let f=leads;
+  if(activeFilter!=='all') f=f.filter(l=>l.status===activeFilter);
+  if(searchQ){ const q=searchQ.toLowerCase(); f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.service||'').toLowerCase().includes(q)||(l.address||'').toLowerCase().includes(q)); }
+  set('app-main',`
     <div class="search-wrap"><i class="fa fa-search"></i>
       <input type="text" placeholder="Search name, phone, address…" value="${esc(searchQ)}" oninput="searchQ=this.value;renderLeads()"/>
     </div>
@@ -579,20 +641,22 @@ function renderLeads() {
 }
 
 // ── LEAD DETAIL ──
-function openLead(id) {
-  const l = leads.find(x=>x.id===id); if(!l) return;
+function openLead(id){
+  currentLeadId=id;
+  const l=leads.find(x=>x.id===id); if(!l) return;
   document.getElementById('lead-modal').classList.add('open');
   renderLeadModal(l);
 }
 
-function renderLeadModal(l) {
-  const activity = getActivity(l);
-  const p = getProfile();
-  const mapSrc = l.address ? `https://maps.google.com/maps?q=${encodeURIComponent(l.address+', NJ')}&output=embed&z=13` : null;
-  const mapLink = l.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.address+', NJ')}` : null;
+function renderLeadModal(l){
+  if(!l) return;
+  currentLeadId=l.id;
+  const activity=getActivity(l);
+  const mapLink = l.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.address+' NJ')}` : null;
+  const mapSrc  = l.address ? `https://maps.google.com/maps?q=${encodeURIComponent(l.address+' NJ')}&output=embed&z=13&t=m` : null;
 
-  set('lead-modal-body', `
-    <!-- HEADER with Edit button -->
+  set('lead-modal-body',`
+    <!-- HEADER -->
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
       <div style="flex:1">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -602,7 +666,7 @@ function renderLeadModal(l) {
           </button>
         </div>
         <div style="color:var(--muted);font-size:12px;margin-top:4px">${esc(l.service||'General Inquiry')} · Added by ${esc(l.created_by||'website')} · ${fmtDate(l.created_at)}</div>
-        ${l.phone?`<div style="font-size:13px;margin-top:3px;color:var(--text)">${esc(l.phone)}</div>`:''}
+        ${l.phone?`<div style="font-size:13px;margin-top:3px">${esc(l.phone)}</div>`:''}
         ${l.email?`<div style="font-size:13px;color:var(--muted)">${esc(l.email)}</div>`:''}
       </div>
       <button onclick="closeModal('lead-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px;flex-shrink:0"><i class="fa fa-times"></i></button>
@@ -616,7 +680,7 @@ function renderLeadModal(l) {
       </div>
     </div>
 
-    <!-- 4 CONTACT ACTIONS -->
+    <!-- CONTACT ACTIONS -->
     <div class="contact-actions">
       ${l.phone?`<a href="tel:${l.phone}" class="contact-btn"><i class="fa fa-phone" style="color:var(--green)"></i>Call</a>`:'<div></div>'}
       <button class="contact-btn" onclick="openTemplateModal('sms','${l.id}')"><i class="fa fa-comment-sms" style="color:var(--blue)"></i>Text</button>
@@ -628,25 +692,28 @@ function renderLeadModal(l) {
       <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Lead Message</div>
       <div style="font-size:14px;line-height:1.5">${esc(l.message)}</div></div>`:''}
 
-    <!-- ADDRESS + MAP -->
+    <!-- ADDRESS + MAP (updates via saveAddress) -->
     <div class="form-group">
       <label>Address / Town</label>
-      <input type="text" placeholder="e.g. 123 Main St, Flemington" value="${esc(l.address||'')}"
-        onchange="updateLead('${l.id}',{address:this.value}).then(()=>{ const ll=leads.find(x=>x.id==='${l.id}'); if(ll) renderLeadModal(ll); })"/>
-    </div>
-    ${mapSrc?`
-      <div class="map-embed">
-        <iframe src="${mapSrc}" allowfullscreen loading="lazy"></iframe>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="addr-input-${l.id}" placeholder="e.g. Flemington or 123 Main St, Clinton" value="${esc(l.address||'')}"/>
+        <button class="btn btn-orange btn-sm" style="flex-shrink:0" onclick="saveAddress('${l.id}')"><i class="fa fa-check"></i> Save</button>
       </div>
-      <a href="${mapLink}" target="_blank" style="display:flex;align-items:center;gap:6px;color:#5DADE2;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:14px">
-        <i class="fa fa-arrow-up-right-from-square"></i> Open full map in Google Maps
-      </a>`:''}
+    </div>
+    <div id="map-container-${l.id}">
+      ${mapSrc?`<div class="map-embed" style="margin-bottom:6px">
+        <iframe src="${mapSrc}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a href="${mapLink}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;color:#5DADE2;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:14px">
+        <i class="fa fa-arrow-up-right-from-square"></i> Open in Google Maps
+      </a>`:'<div style="color:var(--muted);font-size:12px;margin-bottom:14px">Enter an address above and tap Save to see the map.</div>'}
+    </div>
 
     <hr class="div"/>
 
-    <!-- LOG A CALL (moved here, below address) -->
+    <!-- LOG CALL -->
     <div class="section-title" style="font-size:14px"><i class="fa fa-phone-volume" style="color:var(--green)"></i> Log a Call</div>
-    <label>Direction</label>
+    <label>Call Direction</label>
     <div class="call-dir">
       <div class="dir-btn active-out" id="dir-out-${l.id}" onclick="setDir('${l.id}','outbound')"><i class="fa fa-phone-arrow-up-right"></i> Outbound</div>
       <div class="dir-btn" id="dir-in-${l.id}" onclick="setDir('${l.id}','inbound')"><i class="fa fa-phone-arrow-down-left"></i> Inbound</div>
@@ -661,11 +728,13 @@ function renderLeadModal(l) {
     <!-- ESTIMATE + FOLLOW UP -->
     <div class="form-group">
       <label>Estimate Value ($)</label>
-      <input type="number" placeholder="e.g. 2500" value="${l.estimate_value||''}" onchange="updateLead('${l.id}',{estimate_value:parseFloat(this.value)||null})"/>
+      <input type="number" placeholder="e.g. 2500" value="${l.estimate_value||''}"
+        onchange="updateLead('${l.id}',{estimate_value:parseFloat(this.value)||null})"/>
     </div>
     <div class="form-group">
       <label>Follow-Up Date</label>
-      <input type="date" value="${l.follow_up_date||''}" onchange="updateLead('${l.id}',{follow_up_date:this.value||null})"/>
+      <input type="date" value="${l.follow_up_date||''}"
+        onchange="updateLead('${l.id}',{follow_up_date:this.value||null})"/>
     </div>
     <div class="cal-btns">
       <button class="btn btn-ghost" onclick="addToGoogleCal('${l.id}')"><i class="fab fa-google" style="color:#EA4335"></i> Google Cal</button>
@@ -677,29 +746,30 @@ function renderLeadModal(l) {
     <!-- ADD NOTE -->
     <div class="section-title" style="font-size:14px"><i class="fa fa-sticky-note" style="color:var(--amber)"></i> Add Note</div>
     <div style="display:flex;gap:8px;margin-bottom:14px">
-      <input type="text" id="note-input-${l.id}" placeholder="Add a note visible to whole team…" style="flex:1"
+      <input type="text" id="note-input-${l.id}" placeholder="Add a note — visible to the whole team…" style="flex:1"
         onkeydown="if(event.key==='Enter'){const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''}"/>
       <button class="btn btn-orange btn-sm" onclick="const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''"><i class="fa fa-plus"></i></button>
     </div>
 
     <hr class="div"/>
 
-    <!-- ACTIVITY LOG / HISTORY -->
+    <!-- ACTIVITY LOG -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div class="section-title" style="font-size:14px;margin-bottom:0"><i class="fa fa-timeline" style="color:var(--orange)"></i> Activity & History</div>
       <button class="btn btn-ghost btn-sm" onclick="shareActivity('${l.id}')"><i class="fa fa-share-nodes"></i> Share</button>
     </div>
-    ${activity.length ? activity.map((a,i)=>`
+    ${activity.length?activity.map(a=>`
       <div class="activity-item">
         <div class="activity-icon" style="background:${a.type==='call'?(a.dir==='inbound'?'rgba(39,174,96,.2)':'rgba(41,128,185,.2)'):'rgba(230,126,34,.2)'}">
           <i class="fa fa-${a.type==='call'?'phone':'sticky-note'}" style="color:${a.type==='call'?(a.dir==='inbound'?'var(--green)':'#5DADE2'):'var(--amber)'}"></i>
         </div>
         <div class="activity-body">
-          <div class="activity-who">${esc(a.by||'Team')} ${a.type==='call'?'<span style="font-size:10px;opacity:.7;font-weight:400">· '+(a.dir||'outbound')+' call</span>':'<span style="font-size:10px;opacity:.7;font-weight:400">· note</span>'}</div>
+          <div class="activity-who">${esc(a.by||'Team')} <span style="font-size:10px;opacity:.7;font-weight:400">· ${a.type==='call'?(a.dir||'outbound')+' call':'note'}</span></div>
           <div class="activity-text">${esc(a.text)}</div>
           <div class="activity-time">${fmtDateTime(a.at)}</div>
         </div>
-      </div>`).join('') : `<div style="color:var(--muted);font-size:13px;margin-bottom:10px;text-align:center;padding:16px 0"><i class="fa fa-clock" style="display:block;font-size:28px;opacity:.3;margin-bottom:8px"></i>No activity yet — log a call or add a note to get started</div>`}
+      </div>`).join(''):`<div style="color:var(--muted);font-size:13px;text-align:center;padding:16px 0">
+        <i class="fa fa-clock" style="display:block;font-size:28px;opacity:.3;margin-bottom:8px"></i>No activity yet</div>`}
 
     <hr class="div"/>
     <button class="btn btn-red btn-full" onclick="deleteLead('${l.id}')"><i class="fa fa-trash"></i> Delete Lead</button>
@@ -707,30 +777,111 @@ function renderLeadModal(l) {
   `);
 }
 
-// ── SHARE ACTIVITY ──
-function shareActivity(id) {
-  const l = leads.find(x=>x.id===id); if(!l) return;
-  const activity = getActivity(l);
-  let text = `📋 ACTIVITY LOG — ${l.name}\n`;
-  text += `Service: ${l.service||'N/A'} | Status: ${l.status}\n`;
-  text += `Phone: ${l.phone||'N/A'} | Address: ${l.address||'N/A'}\n`;
-  text += `─────────────────\n`;
-  activity.forEach(a => {
-    const type = a.type==='call' ? `📞 ${a.dir||'outbound'} call` : '📝 Note';
-    text += `${type} by ${a.by||'Team'}\n${a.text}\n${fmtDateTime(a.at)}\n─\n`;
-  });
-  if (navigator.share) {
-    navigator.share({ title: `Activity Log — ${l.name}`, text }).catch(()=>{});
+// ── SAVE ADDRESS (fixes map not updating) ──
+async function saveAddress(id){
+  const input = document.getElementById('addr-input-'+id);
+  if(!input) return;
+  const addr = input.value.trim();
+  await updateLead(id, {address: addr});
+
+  // Rebuild map section in place
+  const container = document.getElementById('map-container-'+id);
+  if(!container) return;
+  if(addr){
+    const mapSrc  = `https://maps.google.com/maps?q=${encodeURIComponent(addr+' NJ')}&output=embed&z=13&t=m&hl=en`;
+    const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr+' NJ')}`;
+    container.innerHTML = `
+      <div class="map-embed" style="margin-bottom:6px">
+        <iframe src="${mapSrc}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a href="${mapLink}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;color:#5DADE2;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:14px">
+        <i class="fa fa-arrow-up-right-from-square"></i> Open in Google Maps
+      </a>`;
   } else {
-    navigator.clipboard.writeText(text).then(()=>showToast('Activity log copied!')).catch(()=>showToast('Copy failed'));
+    container.innerHTML = `<div style="color:var(--muted);font-size:12px;margin-bottom:14px">Enter an address above and tap Save to see the map.</div>`;
   }
+  showToast('Address saved!');
+}
+
+// ── ACTIVITY HELPERS ──
+function getActivity(l){
+  const items=[];
+  (l.notes||[]).forEach(n=>items.push({type:'note',text:n.text,by:n.by,at:n.created_at}));
+  (l.call_log||[]).forEach(c=>items.push({type:'call',text:c.notes,by:c.by,at:c.called_at,dir:c.direction||'outbound'}));
+  (l.activity||[]).forEach(a=>items.push({type:'status',text:a.text,by:a.by,at:a.at}));
+  return items.sort((a,b)=>new Date(b.at)-new Date(a.at));
+}
+
+// ── MY CALLS MODAL ──
+function openMyCallsModal(){
+  const p=getProfile();
+  const myName=p.yourName||(currentUser?.email||'').split('@')[0];
+  // Gather all calls across all leads attributed to this user
+  const myCalls=[];
+  leads.forEach(l=>{
+    (l.call_log||[]).forEach(c=>{
+      if((c.by||'').toLowerCase()===myName.toLowerCase()||(c.by||'')===(currentUser?.email||'')){
+        myCalls.push({lead:l, call:c});
+      }
+    });
+  });
+  myCalls.sort((a,b)=>new Date(b.call.called_at)-new Date(a.call.called_at));
+
+  set('mycalls-modal-body',`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em"><i class="fa fa-phone-volume" style="color:var(--green)"></i> My Call Log</div>
+      <button onclick="closeModal('mycalls-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">All calls you personally logged — across every lead.</p>
+    ${myCalls.length?myCalls.map(({lead:l,call:c})=>`
+      <div class="my-call-item ${c.direction==='inbound'?'inbound':''}" onclick="closeModal('mycalls-modal');openLead('${l.id}')">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="call-lead-name">${esc(l.name)}</div>
+          <span style="background:${c.direction==='inbound'?'rgba(39,174,96,.2)':'rgba(41,128,185,.2)'};color:${c.direction==='inbound'?'var(--green)':'#5DADE2'};padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;flex-shrink:0">${c.direction||'outbound'}</span>
+        </div>
+        <div class="call-meta">${esc(l.service||'General')} · ${esc(l.address||l.phone||'')} · ${fmtDateTime(c.called_at)}</div>
+        ${c.notes&&c.notes!=='(no notes)'?`<div class="call-notes-text">${esc(c.notes)}</div>`:''}
+      </div>`).join(''):`<div class="empty-state"><i class="fa fa-phone-slash"></i><div>No calls logged yet</div><div style="font-size:13px;margin-top:6px">Log calls from any customer page</div></div>`}
+    <div style="height:16px"></div>
+  `);
+  document.getElementById('mycalls-modal').classList.add('open');
+}
+
+// ── CALL DIRECTION ──
+function setDir(id, dir){
+  callDirs[id]=dir;
+  const inB=document.getElementById('dir-in-'+id);
+  const outB=document.getElementById('dir-out-'+id);
+  if(!inB||!outB) return;
+  if(dir==='inbound'){ inB.className='dir-btn active-in'; outB.className='dir-btn'; }
+  else { outB.className='dir-btn active-out'; inB.className='dir-btn'; }
+}
+async function logCallHandler(id){
+  const n=document.getElementById('call-notes-'+id);
+  const dir=callDirs[id]||'outbound';
+  await logCall(id, n?n.value:'', dir);
+  if(n) n.value='';
+  showToast('Call logged as '+dir);
+}
+
+// ── SHARE ACTIVITY ──
+function shareActivity(id){
+  const l=leads.find(x=>x.id===id); if(!l) return;
+  const activity=getActivity(l);
+  let text=`📋 ACTIVITY LOG — ${l.name}\nService: ${l.service||'N/A'} | Status: ${l.status}\nPhone: ${l.phone||'N/A'} | Address: ${l.address||'N/A'}\n─────────────────\n`;
+  activity.forEach(a=>{
+    const type=a.type==='call'?`📞 ${a.dir||'outbound'} call`:'📝 Note';
+    text+=`${type} by ${a.by||'Team'}\n${a.text}\n${fmtDateTime(a.at)}\n─\n`;
+  });
+  if(navigator.share){ navigator.share({title:`Activity Log — ${l.name}`, text}).catch(()=>{}); }
+  else { navigator.clipboard.writeText(text).then(()=>showToast('Activity log copied!')).catch(()=>showToast('Copy failed')); }
 }
 
 // ── EDIT LEAD MODAL ──
-function openEditModal(id) {
-  const l = leads.find(x=>x.id===id); if(!l) return;
+function openEditModal(id){
+  const l=leads.find(x=>x.id===id); if(!l) return;
   document.getElementById('edit-modal').classList.add('open');
-  set('edit-modal-body', `
+  set('edit-modal-body',`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
       <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">Edit Lead Info</div>
       <button onclick="closeModal('edit-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
@@ -754,9 +905,8 @@ function openEditModal(id) {
     <div style="height:16px"></div>
   `);
 }
-
-async function saveEditLead(id) {
-  const updates = {
+async function saveEditLead(id){
+  const updates={
     name:    document.getElementById('el-name').value.trim(),
     phone:   document.getElementById('el-phone').value.trim(),
     email:   document.getElementById('el-email').value.trim(),
@@ -764,65 +914,48 @@ async function saveEditLead(id) {
     service: document.getElementById('el-service').value,
     source:  document.getElementById('el-source').value,
   };
-  if (!updates.name) { showToast('Name is required'); return; }
+  if(!updates.name){ showToast('Name is required'); return; }
   await updateLead(id, updates);
   closeModal('edit-modal');
-  const l = leads.find(x=>x.id===id); if(l) renderLeadModal(l);
+  renderLeadModal(leads.find(l=>l.id===id));
   showToast('Lead updated!');
 }
 
-// ── CALL DIRECTION ──
-function setDir(id, dir) {
-  callDirs[id] = dir;
-  const inB = document.getElementById('dir-in-'+id);
-  const outB = document.getElementById('dir-out-'+id);
-  if (!inB || !outB) return;
-  if (dir === 'inbound') { inB.className='dir-btn active-in'; outB.className='dir-btn'; }
-  else { outB.className='dir-btn active-out'; inB.className='dir-btn'; }
-}
-async function logCallHandler(id) {
-  const n = document.getElementById('call-notes-'+id);
-  const dir = callDirs[id] || 'outbound';
-  await logCall(id, n?n.value:'', dir);
-  if (n) n.value = '';
-  showToast('Call logged as ' + dir);
-}
-
 // ── TEMPLATES ──
-function openTemplateModal(type, leadId) {
-  const l = leads.find(x=>x.id===leadId); if(!l) return;
-  const p = getProfile();
-  const myName = p.yourName || '[Your Name]';
-  const company = p.company || 'Handy Pro Services';
-  const phone = p.phone || '(908) 312-6506';
-  const sig = buildSig(p);
+function openTemplateModal(type, leadId){
+  const l=leads.find(x=>x.id===leadId); if(!l) return;
+  const p=getProfile();
+  const myName=p.yourName||'[Your Name]';
+  const company=p.company||'Handy Pro Services';
+  const phone=p.phone||'(908) 312-6506';
+  const sig=buildSig(p);
 
-  const cats = {
-    'New Lead': [
-      { label:'Quick Intro', body:`Hi ${l.name||'there'}, this is ${myName} from ${company}. I got your inquiry about ${l.service||'your project'} — I'd love to help! When's a good time to chat?${sig?'\n\n'+sig:''}` },
-      { label:'Schedule Free Estimate', body:`Hi ${l.name||'there'}! This is ${myName} from ${company}. I'd like to set up a FREE on-site estimate for your ${l.service||'project'}. Are you available this week or next?${sig?'\n\n'+sig:''}` },
-      { label:'3rd Follow-Up', body:`Hi ${l.name||'there'}, I've tried reaching out a couple times about your ${l.service||'project'} inquiry. I just want to make sure you get the help you need! Give us a call at ${phone} whenever you're ready.${sig?'\n\n'+sig:''}` },
+  const cats={
+    'New Lead':[
+      {label:'Quick Intro', body:`Hi ${l.name||'there'}, this is ${myName} from ${company}. I got your inquiry about ${l.service||'your project'} — I'd love to help! When's a good time to chat?${sig?'\n\n'+sig:''}`},
+      {label:'Schedule Free Estimate', body:`Hi ${l.name||'there'}! This is ${myName} from ${company}. I'd like to set up a FREE on-site estimate for your ${l.service||'project'}. Are you available this week or next?${sig?'\n\n'+sig:''}`},
+      {label:'3rd Follow-Up', body:`Hi ${l.name||'there'}, I've tried reaching out a couple of times about your ${l.service||'project'} inquiry. We want to make sure you get the help you need! Give us a call at ${phone} whenever you're ready.${sig?'\n\n'+sig:''}`},
     ],
-    'Quote Sent': [
-      { label:'Checking In', body:`Hi ${l.name||'there'}, just following up on the estimate I sent over for your ${l.service||'project'}. Do you have any questions? Happy to walk through it together.${sig?'\n\n'+sig:''}` },
-      { label:'Limited Time Offer', body:`Hi ${l.name||'there'}! We have a spot opening up in our schedule the next 2 weeks. If you book now, I can offer 5% off your ${l.service||'project'}. Interested?${sig?'\n\n'+sig:''}` },
+    'Quote Sent':[
+      {label:'Checking In', body:`Hi ${l.name||'there'}, just following up on the estimate I sent over for your ${l.service||'project'}. Do you have any questions? Happy to walk through it together.${sig?'\n\n'+sig:''}`},
+      {label:'Limited Availability', body:`Hi ${l.name||'there'}! We have an opening in our schedule the next 2 weeks. If you book now I can offer 5% off your ${l.service||'project'}. Let me know if you're interested!${sig?'\n\n'+sig:''}`},
     ],
-    'Job Won': [
-      { label:'Welcome & Next Steps', body:`Hi ${l.name||'there'}, so excited to get started on your ${l.service||'project'}! I'll be in touch shortly to confirm the start date. Thank you for choosing ${company}!${sig?'\n\n'+sig:''}` },
-      { label:'Confirm Start Date', body:`Hi ${l.name||'there'}, hope you're doing well! Reaching out to confirm our start date for your ${l.service||'project'}. Does [DATE] work for you?${sig?'\n\n'+sig:''}` },
+    'Job Won':[
+      {label:'Welcome & Next Steps', body:`Hi ${l.name||'there'}, so excited to get started on your ${l.service||'project'}! I'll be in touch shortly to confirm the start date. Thank you for choosing ${company}!${sig?'\n\n'+sig:''}`},
+      {label:'Confirm Start Date', body:`Hi ${l.name||'there'}, reaching out to confirm our start date for your ${l.service||'project'}. Does [DATE] work for you?${sig?'\n\n'+sig:''}`},
     ],
-    'Review Request': [
-      { label:'Google Review Ask', body:`Hi ${l.name||'there'}, it was a real pleasure working on your ${l.service||'project'}! If you're happy with the results, would you mind leaving us a quick Google review? It helps our small business a lot. Thank you!${sig?'\n\n'+sig:''}` },
-      { label:'Thank You', body:`Hi ${l.name||'there'}, just wanted to say thank you for choosing ${company}. It was great working with you — please reach out any time for future projects!${sig?'\n\n'+sig:''}` },
+    'Review Request':[
+      {label:'Google Review Ask', body:`Hi ${l.name||'there'}, it was a pleasure working on your ${l.service||'project'}! If you're happy with the results, would you mind leaving us a Google review? It really helps our small business. Thank you so much!${sig?'\n\n'+sig:''}`},
+      {label:'Thank You', body:`Hi ${l.name||'there'}, just wanted to say thank you for choosing ${company}. It was great working with you — reach out anytime for future projects!${sig?'\n\n'+sig:''}`},
     ],
-    'General': [
-      { label:'Reschedule Appointment', body:`Hi ${l.name||'there'}, I need to reschedule our upcoming visit for your ${l.service||'project'}. Would [DATE/TIME] work for you? Sorry for any inconvenience.${sig?'\n\n'+sig:''}` },
-      { label:'We Are On Our Way', body:`Hi ${l.name||'there'}, just wanted to let you know we're on our way to your location and will be there in approximately [TIME]. See you soon!${sig?'\n\n'+sig:''}` },
-      { label:'Custom / Blank', body:sig?'\n\n'+sig:'' },
+    'General':[
+      {label:'On Our Way', body:`Hi ${l.name||'there'}, just letting you know we're on our way and will be there in approximately [TIME]. See you soon!${sig?'\n\n'+sig:''}`},
+      {label:'Reschedule', body:`Hi ${l.name||'there'}, I need to reschedule our upcoming visit. Would [DATE/TIME] work for you? Sorry for any inconvenience.${sig?'\n\n'+sig:''}`},
+      {label:'Custom / Blank', body:sig?'\n\n'+sig:''},
     ],
   };
 
-  set('tmpl-modal-body', `
+  set('tmpl-modal-body',`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <div style="font-family:var(--hd);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">
         <i class="fa fa-${type==='sms'?'comment-sms':'envelope'}" style="color:${type==='sms'?'#5DADE2':'var(--amber)'}"></i>
@@ -830,10 +963,12 @@ function openTemplateModal(type, leadId) {
       </div>
       <button onclick="closeModal('tmpl-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
     </div>
-    <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Tap a template to open it in your ${type==='sms'?'Messages app':'email app'} — you can edit before sending.</p>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Tap a template → opens in your ${type==='sms'?'Messages':'Mail'} app ready to edit and send.</p>
     ${Object.entries(cats).map(([cat,tmpls])=>`
       <div class="tmpl-section">
-        <div class="tmpl-header" onclick="this.querySelector('.tmpl-arrow').style.transform=this.nextElementSibling.classList.toggle('open')?'rotate(180deg)':'';"><span>${cat}</span><i class="fa fa-chevron-down tmpl-arrow"></i></div>
+        <div class="tmpl-header" onclick="const b=this.nextElementSibling;b.classList.toggle('open');this.querySelector('.tmpl-arrow').style.transform=b.classList.contains('open')?'rotate(180deg)':''">
+          <span>${cat}</span><i class="fa fa-chevron-down tmpl-arrow"></i>
+        </div>
         <div class="tmpl-body">
           ${tmpls.map(t=>`<button class="tmpl-btn" onclick="selectTemplate('${type}','${leadId}',${JSON.stringify(t.body)})">${esc(t.label)}</button>`).join('')}
         </div>
@@ -842,34 +977,32 @@ function openTemplateModal(type, leadId) {
   `);
   document.getElementById('tmpl-modal').classList.add('open');
 }
-
-function selectTemplate(type, leadId, message) {
-  const l = leads.find(x=>x.id===leadId); if(!l) return;
+function selectTemplate(type, leadId, message){
+  const l=leads.find(x=>x.id===leadId); if(!l) return;
+  const p=getProfile();
   closeModal('tmpl-modal');
-  if (type === 'sms' && l.phone) {
-    window.location.href = `sms:${l.phone}&body=${encodeURIComponent(message)}`;
-  } else if (type === 'email' && l.email) {
-    const p = getProfile();
-    const subject = encodeURIComponent(`Re: Your ${l.service||'Project'} Inquiry — ${p.company||'Handy Pro Services'}`);
-    window.location.href = `mailto:${l.email}?subject=${subject}&body=${encodeURIComponent(message)}`;
+  if(type==='sms'&&l.phone){
+    window.location.href=`sms:${l.phone}&body=${encodeURIComponent(message)}`;
+  } else if(type==='email'&&l.email){
+    const subj=encodeURIComponent(`Re: Your ${l.service||'Project'} Inquiry — ${p.company||'Handy Pro Services'}`);
+    window.location.href=`mailto:${l.email}?subject=${subj}&body=${encodeURIComponent(message)}`;
   } else {
-    navigator.clipboard.writeText(message).then(()=>showToast('Message copied to clipboard!')).catch(()=>showToast('No contact info on file — message copied'));
+    navigator.clipboard.writeText(message).then(()=>showToast('Copied to clipboard!')).catch(()=>showToast('No contact info — copied to clipboard'));
   }
 }
-
-function buildSig(p) {
-  if (!p.yourName) return '';
-  const lines = ['Best regards,', p.yourName];
-  if (p.company) lines.push(p.company);
-  if (p.phone)   lines.push(p.phone);
-  if (p.email)   lines.push(p.email);
+function buildSig(p){
+  if(!p.yourName) return '';
+  const lines=['Best regards,',p.yourName];
+  if(p.company) lines.push(p.company);
+  if(p.phone)   lines.push(p.phone);
+  if(p.email)   lines.push(p.email);
   return lines.join('\n');
 }
 
 // ── ADD LEAD ──
-function openAddLead() {
+function openAddLead(){
   document.getElementById('add-modal').classList.add('open');
-  set('add-modal-body', `
+  set('add-modal-body',`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
       <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">New Lead</div>
       <button onclick="closeModal('add-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
@@ -898,30 +1031,30 @@ function openAddLead() {
     <div style="height:16px"></div>
   `);
 }
-async function saveNewLead() {
-  const name = document.getElementById('nl-name').value.trim();
-  if (!name) { showToast('Name is required'); return; }
-  const p = getProfile();
-  const who = p.yourName || currentUser?.email || 'Team';
-  await saveLead({ name, phone: document.getElementById('nl-phone').value.trim(), email: document.getElementById('nl-email').value.trim(), address: document.getElementById('nl-address').value.trim(), service: document.getElementById('nl-service').value, source: document.getElementById('nl-source').value, message: document.getElementById('nl-msg').value.trim(), created_by: who });
+async function saveNewLead(){
+  const name=document.getElementById('nl-name').value.trim();
+  if(!name){ showToast('Name is required'); return; }
+  const p=getProfile();
+  const who=p.yourName||currentUser?.email||'Team';
+  await saveLead({name, phone:document.getElementById('nl-phone').value.trim(), email:document.getElementById('nl-email').value.trim(), address:document.getElementById('nl-address').value.trim(), service:document.getElementById('nl-service').value, source:document.getElementById('nl-source').value, message:document.getElementById('nl-msg').value.trim(), created_by:who});
   closeModal('add-modal'); showToast('Lead added!');
 }
 
 // ── REPORTS ──
-function renderReports() {
-  const s = getStats(); const total = leads.length;
-  const wonRate = total>0?Math.round((s.won/total)*100):0;
-  const revWon = leads.filter(l=>l.estimate_value&&l.status==='won').reduce((a,l)=>a+(l.estimate_value||0),0);
-  const pipeline = leads.filter(l=>l.estimate_value&&['new','called','quoted'].includes(l.status)).reduce((a,l)=>a+(l.estimate_value||0),0);
-  const avgWon = s.won>0?Math.round(revWon/s.won):0;
-  const recs = genRecs(s,total,wonRate);
-  const rc = wonRate>=50?'var(--green)':wonRate>=30?'var(--amber)':'var(--red)';
-  const sources = {}; leads.forEach(l=>{ const src=l.source||'Unknown'; sources[src]=(sources[src]||0)+1; });
-  const srcEntries = Object.entries(sources).sort((a,b)=>b[1]-a[1]);
+function renderReports(){
+  const s=getStats(); const total=leads.length;
+  const wonRate=total>0?Math.round((s.won/total)*100):0;
+  const revWon=leads.filter(l=>l.estimate_value&&l.status==='won').reduce((a,l)=>a+(l.estimate_value||0),0);
+  const pipeline=leads.filter(l=>l.estimate_value&&['new','called','quoted'].includes(l.status)).reduce((a,l)=>a+(l.estimate_value||0),0);
+  const avgWon=s.won>0?Math.round(revWon/s.won):0;
+  const recs=genRecs(s,total,wonRate);
+  const rc=wonRate>=50?'var(--green)':wonRate>=30?'var(--amber)':'var(--red)';
+  const sources={}; leads.forEach(l=>{ const src=l.source||'Unknown'; sources[src]=(sources[src]||0)+1; });
+  const srcE=Object.entries(sources).sort((a,b)=>b[1]-a[1]);
   let inbound=0,outbound=0;
   leads.forEach(l=>(l.call_log||[]).forEach(c=>{ if(c.direction==='inbound') inbound++; else outbound++; }));
 
-  set('app-main', `
+  set('app-main',`
     <div class="section-title"><i class="fa fa-chart-line" style="color:var(--orange)"></i> Business Report</div>
     <div class="rev-grid">
       <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--green)">$${revWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Revenue Won</div></div>
@@ -935,8 +1068,7 @@ function renderReports() {
       <div style="font-family:var(--hd);font-size:54px;font-weight:800;color:${rc};line-height:1">${wonRate}%</div>
       <div style="color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-top:4px">Win Rate — ${s.won} won of ${total} total</div>
     </div>
-    ${inbound+outbound>0?`
-    <div class="rev-grid">
+    ${inbound+outbound>0?`<div class="rev-grid">
       <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${inbound}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Inbound Calls</div></div>
       <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:#5DADE2">${outbound}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Outbound Calls</div></div>
     </div>`:''}
@@ -945,10 +1077,9 @@ function renderReports() {
       ${fBar('New',s.new,total,'#5DADE2')}${fBar('Called',s.called,total,'#F4A024')}
       ${fBar('Quoted',s.quoted,total,'#C39BD3')}${fBar('Won',s.won,total,'#52BE80')}${fBar('Lost',s.lost,total,'#EC7063')}
     </div></div>
-    ${srcEntries.length?`
-    <div class="section-title" style="font-size:14px"><i class="fa fa-magnifying-glass-chart" style="color:var(--muted)"></i> Lead Sources</div>
+    ${srcE.length?`<div class="section-title" style="font-size:14px"><i class="fa fa-magnifying-glass-chart" style="color:var(--muted)"></i> Lead Sources</div>
     <div class="card" style="margin-bottom:14px">
-      ${srcEntries.map(([src,cnt])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+      ${srcE.map(([src,cnt])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
         <div style="font-size:13px">${esc(src)}</div>
         <div style="display:flex;align-items:center;gap:8px">
           <div style="width:80px;background:var(--surf2);border-radius:4px;height:8px;overflow:hidden"><div style="width:${Math.round((cnt/total)*100)}%;background:var(--orange);height:100%;border-radius:4px"></div></div>
@@ -957,7 +1088,7 @@ function renderReports() {
       </div>`).join('')}
     </div>`:''}
     <div class="section-title" style="font-size:14px"><i class="fa fa-lightbulb" style="color:var(--amber)"></i> Recommendations</div>
-    ${recs.map(r=>`<div class="rec-card"><h4>${r.title}</h4><p style="font-size:13px;color:var(--text);line-height:1.55">${r.text}</p></div>`).join('')}
+    ${recs.map(r=>`<div class="rec-card"><h4>${r.title}</h4><p style="font-size:13px;line-height:1.55">${r.text}</p></div>`).join('')}
     <hr class="div"/>
     <div class="section-title" style="font-size:14px"><i class="fa fa-file-pdf" style="color:var(--red)"></i> Export PDF</div>
     <div class="lang-btns">
@@ -969,19 +1100,17 @@ function renderReports() {
     <div style="height:20px"></div>
   `);
 }
-
 function fBar(l,c,t,color){const p=t>0?Math.round((c/t)*100):0;return`<div class="funnel-bar"><div class="funnel-label">${l}</div><div class="funnel-track"><div class="funnel-fill" style="width:${p}%;background:${color}">${p>12?p+'%':''}</div></div><div class="funnel-count" style="color:${color}">${c}</div></div>`;}
 function setLang(l){reportLang=l;renderReports();}
-
 function genRecs(s,total,wonRate){
   const r=[];
-  if(s.new>3) r.push({title:'⚠️ Unworked Leads',text:`${s.new} new leads are untouched. Call within the first hour — you're 7× more likely to qualify them.`});
-  if(wonRate<30&&total>=5) r.push({title:'📉 Win Rate Needs Work',text:`${wonRate}% close rate is below the 35–45% industry benchmark. Faster callbacks + in-person estimates make the biggest difference.`});
-  if(s.quoted>s.won&&s.quoted>=2) r.push({title:'💬 Follow Up On Quotes',text:`${s.quoted} quotes pending. Call each one — ask if they have questions, then offer 5% off if booked within 7 days.`});
-  if(s.called>3) r.push({title:'📋 Push Called Leads Forward',text:`${s.called} stuck at "Called." Goal after every call: book an on-site estimate. Once you're in their home, close rates jump.`});
-  if(s.won>=3) r.push({title:'⭐ Get Google Reviews',text:`${s.won} jobs won — use the Review Request text template on each one. One Google review = ~3 new leads.`});
-  if(s.lost>4) r.push({title:'🔍 Re-Engage Lost Leads',text:`${s.lost} leads went cold. Text them 30 days later — reactivation costs nothing and wins back ~15%.`});
-  if(!r.length) r.push({title:'✅ Pipeline Healthy!',text:`Keep responding quickly and following up consistently. That's the #1 driver of growth.`});
+  if(s.new>3) r.push({title:'⚠️ Unworked Leads',text:`${s.new} new leads are untouched. Calling within the first hour makes you 7× more likely to win the job.`});
+  if(wonRate<30&&total>=5) r.push({title:'📉 Win Rate Needs Work',text:`${wonRate}% close rate is below the 35–45% benchmark. Faster callbacks and in-person estimates make the biggest difference.`});
+  if(s.quoted>s.won&&s.quoted>=2) r.push({title:'💬 Follow Up On Quotes',text:`${s.quoted} quotes pending. Call each one, ask if they have questions, then offer 5% off if booked this week.`});
+  if(s.called>3) r.push({title:'📋 Push Called Leads Forward',text:`${s.called} stuck at "Called." Goal after every call: book an on-site estimate. Close rates jump once you're in their home.`});
+  if(s.won>=3) r.push({title:'⭐ Collect Google Reviews',text:`${s.won} jobs won — use the Review Request template on each. One Google review = ~3 new leads.`});
+  if(s.lost>4) r.push({title:'🔍 Re-Engage Lost Leads',text:`${s.lost} leads went cold. Text them 30 days later. Costs nothing and wins back ~15%.`});
+  if(!r.length) r.push({title:'✅ Pipeline Healthy!',text:'Keep responding fast and following up consistently. That\'s the #1 growth driver.'});
   return r;
 }
 
@@ -1004,7 +1133,7 @@ function exportPDF(){
     doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(80,80,80);doc.text(lbl,17,y);
     doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(String(val),196,y,{align:'right'});y+=9;
   });
-  y+=8;doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(T.recs,14,y);y+=8;
+  y+=8;doc.setFontSize(13);doc.setFont('helvetica','bold');doc.text(T.recs,14,y);y+=8;
   recs.forEach(r=>{
     if(y>248){doc.addPage();y=20;}
     doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(200,70,20);doc.text(r.title,14,y);y+=5;
@@ -1023,24 +1152,22 @@ function exportPDF(){
       doc.text(l.status||'',140,y);doc.text(fmtDate(l.created_at),196,y,{align:'right'});y+=9;
     });
   }
-  const pages=doc.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(160,160,160);doc.text('Handy Pro Services · (908) 312-6506 · handyproservice20@gmail.com · home-improvement-pros.com',105,290,{align:'center'});}
+  const pages=doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(160,160,160);doc.text('Handy Pro Services · (908) 312-6506 · handyproservice20@gmail.com · home-improvement-pros.com',105,290,{align:'center'});}
   doc.save(`HandyPro_Report_${new Date().toISOString().split('T')[0]}.pdf`);
   showToast('PDF downloaded!');
 }
-
 const TRANSLATIONS={
   en:{title:'Lead Management Report',overview:'Business Overview',totalLeads:'Total Leads',newL:'New',called:'Called',quoted:'Quoted',won:'Won',lost:'Lost',winRate:'Win Rate',revWon:'Revenue Won',pipeline:'Pipeline Value',recs:'Recommendations',recentLeads:'Recent Leads',name:'Name',service:'Service',status:'Status',date:'Date'},
   es:{title:'Reporte de Clientes',overview:'Resumen del Negocio',totalLeads:'Total',newL:'Nuevos',called:'Llamados',quoted:'Cotizados',won:'Ganados',lost:'Perdidos',winRate:'Tasa de Cierre',revWon:'Ingresos',pipeline:'Pipeline',recs:'Recomendaciones',recentLeads:'Clientes Recientes',name:'Nombre',service:'Servicio',status:'Estado',date:'Fecha'},
-  pt:{title:'Relatório de Leads',overview:'Visão Geral',totalLeads:'Total',newL:'Novos',called:'Contatados',quoted:'Orçados',won:'Ganhos',lost:'Perdidos',winRate:'Taxa de Conversão',revWon:'Receita',pipeline:'Pipeline',recs:'Recomendações',recentLeads:'Leads Recentes',name:'Nome',service:'Serviço',status:'Status',date:'Data'},
+  pt:{title:'Relatório de Leads',overview:'Visão Geral',totalLeads:'Total',newL:'Novos',called:'Contatados',quoted:'Orçados',won:'Ganhos',lost:'Perdidos',winRate:'Conversão',revWon:'Receita',pipeline:'Pipeline',recs:'Recomendações',recentLeads:'Leads Recentes',name:'Nome',service:'Serviço',status:'Status',date:'Data'},
 };
 
 // ── CALENDAR ──
 function addToGoogleCal(id){
   const l=leads.find(x=>x.id===id);if(!l)return;
   const d=(l.follow_up_date||new Date().toISOString().split('T')[0]).replace(/-/g,'');
-  const title=encodeURIComponent(`Follow up: ${l.name} – ${l.service||'Handy Pro'}`);
-  const details=encodeURIComponent(`Phone: ${l.phone||'N/A'}\nEmail: ${l.email||'N/A'}\nAddress: ${l.address||'N/A'}\nService: ${l.service||'N/A'}`);
-  window.open(`https://calendar.google.com/calendar/r/eventedit?text=${title}&dates=${d}/${d}&details=${details}`,'_blank');
+  window.open(`https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent('Follow up: '+l.name+' – '+(l.service||''))}&dates=${d}/${d}&details=${encodeURIComponent('Phone: '+(l.phone||'N/A')+'\nEmail: '+(l.email||'N/A')+'\nAddress: '+(l.address||'N/A'))}`,'_blank');
 }
 function addToAppleCal(id){
   const l=leads.find(x=>x.id===id);if(!l)return;
@@ -1053,115 +1180,198 @@ function addToAppleCal(id){
 }
 
 // ── SETTINGS ──
-function renderSettings() {
-  const p = getProfile();
-  const notifOn = typeof Notification!=='undefined'&&Notification.permission==='granted';
-  set('app-main', `
+function renderSettings(){
+  const p=getProfile();
+  const notifStatus = typeof Notification!=='undefined' ? Notification.permission : 'unknown';
+  const notifOn = notifStatus==='granted';
+  const notifDenied = notifStatus==='denied';
+
+  set('app-main',`
     <div class="section-title">Settings</div>
 
-    <div class="card" style="margin-bottom:12px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">✍️ Profile & Message Signature</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Auto-added to every text and email so you don't have to type it every time.</div>
-      <div class="form-group"><label>Your Name</label><input type="text" id="p-name" placeholder="Damian" value="${esc(p.yourName||'')}" oninput="saveProfile({yourName:this.value});refreshSigPreview()"/></div>
-      <div class="form-group"><label>Company Name</label><input type="text" id="p-company" placeholder="Handy Pro Services" value="${esc(p.company||'')}" oninput="saveProfile({company:this.value});refreshSigPreview()"/></div>
-      <div class="form-group"><label>Business Phone</label><input type="tel" id="p-phone" placeholder="(908) 312-6506" value="${esc(p.phone||'')}" oninput="saveProfile({phone:this.value});refreshSigPreview()"/></div>
-      <div class="form-group" style="margin-bottom:10px"><label>Business Email</label><input type="email" id="p-email" placeholder="handyproservice20@gmail.com" value="${esc(p.email||'')}" oninput="saveProfile({email:this.value});refreshSigPreview()"/></div>
-      <div id="sig-preview" style="background:var(--surf2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);line-height:1.8;font-style:italic;display:${p.yourName?'block':'none'}">
-        ${p.yourName?`Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}` : ''}
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:12px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">🔔 Notifications</div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-size:14px;font-weight:500">Follow-Up Reminders</div>
-          <div style="color:var(--muted);font-size:12px">${notifOn?'Enabled ✓':'Tap to enable'}</div>
-        </div>
-        <label class="toggle" onclick="requestNotifPermission()"><input type="checkbox" ${notifOn?'checked':''} readonly/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:12px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">👥 Team Access</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px">Add employees at <strong style="color:var(--text)">supabase.com → Authentication → Users → Add User</strong>. Share the app URL below with their login.</div>
-      <div style="font-family:monospace;font-size:11px;background:var(--surf2);padding:10px;border-radius:8px;word-break:break-all;color:var(--muted)">${window.location.href.split('?')[0]}</div>
-      <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="navigator.clipboard.writeText(window.location.href.split('?')[0]).then(()=>showToast('URL copied!'))"><i class="fa fa-copy"></i> Copy App URL</button>
-    </div>
-
-    <div class="card" style="margin-bottom:12px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">🔐 Account</div>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-        <div style="width:44px;height:44px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:22px;font-weight:800;color:#fff;flex-shrink:0">${(p.yourName||currentUser?.email||'?')[0].toUpperCase()}</div>
-        <div>
-          <div style="font-weight:600;font-size:14px">${esc(p.yourName||currentUser?.email||'Demo')}</div>
-          <div style="color:var(--muted);font-size:12px">${esc(currentUser?.email||'demo mode')}</div>
+    <!-- PROFILE & SIGNATURE -->
+    <div class="settings-section">
+      <div class="settings-section-title">✍️ Profile & Message Signature</div>
+      <div style="padding:0 16px 4px">
+        <p style="font-size:12px;color:var(--muted);padding:10px 0 14px;line-height:1.5;margin:0">Auto-added to the bottom of every text and email so customers always know who they're talking to.</p>
+        <div class="form-group"><label>Your Name</label><input type="text" id="p-name" placeholder="e.g. Damian" value="${esc(p.yourName||'')}" oninput="saveProfile({yourName:this.value});refreshSigPreview()"/></div>
+        <div class="form-group"><label>Company Name</label><input type="text" id="p-company" placeholder="Handy Pro Services" value="${esc(p.company||'')}" oninput="saveProfile({company:this.value});refreshSigPreview()"/></div>
+        <div class="form-group"><label>Business Phone</label><input type="tel" id="p-phone" placeholder="(908) 312-6506" value="${esc(p.phone||'')}" oninput="saveProfile({phone:this.value});refreshSigPreview()"/></div>
+        <div class="form-group"><label>Business Email</label><input type="email" id="p-email" placeholder="handyproservice20@gmail.com" value="${esc(p.email||'')}" oninput="saveProfile({email:this.value});refreshSigPreview()"/></div>
+        <div id="sig-preview" style="background:var(--surf2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);line-height:1.8;font-style:italic;margin-bottom:14px;display:${p.yourName?'block':'none'}">
+          ${p.yourName?`Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}` : ''}
         </div>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="localStorage.removeItem('hp_onboarded');showToast('Onboarding reset — sign out and back in')"><i class="fa fa-rotate-left"></i> Re-run Setup Wizard</button>
     </div>
 
-    <div class="card" style="margin-bottom:16px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">📊 Quick Stats</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center">
+    <!-- NOTIFICATIONS -->
+    <div class="settings-section">
+      <div class="settings-section-title">🔔 Follow-Up Notifications</div>
+      <div style="padding:0 16px 14px">
+        <p style="font-size:12px;color:var(--muted);padding:10px 0 12px;margin:0;line-height:1.5">Get reminded when a follow-up is due so you never miss a lead.</p>
+        ${notifDenied?`
+          <div style="background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:12px;font-size:13px;margin-bottom:10px">
+            <strong style="color:var(--red)">Notifications are blocked.</strong><br/>
+            <span style="color:var(--muted)">To fix: go to your phone's Settings → Safari/Chrome → Notifications → allow for this site.</span>
+          </div>`:`
+          <button class="btn ${notifOn?'btn-ghost':'btn-orange'} btn-full" onclick="enableNotifFromSettings()">
+            <i class="fa fa-bell${notifOn?'-slash':''}"></i> ${notifOn?'Notifications On ✓':'Enable Notifications'}
+          </button>`}
+        ${notifOn?`<button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="checkFollowUpsNow()"><i class="fa fa-bell-ring"></i> Test — Check Now</button>`:''}
+      </div>
+    </div>
+
+    <!-- MY CALL LOG -->
+    <div class="settings-section">
+      <div class="settings-section-title">📞 My Call Log</div>
+      <div style="padding:0 16px 14px">
+        <p style="font-size:12px;color:var(--muted);padding:10px 0 12px;margin:0;line-height:1.5">View every call you've personally logged across all leads.</p>
+        <button class="btn btn-ghost btn-full" onclick="openMyCallsModal()"><i class="fa fa-phone-volume" style="color:var(--green)"></i> View My Calls</button>
+      </div>
+    </div>
+
+    <!-- PASSWORD CHANGE -->
+    <div class="settings-section">
+      <div class="settings-section-title">🔐 Security</div>
+      <div style="padding:0 16px 14px">
+        <p style="font-size:12px;color:var(--muted);padding:10px 0 12px;margin:0">Change your password at any time.</p>
+        <button class="btn btn-ghost btn-full" onclick="openPwModal()"><i class="fa fa-lock"></i> Change Password</button>
+      </div>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="settings-section">
+      <div class="settings-section-title">📊 Quick Stats</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;padding:14px 16px">
         <div><div style="font-family:var(--hd);font-size:26px;font-weight:800">${leads.length}</div><div style="color:var(--muted);font-size:11px">Total Leads</div></div>
-        <div><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${leads.filter(l=>l.status==='won').length}</div><div style="color:var(--muted);font-size:11px">Jobs Won</div></div>
+        <div><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${leads.filter(l=>l.status==='won').length}</div><div style="color:var(--muted);font-size:11px">Won</div></div>
         <div><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--amber)">${leads.filter(l=>l.status==='quoted').length}</div><div style="color:var(--muted);font-size:11px">Quoted</div></div>
       </div>
     </div>
 
-    <button class="btn btn-ghost btn-full" onclick="doLogout()" style="margin-bottom:24px"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+    <!-- ACCOUNT -->
+    <div class="settings-section" style="margin-bottom:0">
+      <div class="settings-section-title">👤 Account</div>
+      <div style="padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:22px;font-weight:800;color:#fff;flex-shrink:0">${(p.yourName||currentUser?.email||'?')[0].toUpperCase()}</div>
+        <div>
+          <div style="font-weight:600;font-size:14px">${esc(p.yourName||currentUser?.email||'Demo')}</div>
+          <div style="color:var(--muted);font-size:12px">${demoMode?'Demo Mode':esc(currentUser?.email||'')}</div>
+        </div>
+      </div>
+      <div style="padding:14px 16px">
+        <button class="btn btn-ghost btn-full" onclick="doLogout()"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+      </div>
+    </div>
+    <div style="height:24px"></div>
   `);
 }
 
-function refreshSigPreview() {
-  const p = getProfile();
-  const el = document.getElementById('sig-preview');
-  if (!el) return;
-  if (p.yourName) {
-    el.style.display = 'block';
-    el.innerHTML = `Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}`;
-  } else { el.style.display = 'none'; }
+function refreshSigPreview(){
+  const p=getProfile();
+  const el=document.getElementById('sig-preview'); if(!el) return;
+  if(p.yourName){
+    el.style.display='block';
+    el.innerHTML=`Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}`;
+  } else { el.style.display='none'; }
+}
+
+// ── ENABLE NOTIFS FROM SETTINGS ──
+async function enableNotifFromSettings(){
+  if(!('Notification' in window)){ showToast('Notifications not supported in this browser'); return; }
+  if(Notification.permission==='granted'){ showToast('Already enabled!'); return; }
+  if(Notification.permission==='denied'){ showToast('Blocked — check your phone Settings to allow'); return; }
+  try {
+    const result = await Notification.requestPermission();
+    if(result==='granted'){
+      showToast('Notifications enabled! 🎉');
+      new Notification('Handy Pro CRM', {body:'Notifications are working!'});
+    } else {
+      showToast('Notifications blocked by browser');
+    }
+    renderSettings();
+  } catch(e){ showToast('Could not enable: '+e.message); }
+}
+
+// ── PASSWORD CHANGE MODAL ──
+function openPwModal(){
+  set('pw-modal-body',`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em"><i class="fa fa-lock" style="color:var(--orange)"></i> Change Password</div>
+      <button onclick="closeModal('pw-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="form-group"><label>New Password (min 6 chars)</label>
+      <div class="pw-wrap"><input type="password" id="pw-new" placeholder="New password"/><button class="pw-eye" type="button" onclick="togglePw('pw-new',this)"><i class="fa fa-eye"></i></button></div>
+    </div>
+    <div class="form-group"><label>Confirm New Password</label>
+      <div class="pw-wrap"><input type="password" id="pw-confirm" placeholder="Repeat new password" onkeydown="if(event.key==='Enter')doChangePassword()"/><button class="pw-eye" type="button" onclick="togglePw('pw-confirm',this)"><i class="fa fa-eye"></i></button></div>
+    </div>
+    <div id="pw-err" style="font-size:13px;margin-bottom:10px;display:none"></div>
+    <button class="btn btn-orange btn-full" onclick="doChangePassword()"><i class="fa fa-check"></i> Update Password</button>
+    <div style="height:16px"></div>
+  `);
+  document.getElementById('pw-modal').classList.add('open');
+}
+async function doChangePassword(){
+  if(demoMode){ showToast('Password change not available in Demo Mode'); return; }
+  const newPw  = document.getElementById('pw-new').value;
+  const confirm= document.getElementById('pw-confirm').value;
+  const err    = document.getElementById('pw-err');
+  err.style.display='none';
+  if(newPw.length<6){ err.style.color='var(--red)'; err.textContent='Password must be at least 6 characters.'; err.style.display='block'; return; }
+  if(newPw!==confirm){ err.style.color='var(--red)'; err.textContent='Passwords do not match.'; err.style.display='block'; return; }
+  const {error}=await sb.auth.updateUser({password:newPw});
+  if(error){ err.style.color='var(--red)'; err.textContent=error.message; err.style.display='block'; }
+  else { closeModal('pw-modal'); showToast('Password updated successfully!'); }
 }
 
 // ── NOTIFICATIONS ──
 async function requestNotifPermission(){
-  if('Notification' in window&&Notification.permission!=='granted'){
-    const p=await Notification.requestPermission();
-    if(p==='granted') showToast('Reminders enabled!');
-    renderTab();
-  }
+  if(!('Notification' in window)) return;
+  if(Notification.permission!=='granted') await Notification.requestPermission();
 }
 function checkFollowUps(){
   const today=new Date().toISOString().split('T')[0];
   const due=leads.filter(l=>l.follow_up_date&&l.follow_up_date<=today&&!['won','lost'].includes(l.status));
   const badge=document.getElementById('notif-badge');
-  if(badge){badge.textContent=due.length;badge.style.display=due.length?'block':'none';}
+  if(badge){ badge.textContent=due.length; badge.style.display=due.length?'block':'none'; }
   return due;
 }
 function checkFollowUpsNow(){
   const due=checkFollowUps();
-  if(!due.length){showToast('No follow-ups due ✓');return;}
+  if(!due.length){ showToast('No follow-ups due today ✓'); return; }
   showToast(`${due.length} follow-up${due.length>1?'s':''} due today!`);
-  if(typeof Notification!=='undefined'&&Notification.permission==='granted') new Notification('Handy Pro CRM',{body:`${due.length} follow-up${due.length>1?'s':''} due today!`});
-  activeFilter='all';showTab('leads');
+  if(typeof Notification!=='undefined'&&Notification.permission==='granted'){
+    new Notification('Handy Pro CRM',{body:`${due.length} follow-up${due.length>1?'s':''} due today!`});
+  }
+  activeFilter='all'; showTab('leads');
 }
-function updateBadge(){checkFollowUps();}
+function updateBadge(){ checkFollowUps(); }
 
 // ── HELPERS ──
-function getStats(){return{new:leads.filter(l=>l.status==='new').length,called:leads.filter(l=>l.status==='called').length,quoted:leads.filter(l=>l.status==='quoted').length,won:leads.filter(l=>l.status==='won').length,lost:leads.filter(l=>l.status==='lost').length};}
-function fmtDate(val){if(!val)return'';const d=new Date(val);if(isNaN(d))return'';return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
-function fmtDateTime(val){if(!val)return'';const d=new Date(val);if(isNaN(d))return'';return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
-function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function set(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function showToast(msg,dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),dur);}
+function getStats(){ return{new:leads.filter(l=>l.status==='new').length,called:leads.filter(l=>l.status==='called').length,quoted:leads.filter(l=>l.status==='quoted').length,won:leads.filter(l=>l.status==='won').length,lost:leads.filter(l=>l.status==='lost').length}; }
+function fmtDate(val){ if(!val)return''; const d=new Date(val); if(isNaN(d))return''; return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function fmtDateTime(val){ if(!val)return''; const d=new Date(val); if(isNaN(d))return''; return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); }
+function esc(s){ if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function set(id,html){ const el=document.getElementById(id); if(el)el.innerHTML=html; }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function showToast(msg,dur=2800){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),dur); }
 
 // ── SAMPLE DATA ──
 const SAMPLE_LEADS=[
   {id:'s1',name:'Mike Johnson',phone:'(908) 555-0101',email:'mike@email.com',address:'Flemington, NJ',service:'Kitchen Remodel',status:'new',notes:[],call_log:[],activity:[],estimate_value:8500,source:'Website Form',created_by:'Website',created_at:new Date(Date.now()-86400000).toISOString(),follow_up_date:''},
-  {id:'s2',name:'Sarah Williams',phone:'(908) 555-0202',email:'sarah@email.com',address:'124 Oak Lane, Clinton, NJ',service:'Bathroom Remodel',status:'called',notes:[{text:'Wants walk-in shower. Budget around $6k. John spoke with her first.',by:'John',created_at:new Date(Date.now()-80000000).toISOString()},{text:'Called back — confirmed she wants a quote this week.',by:'Tim',created_at:new Date(Date.now()-40000000).toISOString()}],call_log:[{notes:'First contact — she called us asking about bathroom remodel.',by:'John',called_at:new Date(Date.now()-80000000).toISOString(),direction:'inbound'},{notes:'Called to follow up, she is very interested and ready for estimate.',by:'Tim',called_at:new Date(Date.now()-40000000).toISOString(),direction:'outbound'}],activity:[{type:'status',text:'Status changed to: called',by:'John',at:new Date(Date.now()-80000000).toISOString()}],estimate_value:6200,source:'Phone Call — Inbound',created_by:'John',created_at:new Date(Date.now()-172800000).toISOString(),follow_up_date:new Date().toISOString().split('T')[0]},
-  {id:'s3',name:'Tom Garcia',phone:'(908) 555-0303',email:'',address:'Readington Township, NJ',service:'Exterior Painting',status:'quoted',notes:[],call_log:[{notes:'Called to discuss quote details.',by:'Damian',called_at:new Date(Date.now()-100000000).toISOString(),direction:'outbound'}],activity:[],estimate_value:3800,source:'Google',created_by:'Website',created_at:new Date(Date.now()-259200000).toISOString(),follow_up_date:''},
+  {id:'s2',name:'Sarah Williams',phone:'(908) 555-0202',email:'sarah@email.com',address:'124 Oak Lane, Clinton, NJ',service:'Bathroom Remodel',status:'called',
+    notes:[
+      {text:'She called us — wants a walk-in shower, budget around $6k. Very interested.',by:'John',created_at:new Date(Date.now()-80000000).toISOString()},
+      {text:'Called back to follow up. She confirmed she wants a quote this week.',by:'Tim',created_at:new Date(Date.now()-40000000).toISOString()}
+    ],
+    call_log:[
+      {notes:'She called us — very interested in bathroom remodel, wants walk-in shower.',by:'John',called_at:new Date(Date.now()-80000000).toISOString(),direction:'inbound'},
+      {notes:'I called to follow up, she is ready for an on-site estimate.',by:'Tim',called_at:new Date(Date.now()-40000000).toISOString(),direction:'outbound'}
+    ],
+    activity:[{type:'status',text:'Status changed to: called',by:'John',at:new Date(Date.now()-80000000).toISOString()}],
+    estimate_value:6200,source:'Phone Call — Inbound',created_by:'John',created_at:new Date(Date.now()-172800000).toISOString(),follow_up_date:new Date().toISOString().split('T')[0]},
+  {id:'s3',name:'Tom Garcia',phone:'(908) 555-0303',email:'tom@email.com',address:'Readington Township, NJ',service:'Exterior Painting',status:'quoted',notes:[],call_log:[{notes:'Called to walk through the quote.',by:'Damian',called_at:new Date(Date.now()-100000000).toISOString(),direction:'outbound'}],activity:[],estimate_value:3800,source:'Google',created_by:'Website',created_at:new Date(Date.now()-259200000).toISOString(),follow_up_date:''},
   {id:'s4',name:'Lisa Chen',phone:'(908) 555-0404',email:'lisa@email.com',address:'High Bridge, NJ',service:'Deck / Porch',status:'won',notes:[],call_log:[],activity:[],estimate_value:5500,source:'Website Form',created_by:'Website',created_at:new Date(Date.now()-432000000).toISOString(),follow_up_date:''},
   {id:'s5',name:'Bob Martinez',phone:'(908) 555-0505',email:'',address:'Annandale, NJ',service:'Basement Finishing',status:'lost',notes:[{text:'Price too high — went with another contractor.',by:'Tim',created_at:new Date(Date.now()-200000000).toISOString()}],call_log:[],activity:[],estimate_value:null,source:'Phone Call — Inbound',created_by:'Tim',created_at:new Date(Date.now()-518400000).toISOString(),follow_up_date:''},
 ];
