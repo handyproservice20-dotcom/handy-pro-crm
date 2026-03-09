@@ -25,42 +25,74 @@
 }
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--bd);font-size:15px}
+
+/* ── LOGIN ── */
 #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:24px;background:radial-gradient(ellipse at 50% 0%,#1E1E1E,#090909)}
 .login-logo{font-family:var(--hd);font-size:46px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-bottom:6px;line-height:1}
 .login-logo span{color:var(--orange)}
+
+/* ── APP ── */
 #app{display:none;flex-direction:column;height:100vh;overflow:hidden}
 .app-header{background:var(--surf);border-bottom:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .app-logo{font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
 .app-logo span{color:var(--orange)}
 .app-main{flex:1;overflow-y:auto;padding:14px 14px 88px;-webkit-overflow-scrolling:touch}
+
+/* ── BOTTOM NAV ── */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 7px;background:none;border:none;color:var(--muted);font-family:var(--bd);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;transition:color .2s}
 .nav-btn.active{color:var(--orange)}
 .nav-btn i{font-size:19px}
+
+/* ── FAB ── */
 .fab{position:fixed;right:18px;bottom:76px;width:54px;height:54px;border-radius:27px;background:var(--orange);color:#fff;border:none;font-size:24px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(244,98,26,.6);z-index:150;transition:transform .15s}
 .fab:active{transform:scale(.92)}
+
+/* ── CARDS ── */
 .card{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:12px;border:1px solid var(--border)}
+
+/* ── STATS ── */
 .stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:14px}
 .stat-box{background:var(--surf);border-radius:10px;padding:10px 4px;text-align:center;border:1px solid var(--border)}
 .stat-num{font-family:var(--hd);font-size:30px;font-weight:800;line-height:1}
 .stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* ── BADGES ── */
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
 .badge-new{background:rgba(41,128,185,.2);color:#5DADE2}
 .badge-called{background:rgba(230,126,34,.2);color:#F4A024}
 .badge-quoted{background:rgba(142,68,173,.2);color:#C39BD3}
 .badge-won{background:rgba(39,174,96,.2);color:#52BE80}
 .badge-lost{background:rgba(192,57,43,.2);color:#EC7063}
+
+/* ── LEAD CARD ── */
 .lead-card{background:var(--surf);border-radius:var(--r);padding:14px;margin-bottom:10px;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,transform .1s}
 .lead-card:active{transform:scale(.99);border-color:var(--orange)}
+
+/* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;overflow-y:auto}
 .modal-overlay.open{display:block}
 .modal{background:var(--surf);border-radius:var(--r) var(--r) 0 0;padding:20px 16px;position:absolute;bottom:0;left:0;right:0;max-height:92vh;overflow-y:auto;animation:slideUp .26s ease}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* ── ONBOARDING ── */
+.onboard-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:500;align-items:center;justify-content:center;padding:20px}
+.onboard-overlay.open{display:flex}
+.onboard-box{background:var(--surf);border-radius:20px;padding:28px 22px;width:100%;max-width:360px;text-align:center}
+.onboard-step{display:none}
+.onboard-step.active{display:block}
+.step-dots{display:flex;justify-content:center;gap:7px;margin-bottom:24px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s}
+.step-dot.active{background:var(--orange)}
+
+/* ── FORMS ── */
 input,select,textarea{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--bd);font-size:15px;padding:10px 12px;outline:none;transition:border-color .2s;-webkit-appearance:none}
 input:focus,select:focus,textarea:focus{border-color:var(--orange)}
 select option{background:var(--surf2)}
 label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
 .form-group{margin-bottom:14px}
+
+/* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;border-radius:8px;font-family:var(--hd);font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .1s;text-decoration:none;white-space:nowrap}
 .btn:active{transform:scale(.97)}
 .btn-orange{background:var(--orange);color:#fff}
@@ -71,6 +103,8 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .btn-full{width:100%;justify-content:center}
 .btn:hover{opacity:.85}
 .btn-sm{padding:7px 12px;font-size:13px}
+
+/* ── STATUS PILLS ── */
 .status-pills{display:flex;gap:6px;flex-wrap:wrap}
 .status-pill{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;border:2px solid transparent;cursor:pointer;background:var(--surf2);color:var(--muted);transition:all .18s}
 .sp-new{background:rgba(41,128,185,.18);border-color:#5DADE2;color:#5DADE2}
@@ -78,70 +112,106 @@ label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;l
 .sp-quoted{background:rgba(142,68,173,.18);border-color:#C39BD3;color:#C39BD3}
 .sp-won{background:rgba(39,174,96,.18);border-color:#52BE80;color:#52BE80}
 .sp-lost{background:rgba(192,57,43,.18);border-color:#EC7063;color:#EC7063}
+
+/* ── FILTER TABS ── */
 .filter-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none}
 .filter-tabs::-webkit-scrollbar{display:none}
 .filter-tab{white-space:nowrap;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:600;background:var(--surf2);color:var(--muted);border:1px solid var(--border);cursor:pointer;transition:all .18s}
 .filter-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+
+/* ── SECTION TITLE ── */
 .section-title{font-family:var(--hd);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+
+/* ── SEARCH ── */
 .search-wrap{position:relative;margin-bottom:12px}
 .search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .search-wrap input{padding-left:36px}
+
+/* ── FUNNEL ── */
 .funnel{display:flex;flex-direction:column;gap:9px}
 .funnel-bar{display:flex;align-items:center;gap:10px}
 .funnel-label{width:56px;font-size:10px;color:var(--muted);text-align:right;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0}
 .funnel-track{flex:1;background:var(--surf2);border-radius:5px;height:28px;overflow:hidden}
 .funnel-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding:0 9px;font-family:var(--hd);font-size:13px;font-weight:700;color:#fff;transition:width .7s ease;min-width:4px}
 .funnel-count{width:28px;font-family:var(--hd);font-size:20px;font-weight:800;text-align:right;flex-shrink:0}
-.note-item{background:var(--surf2);border-radius:8px;padding:10px 12px;margin-bottom:7px}
-.note-meta{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;align-items:center;gap:6px}
-/* CONTACT ACTIONS - now 4 buttons */
+
+/* ── ACTIVITY LOG ── */
+.activity-item{display:flex;gap:10px;margin-bottom:10px}
+.activity-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+.activity-body{flex:1;background:var(--surf2);border-radius:8px;padding:9px 12px}
+.activity-who{font-size:11px;color:var(--orange);font-weight:700;margin-bottom:2px}
+.activity-text{font-size:13px;line-height:1.45}
+.activity-time{font-size:10px;color:var(--muted);margin-top:3px}
+.activity-line{width:2px;background:var(--border);margin:0 auto;height:8px;margin-bottom:2px}
+
+/* ── CONTACT BUTTONS ── */
 .contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
 .contact-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:10px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-size:10px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .18s}
 .contact-btn i{font-size:18px}
 .contact-btn:active{border-color:var(--orange);color:var(--orange)}
+
+/* ── CAL BTNS ── */
 .cal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+
+/* ── MAP ── */
+.map-embed{width:100%;height:180px;border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px;background:var(--surf2)}
+.map-embed iframe{width:100%;height:100%;border:none}
+
+/* ── INLINE EDIT ── */
+.editable-field{display:flex;align-items:center;gap:8px}
+.editable-field span{flex:1;font-size:15px}
+.edit-ico{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;transition:color .18s}
+.edit-ico:hover{color:var(--orange)}
+
+/* ── TEMPLATE ── */
+.tmpl-section{background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.tmpl-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:14px}
+.tmpl-arrow{transition:transform .2s;color:var(--muted);font-size:12px}
+.tmpl-body{display:none;padding:0 14px 12px}
+.tmpl-body.open{display:block}
+.tmpl-btn{display:block;width:100%;text-align:left;background:var(--surf3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--bd);font-size:13px;padding:9px 12px;margin-bottom:6px;cursor:pointer;transition:border-color .18s}
+.tmpl-btn:hover,.tmpl-btn:active{border-color:var(--orange)}
+
+/* ── CALL DIRECTION ── */
+.call-dir{display:flex;gap:8px;margin-bottom:12px}
+.dir-btn{flex:1;padding:10px;border-radius:8px;border:2px solid var(--border);background:var(--surf2);color:var(--muted);font-family:var(--hd);font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .18s}
+.dir-btn.active-in{border-color:var(--green);color:var(--green);background:rgba(39,174,96,.1)}
+.dir-btn.active-out{border-color:#5DADE2;color:#5DADE2;background:rgba(41,128,185,.1)}
+
+/* ── REC CARD ── */
 .rec-card{background:rgba(244,98,26,.07);border:1px solid rgba(244,98,26,.22);border-radius:var(--r);padding:14px;margin-bottom:10px}
 .rec-card h4{font-family:var(--hd);font-size:15px;font-weight:800;text-transform:uppercase;color:var(--orange);margin-bottom:5px;letter-spacing:.04em}
+
+/* ── LANG BTNS ── */
 .lang-btns{display:flex;gap:7px;margin-bottom:14px}
 .lang-btn{flex:1;padding:10px 6px;border-radius:8px;border:2px solid var(--border);background:var(--surf2);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .18s}
 .lang-btn.active{border-color:var(--orange);color:var(--orange);background:rgba(244,98,26,.1)}
+
+/* ── REV GRID ── */
 .rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+
+/* ── NOTIF BADGE ── */
 .notif-badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 5px;min-width:17px;text-align:center;display:none;pointer-events:none}
+
+/* ── TOAST ── */
 #toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:30px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
 #toast.show{opacity:1}
+
+/* ── TOGGLE ── */
 .toggle{position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0}
 .toggle input{display:none}
 .toggle-track{width:100%;height:100%;background:var(--border);border-radius:12px;transition:background .2s}
 .toggle input:checked~.toggle-track{background:var(--orange)}
 .toggle-thumb{position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;pointer-events:none}
 .toggle input:checked~.toggle-thumb{transform:translateX(20px)}
+
+/* ── MISC ── */
 hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
 .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty-state i{font-size:46px;margin-bottom:12px;display:block;opacity:.3}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-/* TEMPLATE DROPDOWN */
-.tmpl-section{background:var(--surf2);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.tmpl-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:14px}
-.tmpl-header i.arrow{transition:transform .2s;color:var(--muted);font-size:12px}
-.tmpl-header.open i.arrow{transform:rotate(180deg)}
-.tmpl-body{display:none;padding:0 14px 12px}
-.tmpl-body.open{display:block}
-.tmpl-btn{display:block;width:100%;text-align:left;background:var(--surf3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--bd);font-size:13px;padding:9px 12px;margin-bottom:6px;cursor:pointer;transition:border-color .18s}
-.tmpl-btn:hover,.tmpl-btn:active{border-color:var(--orange)}
-/* CALL DIRECTION */
-.call-dir{display:flex;gap:8px;margin-bottom:12px}
-.dir-btn{flex:1;padding:10px;border-radius:8px;border:2px solid var(--border);background:var(--surf2);color:var(--muted);font-family:var(--hd);font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .18s}
-.dir-btn.active-inbound{border-color:var(--green);color:var(--green);background:rgba(39,174,96,.1)}
-.dir-btn.active-outbound{border-color:var(--blue);color:#5DADE2;background:rgba(41,128,185,.1)}
-/* MAP PIN */
-.map-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;background:rgba(41,128,185,.15);border:1px solid rgba(41,128,185,.3);color:#5DADE2;font-size:12px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .18s}
-.map-btn:active{opacity:.7}
-/* SETTINGS ROWS */
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .settings-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
 .settings-row:last-child{border-bottom:none}
-.settings-row-label{font-size:14px;font-weight:500}
-.settings-row-sub{font-size:12px;color:var(--muted);margin-top:2px}
 </style>
 </head>
 <body>
@@ -158,6 +228,46 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
     <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">First time? <span style="color:var(--orange);cursor:pointer" onclick="doRegister()">Create account</span></p>
     <hr class="div" style="margin:18px 0"/>
     <button class="btn btn-ghost btn-full" onclick="enterDemoMode()"><i class="fa fa-eye"></i> Try Demo Mode</button>
+  </div>
+</div>
+
+<!-- ONBOARDING OVERLAY -->
+<div class="onboard-overlay" id="onboard-overlay">
+  <div class="onboard-box">
+    <div class="step-dots">
+      <div class="step-dot active" id="dot-0"></div>
+      <div class="step-dot" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+    </div>
+
+    <!-- Step 0: Welcome -->
+    <div class="onboard-step active" id="ob-step-0">
+      <div style="font-size:48px;margin-bottom:12px">👋</div>
+      <div style="font-family:var(--hd);font-size:26px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Welcome to<br/><span style="color:var(--orange)">Handy Pro CRM</span></div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Let's set up your profile in 2 quick steps so your texts and emails look professional.</p>
+      <button class="btn btn-orange btn-full" onclick="obNext(1)">Let's Go <i class="fa fa-arrow-right"></i></button>
+    </div>
+
+    <!-- Step 1: Your name & profile -->
+    <div class="onboard-step" id="ob-step-1">
+      <div style="font-size:40px;margin-bottom:12px">✍️</div>
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Your Profile</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5">This goes at the bottom of every text and email so customers know who they're talking to.</p>
+      <div class="form-group"><label>Your First Name *</label><input type="text" id="ob-name" placeholder="e.g. Damian" autofocus/></div>
+      <div class="form-group"><label>Company Name</label><input type="text" id="ob-company" placeholder="Handy Pro Services"/></div>
+      <div class="form-group"><label>Business Phone</label><input type="tel" id="ob-phone" placeholder="(908) 312-6506"/></div>
+      <div class="form-group" style="margin-bottom:20px"><label>Business Email</label><input type="email" id="ob-email" placeholder="handyproservice20@gmail.com"/></div>
+      <button class="btn btn-orange btn-full" onclick="obSaveProfile()">Save & Continue <i class="fa fa-arrow-right"></i></button>
+    </div>
+
+    <!-- Step 2: Notifications -->
+    <div class="onboard-step" id="ob-step-2">
+      <div style="font-size:48px;margin-bottom:12px">🔔</div>
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Stay on Top<br/>of Follow-Ups</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px">Turn on notifications so we can remind you when a follow-up is due. Never miss a lead again.</p>
+      <button class="btn btn-orange btn-full" onclick="obEnableNotifs()" id="ob-notif-btn"><i class="fa fa-bell"></i> Enable Notifications</button>
+      <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="obFinish()">Skip for now</button>
+    </div>
   </div>
 </div>
 
@@ -185,15 +295,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
   </nav>
 </div>
 
-<div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal('lead-modal')">
-  <div class="modal" id="lead-modal-body"></div>
-</div>
-<div class="modal-overlay" id="add-modal" onclick="if(event.target===this)closeModal('add-modal')">
-  <div class="modal" id="add-modal-body"></div>
-</div>
-<div class="modal-overlay" id="tmpl-modal" onclick="if(event.target===this)closeModal('tmpl-modal')">
-  <div class="modal" id="tmpl-modal-body"></div>
-</div>
+<!-- Modals -->
+<div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal('lead-modal')"><div class="modal" id="lead-modal-body"></div></div>
+<div class="modal-overlay" id="add-modal" onclick="if(event.target===this)closeModal('add-modal')"><div class="modal" id="add-modal-body"></div></div>
+<div class="modal-overlay" id="tmpl-modal" onclick="if(event.target===this)closeModal('tmpl-modal')"><div class="modal" id="tmpl-modal-body"></div></div>
+<div class="modal-overlay" id="edit-modal" onclick="if(event.target===this)closeModal('edit-modal')"><div class="modal" id="edit-modal-body"></div></div>
 
 <div id="toast"></div>
 
@@ -205,35 +311,38 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // ── STATE ──
 let sb = null, currentUser = null, leads = [], activeTab = 'dashboard';
 let activeFilter = 'all', searchQ = '', reportLang = 'en', demoMode = false;
-let callDirection = 'outbound'; // default
+let callDirs = {};
 
-// ── PROFILE (stored in localStorage — device prefs) ──
-function getProfile() {
-  try {
-    return JSON.parse(localStorage.getItem('hp_profile') || '{}');
-  } catch(e) { return {}; }
-}
-function saveProfile(data) {
-  try { localStorage.setItem('hp_profile', JSON.stringify({...getProfile(), ...data})); } catch(e){}
-}
+// ── PROFILE (localStorage per device) ──
+function getProfile() { try { return JSON.parse(localStorage.getItem('hp_profile')||'{}'); } catch(e){ return {}; } }
+function saveProfile(d) { try { localStorage.setItem('hp_profile', JSON.stringify({...getProfile(),...d})); } catch(e){} }
+function isOnboarded() { try { return !!localStorage.getItem('hp_onboarded'); } catch(e){ return true; } }
+function setOnboarded() { try { localStorage.setItem('hp_onboarded','1'); } catch(e){} }
 
 // ── INIT ──
 try {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-  sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) { currentUser = session.user; showApp(); }
-  });
+  sb.auth.getSession().then(({ data: { session } }) => { if (session) { currentUser = session.user; onLoginSuccess(); } });
   sb.auth.onAuthStateChange((_e, session) => {
-    if (session) { currentUser = session.user; showApp(); }
+    if (session) { currentUser = session.user; onLoginSuccess(); }
     else if (!demoMode) { currentUser = null; showLogin(); }
   });
 } catch(e) { console.warn('Supabase init:', e.message); }
 
+function onLoginSuccess() {
+  document.getElementById('login-screen').style.display = 'none';
+  if (!isOnboarded()) {
+    showOnboarding();
+  } else {
+    showApp();
+  }
+}
+
 function showApp() {
+  document.getElementById('onboard-overlay').classList.remove('open');
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   loadLeads();
-  requestNotifPermission();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 function showLogin() {
@@ -243,8 +352,55 @@ function showLogin() {
 function enterDemoMode() {
   demoMode = true; currentUser = { email: 'demo@handypro.com' }; leads = SAMPLE_LEADS;
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  renderTab(); updateBadge(); showToast('Demo mode — data is not saved');
+  if (!isOnboarded()) { showOnboarding(); } else { showApp(); }
+}
+
+// ── ONBOARDING ──
+let obStep = 0;
+function showOnboarding() {
+  document.getElementById('onboard-overlay').classList.add('open');
+  // Pre-fill if profile exists
+  const p = getProfile();
+  if (p.yourName) document.getElementById('ob-name').value = p.yourName;
+  if (p.company)  document.getElementById('ob-company').value = p.company;
+  if (p.phone)    document.getElementById('ob-phone').value = p.phone;
+  if (p.email)    document.getElementById('ob-email').value = p.email;
+}
+function obNext(step) {
+  document.getElementById('ob-step-'+obStep).classList.remove('active');
+  document.getElementById('dot-'+obStep).classList.remove('active');
+  obStep = step;
+  document.getElementById('ob-step-'+step).classList.add('active');
+  document.getElementById('dot-'+step).classList.add('active');
+}
+function obSaveProfile() {
+  const name = document.getElementById('ob-name').value.trim();
+  if (!name) { showToast('Please enter your name'); return; }
+  saveProfile({
+    yourName: name,
+    company: document.getElementById('ob-company').value.trim() || 'Handy Pro Services',
+    phone: document.getElementById('ob-phone').value.trim() || '(908) 312-6506',
+    email: document.getElementById('ob-email').value.trim() || 'handyproservice20@gmail.com',
+  });
+  obNext(2);
+}
+async function obEnableNotifs() {
+  const btn = document.getElementById('ob-notif-btn');
+  if ('Notification' in window) {
+    const p = await Notification.requestPermission();
+    if (p === 'granted') {
+      btn.innerHTML = '<i class="fa fa-check"></i> Notifications Enabled!';
+      btn.style.background = 'var(--green)';
+      setTimeout(()=>obFinish(), 1200);
+    } else {
+      obFinish();
+    }
+  } else { obFinish(); }
+}
+function obFinish() {
+  setOnboarded();
+  document.getElementById('onboard-overlay').classList.remove('open');
+  showApp();
 }
 
 // ── AUTH ──
@@ -267,7 +423,7 @@ async function doRegister() {
   if (!email || pwd.length < 6) { errEl.style.color='var(--red)'; errEl.textContent='Enter email + password (min 6 chars)'; errEl.style.display='block'; return; }
   const { error } = await sb.auth.signUp({ email, password: pwd });
   if (error) { errEl.style.color='var(--red)'; errEl.textContent=error.message; errEl.style.display='block'; }
-  else { errEl.style.color='var(--green)'; errEl.textContent='Account created! Check your email or sign in.'; errEl.style.display='block'; }
+  else { errEl.style.color='var(--green)'; errEl.textContent='Account created! Sign in below.'; errEl.style.display='block'; }
 }
 function doLogout() {
   demoMode = false; leads = []; currentUser = null;
@@ -282,8 +438,8 @@ async function loadLeads() {
   leads = data || []; renderTab(); updateBadge();
 }
 async function saveLead(data) {
-  if (demoMode) { leads.unshift({ id: Date.now()+'', created_at: new Date().toISOString(), status:'new', notes:[], call_log:[], ...data }); renderTab(); return; }
-  const { error } = await sb.from('leads').insert({ ...data, status:'new', notes:[], call_log:[], created_by: currentUser?.email||'' });
+  if (demoMode) { leads.unshift({ id: Date.now()+'', created_at: new Date().toISOString(), status:'new', notes:[], call_log:[], activity:[], ...data }); renderTab(); return; }
+  const { error } = await sb.from('leads').insert({ ...data, status:'new', notes:[], call_log:[], activity:[], created_by: currentUser?.email||'' });
   if (error) { showToast('Save error: ' + error.message); return; }
   await loadLeads();
 }
@@ -296,26 +452,46 @@ async function updateLead(id, updates) {
 async function deleteLead(id) {
   if (!confirm('Delete this lead permanently?')) return;
   if (demoMode) { leads = leads.filter(l=>l.id!==id); }
-  else { const { error } = await sb.from('leads').delete().eq('id', id); if(error){ showToast('Delete error: '+error.message); return; } await loadLeads(); }
+  else { const { error } = await sb.from('leads').delete().eq('id', id); if(error){ showToast('Delete error'); return; } await loadLeads(); }
   closeModal('lead-modal'); renderTab(); showToast('Lead deleted');
 }
+
+// ── ACTIVITY LOG helpers ──
+function getActivity(l) {
+  // Merge notes and call_log into one sorted timeline
+  const items = [];
+  (l.notes||[]).forEach(n => items.push({ type:'note', text: n.text, by: n.by, at: n.created_at }));
+  (l.call_log||[]).forEach(c => items.push({ type:'call', text: c.notes, by: c.by, at: c.called_at, dir: c.direction||'outbound' }));
+  (l.activity||[]).forEach(a => items.push({ type:'status', text: a.text, by: a.by, at: a.at }));
+  return items.sort((a,b) => new Date(b.at) - new Date(a.at));
+}
+
 async function addNote(id, text) {
   if (!text.trim()) return;
   const lead = leads.find(l=>l.id===id); if (!lead) return;
-  const note = { text: text.trim(), created_at: new Date().toISOString(), by: currentUser?.email||'user' };
+  const p = getProfile();
+  const who = p.yourName || currentUser?.email || 'Team';
+  const note = { text: text.trim(), created_at: new Date().toISOString(), by: who };
   await updateLead(id, { notes: [...(lead.notes||[]), note] });
   const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
 }
 async function logCall(id, notes, direction) {
   const lead = leads.find(l=>l.id===id); if (!lead) return;
-  const entry = {
-    notes: notes.trim()||'(no notes)',
-    called_at: new Date().toISOString(),
-    by: currentUser?.email||'user',
-    direction: direction || 'outbound'
-  };
-  await updateLead(id, { call_log: [...(lead.call_log||[]), entry], status: 'called' });
+  const p = getProfile();
+  const who = p.yourName || currentUser?.email || 'Team';
+  const entry = { notes: notes.trim()||'(no notes)', called_at: new Date().toISOString(), by: who, direction: direction||'outbound' };
+  const actEntry = { type:'status', text: `Status changed to: called`, by: who, at: new Date().toISOString() };
+  await updateLead(id, { call_log: [...(lead.call_log||[]), entry], status:'called', activity: [...(lead.activity||[]), actEntry] });
   const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
+}
+async function changeStatus(id, status) {
+  const p = getProfile();
+  const who = p.yourName || currentUser?.email || 'Team';
+  const lead = leads.find(l=>l.id===id); if(!lead) return;
+  const actEntry = { type:'status', text:`Status changed to: ${status}`, by: who, at: new Date().toISOString() };
+  await updateLead(id, { status, activity: [...(lead.activity||[]), actEntry] });
+  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
+  renderTab(); showToast('Status → ' + status);
 }
 
 // ── TABS ──
@@ -355,8 +531,7 @@ function renderDashboard() {
           <span class="badge badge-${l.status}">${l.status}</span>
         </div>
         <div style="color:var(--amber);font-size:12px;margin-top:3px"><i class="fa fa-calendar-day"></i> Due ${fmtDate(l.follow_up_date)}</div>
-      </div>`).join('')}
-      <hr class="div"/>`:''}
+      </div>`).join('')}<hr class="div"/>`:''}
     <div class="section-title" style="font-size:14px"><i class="fa fa-clock-rotate-left" style="color:var(--orange)"></i> Recent Leads</div>
     ${recent.length?recent.map(l=>`<div class="lead-card" onclick="openLead('${l.id}')">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
@@ -367,7 +542,7 @@ function renderDashboard() {
         <div style="color:var(--muted);font-size:13px">${esc(l.service||'General Inquiry')}</div>
         <div style="color:var(--muted);font-size:12px">${fmtDate(l.created_at)}</div>
       </div>
-    </div>`).join(''):`<div class="empty-state"><i class="fa fa-inbox"></i><div>No leads yet</div><div style="font-size:13px;margin-top:6px">Tap Leads → + to add your first one</div></div>`}
+    </div>`).join(''):`<div class="empty-state"><i class="fa fa-inbox"></i><div>No leads yet</div><div style="font-size:13px;margin-top:6px">Tap Leads → + to add one</div></div>`}
   `);
 }
 
@@ -375,7 +550,7 @@ function renderDashboard() {
 function renderLeads() {
   let f = leads;
   if (activeFilter!=='all') f=f.filter(l=>l.status===activeFilter);
-  if (searchQ) { const q=searchQ.toLowerCase(); f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.service||'').toLowerCase().includes(q)||(l.email||'').toLowerCase().includes(q)||(l.address||'').toLowerCase().includes(q)); }
+  if (searchQ) { const q=searchQ.toLowerCase(); f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.service||'').toLowerCase().includes(q)||(l.address||'').toLowerCase().includes(q)); }
   set('app-main', `
     <div class="search-wrap"><i class="fa fa-search"></i>
       <input type="text" placeholder="Search name, phone, address…" value="${esc(searchQ)}" oninput="searchQ=this.value;renderLeads()"/>
@@ -396,7 +571,7 @@ function renderLeads() {
         <span class="badge badge-${l.status}">${l.status}</span>
       </div>
       <div style="display:flex;justify-content:space-between">
-        <span style="font-size:12px;color:var(--muted)">${(l.notes||[]).length} note${(l.notes||[]).length!==1?'s':''} · ${(l.call_log||[]).length} call${(l.call_log||[]).length!==1?'s':''}</span>
+        <span style="font-size:12px;color:var(--muted)">${getActivity(l).length} activit${getActivity(l).length!==1?'ies':'y'}</span>
         <span style="font-size:12px;color:var(--muted)">${fmtDate(l.created_at)}</span>
       </div>
     </div>`).join(''):`<div class="empty-state"><i class="fa fa-users-slash"></i><div>No leads found</div></div>`}
@@ -411,20 +586,29 @@ function openLead(id) {
 }
 
 function renderLeadModal(l) {
-  const notes = (l.notes||[]).slice().reverse();
-  const calls = (l.call_log||[]).slice().reverse();
-  const mapUrl = l.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.address+', NJ')}` : null;
+  const activity = getActivity(l);
+  const p = getProfile();
+  const mapSrc = l.address ? `https://maps.google.com/maps?q=${encodeURIComponent(l.address+', NJ')}&output=embed&z=13` : null;
+  const mapLink = l.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.address+', NJ')}` : null;
 
   set('lead-modal-body', `
+    <!-- HEADER with Edit button -->
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
-      <div>
-        <div style="font-family:var(--hd);font-size:27px;font-weight:800;line-height:1">${esc(l.name)}</div>
-        <div style="color:var(--muted);font-size:12px;margin-top:3px">${esc(l.service||'General Inquiry')} · ${fmtDate(l.created_at)}</div>
-        ${l.address?`<a href="${mapUrl}" target="_blank" class="map-btn" style="margin-top:7px;display:inline-flex"><i class="fa fa-location-dot"></i> ${esc(l.address)}</a>`:''}
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="font-family:var(--hd);font-size:27px;font-weight:800;line-height:1">${esc(l.name)}</div>
+          <button onclick="openEditModal('${l.id}')" style="background:rgba(244,98,26,.12);border:1px solid rgba(244,98,26,.3);color:var(--orange);border-radius:6px;font-size:11px;font-weight:700;padding:3px 9px;cursor:pointer;text-transform:uppercase;letter-spacing:.05em">
+            <i class="fa fa-pen"></i> Edit
+          </button>
+        </div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">${esc(l.service||'General Inquiry')} · Added by ${esc(l.created_by||'website')} · ${fmtDate(l.created_at)}</div>
+        ${l.phone?`<div style="font-size:13px;margin-top:3px;color:var(--text)">${esc(l.phone)}</div>`:''}
+        ${l.email?`<div style="font-size:13px;color:var(--muted)">${esc(l.email)}</div>`:''}
       </div>
-      <button onclick="closeModal('lead-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px"><i class="fa fa-times"></i></button>
+      <button onclick="closeModal('lead-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px;flex-shrink:0"><i class="fa fa-times"></i></button>
     </div>
 
+    <!-- STATUS -->
     <div class="form-group">
       <label>Status — tap to change</label>
       <div class="status-pills">
@@ -432,35 +616,56 @@ function renderLeadModal(l) {
       </div>
     </div>
 
-    <!-- 4 CONTACT BUTTONS -->
+    <!-- 4 CONTACT ACTIONS -->
     <div class="contact-actions">
       ${l.phone?`<a href="tel:${l.phone}" class="contact-btn"><i class="fa fa-phone" style="color:var(--green)"></i>Call</a>`:'<div></div>'}
       <button class="contact-btn" onclick="openTemplateModal('sms','${l.id}')"><i class="fa fa-comment-sms" style="color:var(--blue)"></i>Text</button>
       <button class="contact-btn" onclick="openTemplateModal('email','${l.id}')"><i class="fa fa-envelope" style="color:var(--amber)"></i>Email</button>
-      ${l.address?`<a href="${mapUrl}" target="_blank" class="contact-btn"><i class="fa fa-map-location-dot" style="color:#5DADE2"></i>Map</a>`:'<div></div>'}
+      ${mapLink?`<a href="${mapLink}" target="_blank" class="contact-btn"><i class="fa fa-map-location-dot" style="color:#5DADE2"></i>Map</a>`:'<div></div>'}
     </div>
 
     ${l.message?`<div class="card" style="background:var(--surf2);margin-bottom:14px">
       <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Lead Message</div>
       <div style="font-size:14px;line-height:1.5">${esc(l.message)}</div></div>`:''}
 
-    <hr class="div"/>
-
+    <!-- ADDRESS + MAP -->
     <div class="form-group">
       <label>Address / Town</label>
       <input type="text" placeholder="e.g. 123 Main St, Flemington" value="${esc(l.address||'')}"
-        onchange="updateLead('${l.id}',{address:this.value})"/>
+        onchange="updateLead('${l.id}',{address:this.value}).then(()=>{ const ll=leads.find(x=>x.id==='${l.id}'); if(ll) renderLeadModal(ll); })"/>
     </div>
+    ${mapSrc?`
+      <div class="map-embed">
+        <iframe src="${mapSrc}" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <a href="${mapLink}" target="_blank" style="display:flex;align-items:center;gap:6px;color:#5DADE2;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:14px">
+        <i class="fa fa-arrow-up-right-from-square"></i> Open full map in Google Maps
+      </a>`:''}
 
+    <hr class="div"/>
+
+    <!-- LOG A CALL (moved here, below address) -->
+    <div class="section-title" style="font-size:14px"><i class="fa fa-phone-volume" style="color:var(--green)"></i> Log a Call</div>
+    <label>Direction</label>
+    <div class="call-dir">
+      <div class="dir-btn active-out" id="dir-out-${l.id}" onclick="setDir('${l.id}','outbound')"><i class="fa fa-phone-arrow-up-right"></i> Outbound</div>
+      <div class="dir-btn" id="dir-in-${l.id}" onclick="setDir('${l.id}','inbound')"><i class="fa fa-phone-arrow-down-left"></i> Inbound</div>
+    </div>
+    <div class="form-group"><textarea id="call-notes-${l.id}" rows="2" placeholder="What was discussed?"></textarea></div>
+    <button class="btn btn-green btn-full" onclick="logCallHandler('${l.id}')" style="margin-bottom:14px">
+      <i class="fa fa-phone"></i> Log Call + Set Status → Called
+    </button>
+
+    <hr class="div"/>
+
+    <!-- ESTIMATE + FOLLOW UP -->
     <div class="form-group">
       <label>Estimate Value ($)</label>
-      <input type="number" placeholder="e.g. 2500" value="${l.estimate_value||''}"
-        onchange="updateLead('${l.id}',{estimate_value:parseFloat(this.value)||null})"/>
+      <input type="number" placeholder="e.g. 2500" value="${l.estimate_value||''}" onchange="updateLead('${l.id}',{estimate_value:parseFloat(this.value)||null})"/>
     </div>
     <div class="form-group">
       <label>Follow-Up Date</label>
-      <input type="date" value="${l.follow_up_date||''}"
-        onchange="updateLead('${l.id}',{follow_up_date:this.value||null})"/>
+      <input type="date" value="${l.follow_up_date||''}" onchange="updateLead('${l.id}',{follow_up_date:this.value||null})"/>
     </div>
     <div class="cal-btns">
       <button class="btn btn-ghost" onclick="addToGoogleCal('${l.id}')"><i class="fab fa-google" style="color:#EA4335"></i> Google Cal</button>
@@ -469,164 +674,195 @@ function renderLeadModal(l) {
 
     <hr class="div"/>
 
-    <!-- LOG CALL with direction -->
-    <div class="section-title" style="font-size:14px"><i class="fa fa-phone-volume" style="color:var(--green)"></i> Log a Call</div>
-    <label>Call Direction</label>
-    <div class="call-dir" id="call-dir-${l.id}">
-      <div class="dir-btn active-outbound" id="dir-out-${l.id}" onclick="setDir('${l.id}','outbound')"><i class="fa fa-phone-arrow-up-right"></i> Outbound</div>
-      <div class="dir-btn" id="dir-in-${l.id}" onclick="setDir('${l.id}','inbound')"><i class="fa fa-phone-arrow-down-left"></i> Inbound</div>
-    </div>
-    <div class="form-group"><textarea id="call-notes-${l.id}" rows="2" placeholder="What was discussed?"></textarea></div>
-    <button class="btn btn-green btn-full" onclick="logCallHandler('${l.id}')" style="margin-bottom:10px">
-      <i class="fa fa-phone"></i> Log Call + Set Status → Called
-    </button>
-    ${calls.map(c=>`<div class="note-item">
-      <div class="note-meta">
-        <span style="background:${c.direction==='inbound'?'rgba(39,174,96,.2)':'rgba(41,128,185,.2)'};color:${c.direction==='inbound'?'var(--green)':'#5DADE2'};padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase">${c.direction||'outbound'}</span>
-        ${esc(c.by)} · ${fmtDateTime(c.called_at)}
-      </div>
-      <div style="font-size:13px">${esc(c.notes)}</div>
-    </div>`).join('')}
-
-    <hr class="div"/>
-
-    <div class="section-title" style="font-size:14px"><i class="fa fa-sticky-note" style="color:var(--amber)"></i> Notes</div>
-    <div style="display:flex;gap:8px;margin-bottom:10px">
-      <input type="text" id="note-input-${l.id}" placeholder="Add a note…" style="flex:1"
+    <!-- ADD NOTE -->
+    <div class="section-title" style="font-size:14px"><i class="fa fa-sticky-note" style="color:var(--amber)"></i> Add Note</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input type="text" id="note-input-${l.id}" placeholder="Add a note visible to whole team…" style="flex:1"
         onkeydown="if(event.key==='Enter'){const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''}"/>
       <button class="btn btn-orange btn-sm" onclick="const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''"><i class="fa fa-plus"></i></button>
     </div>
-    ${notes.length?notes.map(n=>`<div class="note-item">
-      <div class="note-meta">${esc(n.by)} · ${fmtDateTime(n.created_at)}</div>
-      <div style="font-size:13px">${esc(n.text)}</div>
-    </div>`).join(''):`<div style="color:var(--muted);font-size:13px;margin-bottom:10px">No notes yet</div>`}
+
+    <hr class="div"/>
+
+    <!-- ACTIVITY LOG / HISTORY -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="section-title" style="font-size:14px;margin-bottom:0"><i class="fa fa-timeline" style="color:var(--orange)"></i> Activity & History</div>
+      <button class="btn btn-ghost btn-sm" onclick="shareActivity('${l.id}')"><i class="fa fa-share-nodes"></i> Share</button>
+    </div>
+    ${activity.length ? activity.map((a,i)=>`
+      <div class="activity-item">
+        <div class="activity-icon" style="background:${a.type==='call'?(a.dir==='inbound'?'rgba(39,174,96,.2)':'rgba(41,128,185,.2)'):'rgba(230,126,34,.2)'}">
+          <i class="fa fa-${a.type==='call'?'phone':'sticky-note'}" style="color:${a.type==='call'?(a.dir==='inbound'?'var(--green)':'#5DADE2'):'var(--amber)'}"></i>
+        </div>
+        <div class="activity-body">
+          <div class="activity-who">${esc(a.by||'Team')} ${a.type==='call'?'<span style="font-size:10px;opacity:.7;font-weight:400">· '+(a.dir||'outbound')+' call</span>':'<span style="font-size:10px;opacity:.7;font-weight:400">· note</span>'}</div>
+          <div class="activity-text">${esc(a.text)}</div>
+          <div class="activity-time">${fmtDateTime(a.at)}</div>
+        </div>
+      </div>`).join('') : `<div style="color:var(--muted);font-size:13px;margin-bottom:10px;text-align:center;padding:16px 0"><i class="fa fa-clock" style="display:block;font-size:28px;opacity:.3;margin-bottom:8px"></i>No activity yet — log a call or add a note to get started</div>`}
 
     <hr class="div"/>
     <button class="btn btn-red btn-full" onclick="deleteLead('${l.id}')"><i class="fa fa-trash"></i> Delete Lead</button>
     <div style="height:20px"></div>
   `);
-
-  // Set call direction state
-  callDirection = 'outbound';
 }
 
-let callDirs = {};
-function setDir(id, dir) {
-  callDirs[id] = dir;
-  const inBtn  = document.getElementById('dir-in-'+id);
-  const outBtn = document.getElementById('dir-out-'+id);
-  if (dir === 'inbound') {
-    inBtn.className  = 'dir-btn active-inbound';
-    outBtn.className = 'dir-btn';
+// ── SHARE ACTIVITY ──
+function shareActivity(id) {
+  const l = leads.find(x=>x.id===id); if(!l) return;
+  const activity = getActivity(l);
+  let text = `📋 ACTIVITY LOG — ${l.name}\n`;
+  text += `Service: ${l.service||'N/A'} | Status: ${l.status}\n`;
+  text += `Phone: ${l.phone||'N/A'} | Address: ${l.address||'N/A'}\n`;
+  text += `─────────────────\n`;
+  activity.forEach(a => {
+    const type = a.type==='call' ? `📞 ${a.dir||'outbound'} call` : '📝 Note';
+    text += `${type} by ${a.by||'Team'}\n${a.text}\n${fmtDateTime(a.at)}\n─\n`;
+  });
+  if (navigator.share) {
+    navigator.share({ title: `Activity Log — ${l.name}`, text }).catch(()=>{});
   } else {
-    outBtn.className = 'dir-btn active-outbound';
-    inBtn.className  = 'dir-btn';
+    navigator.clipboard.writeText(text).then(()=>showToast('Activity log copied!')).catch(()=>showToast('Copy failed'));
   }
 }
 
-async function logCallHandler(id) {
-  const n = document.getElementById('call-notes-'+id);
-  const dir = callDirs[id] || 'outbound';
-  await logCall(id, n?n.value:'', dir);
-  showToast('Call logged as ' + dir + '!');
-}
-
-async function changeStatus(id, status) {
-  await updateLead(id, { status });
-  const l = leads.find(x=>x.id===id); if(l) renderLeadModal(l);
-  renderTab(); showToast('Status → ' + status);
-}
-
-// ── TEMPLATE MODAL ──
-function openTemplateModal(type, leadId) {
-  const l = leads.find(x=>x.id===leadId); if(!l) return;
-  const p = getProfile();
-  document.getElementById('tmpl-modal').classList.add('open');
-
-  const sig = buildSig(p);
-
-  // Templates organized by category
-  const categories = {
-    'New Lead': [
-      { label: 'Quick Intro', body: `Hi ${l.name||'there'}, this is ${p.yourName||'[Your Name]'} from ${p.company||'Handy Pro Services'}. I got your inquiry about ${l.service||'your project'} — I'd love to help! When's a good time to chat?` },
-      { label: 'Schedule Free Estimate', body: `Hi ${l.name||'there'}! This is ${p.yourName||'[Your Name]'} from ${p.company||'Handy Pro Services'}. I'd like to set up a FREE estimate for your ${l.service||'project'}. Are you available this week or next?` },
-      { label: 'Follow-Up Attempt', body: `Hi ${l.name||'there'}, just following up on your ${l.service||'project'} inquiry. We have great availability this week. Give me a call at ${p.phone||'(908) 312-6506'} when you get a chance!` },
-    ],
-    'Quote Sent': [
-      { label: 'Checking In After Quote', body: `Hi ${l.name||'there'}, just wanted to follow up on the estimate I sent over. Do you have any questions? I'm happy to go over everything in detail. — ${p.yourName||'[Your Name]'}` },
-      { label: 'Limited Time Offer', body: `Hi ${l.name||'there'}! I wanted to let you know we have an opening in our schedule in the next 2 weeks. If you book now I can offer 5% off your ${l.service||'project'}. Interested? — ${p.yourName||'[Your Name]'}` },
-    ],
-    'Job Won': [
-      { label: 'Welcome & Next Steps', body: `Hi ${l.name||'there'}, so excited to get started on your ${l.service||'project'}! I'll be in touch shortly to confirm the start date. Thank you for choosing us! — ${p.yourName||'[Your Name]'}, ${p.company||'Handy Pro Services'}` },
-      { label: 'Schedule Start Date', body: `Hi ${l.name||'there'}, hope you're doing well! I wanted to reach out to confirm the start date for your ${l.service||'project'}. Does [DATE] work for you? — ${p.yourName||'[Your Name]'}` },
-    ],
-    'Review Request': [
-      { label: 'Google Review Ask', body: `Hi ${l.name||'there'}, it was a pleasure working on your ${l.service||'project'}! If you're happy with our work, would you mind leaving us a quick Google review? It really helps our small business. Thank you! — ${p.yourName||'[Your Name]'}, ${p.company||'Handy Pro Services'}` },
-      { label: 'Thank You', body: `Hi ${l.name||'there'}, just wanted to say thank you for choosing ${p.company||'Handy Pro Services'} for your ${l.service||'project'}. It was great working with you. Please don't hesitate to reach out for future projects! — ${p.yourName||'[Your Name]'}` },
-    ],
-    'General': [
-      { label: 'Reschedule', body: `Hi ${l.name||'there'}, I need to reschedule our upcoming appointment for your ${l.service||'project'}. Would [DATE/TIME] work for you? Sorry for any inconvenience. — ${p.yourName||'[Your Name]'}` },
-      { label: 'Custom Message', body: `` },
-    ],
-  };
-
-  const catHtml = Object.entries(categories).map(([cat, templates]) => `
-    <div class="tmpl-section">
-      <div class="tmpl-header" onclick="toggleCat(this)">
-        <span>${cat}</span>
-        <i class="fa fa-chevron-down arrow"></i>
-      </div>
-      <div class="tmpl-body">
-        ${templates.map(t => `<button class="tmpl-btn" onclick="selectTemplate('${type}','${leadId}',${JSON.stringify(t.body.replace(/'/g,"\\'")+'\n\n'+sig).replace(/"/g,'&quot;')})">${t.label}</button>`).join('')}
-      </div>
-    </div>`).join('');
-
-  set('tmpl-modal-body', `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">
-        <i class="fa fa-${type==='sms'?'comment-sms':'envelope'}" style="color:${type==='sms'?'#5DADE2':'var(--amber)'}"></i>
-        ${type==='sms'?'Text Message':'Email'} Templates
-      </div>
-      <button onclick="closeModal('tmpl-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
+// ── EDIT LEAD MODAL ──
+function openEditModal(id) {
+  const l = leads.find(x=>x.id===id); if(!l) return;
+  document.getElementById('edit-modal').classList.add('open');
+  set('edit-modal-body', `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">Edit Lead Info</div>
+      <button onclick="closeModal('edit-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
     </div>
-    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Pick a template to open it in your ${type==='sms'?'Messages app':'email app'}. You can edit before sending.</p>
-    ${catHtml}
+    <div class="form-group"><label>Full Name</label><input type="text" id="el-name" value="${esc(l.name||'')}"/></div>
+    <div class="form-group"><label>Phone</label><input type="tel" id="el-phone" value="${esc(l.phone||'')}"/></div>
+    <div class="form-group"><label>Email</label><input type="email" id="el-email" value="${esc(l.email||'')}"/></div>
+    <div class="form-group"><label>Address / Town</label><input type="text" id="el-address" value="${esc(l.address||'')}"/></div>
+    <div class="form-group"><label>Service</label>
+      <select id="el-service">
+        <option value="">Select…</option>
+        ${['Kitchen Remodel','Bathroom Remodel','Interior Painting','Exterior Painting','Deck / Porch','Basement Finishing','General Handyman','Other'].map(s=>`<option ${l.service===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group"><label>Source</label>
+      <select id="el-source">
+        ${['Website Form','Phone Call — Inbound','Phone Call — Outbound','Referral','Google','Door Knock / In Person','Other'].map(s=>`<option ${l.source===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn btn-orange btn-full" onclick="saveEditLead('${id}')"><i class="fa fa-check"></i> Save Changes</button>
     <div style="height:16px"></div>
   `);
 }
 
-function toggleCat(el) {
-  el.classList.toggle('open');
-  el.nextElementSibling.classList.toggle('open');
+async function saveEditLead(id) {
+  const updates = {
+    name:    document.getElementById('el-name').value.trim(),
+    phone:   document.getElementById('el-phone').value.trim(),
+    email:   document.getElementById('el-email').value.trim(),
+    address: document.getElementById('el-address').value.trim(),
+    service: document.getElementById('el-service').value,
+    source:  document.getElementById('el-source').value,
+  };
+  if (!updates.name) { showToast('Name is required'); return; }
+  await updateLead(id, updates);
+  closeModal('edit-modal');
+  const l = leads.find(x=>x.id===id); if(l) renderLeadModal(l);
+  showToast('Lead updated!');
+}
+
+// ── CALL DIRECTION ──
+function setDir(id, dir) {
+  callDirs[id] = dir;
+  const inB = document.getElementById('dir-in-'+id);
+  const outB = document.getElementById('dir-out-'+id);
+  if (!inB || !outB) return;
+  if (dir === 'inbound') { inB.className='dir-btn active-in'; outB.className='dir-btn'; }
+  else { outB.className='dir-btn active-out'; inB.className='dir-btn'; }
+}
+async function logCallHandler(id) {
+  const n = document.getElementById('call-notes-'+id);
+  const dir = callDirs[id] || 'outbound';
+  await logCall(id, n?n.value:'', dir);
+  if (n) n.value = '';
+  showToast('Call logged as ' + dir);
+}
+
+// ── TEMPLATES ──
+function openTemplateModal(type, leadId) {
+  const l = leads.find(x=>x.id===leadId); if(!l) return;
+  const p = getProfile();
+  const myName = p.yourName || '[Your Name]';
+  const company = p.company || 'Handy Pro Services';
+  const phone = p.phone || '(908) 312-6506';
+  const sig = buildSig(p);
+
+  const cats = {
+    'New Lead': [
+      { label:'Quick Intro', body:`Hi ${l.name||'there'}, this is ${myName} from ${company}. I got your inquiry about ${l.service||'your project'} — I'd love to help! When's a good time to chat?${sig?'\n\n'+sig:''}` },
+      { label:'Schedule Free Estimate', body:`Hi ${l.name||'there'}! This is ${myName} from ${company}. I'd like to set up a FREE on-site estimate for your ${l.service||'project'}. Are you available this week or next?${sig?'\n\n'+sig:''}` },
+      { label:'3rd Follow-Up', body:`Hi ${l.name||'there'}, I've tried reaching out a couple times about your ${l.service||'project'} inquiry. I just want to make sure you get the help you need! Give us a call at ${phone} whenever you're ready.${sig?'\n\n'+sig:''}` },
+    ],
+    'Quote Sent': [
+      { label:'Checking In', body:`Hi ${l.name||'there'}, just following up on the estimate I sent over for your ${l.service||'project'}. Do you have any questions? Happy to walk through it together.${sig?'\n\n'+sig:''}` },
+      { label:'Limited Time Offer', body:`Hi ${l.name||'there'}! We have a spot opening up in our schedule the next 2 weeks. If you book now, I can offer 5% off your ${l.service||'project'}. Interested?${sig?'\n\n'+sig:''}` },
+    ],
+    'Job Won': [
+      { label:'Welcome & Next Steps', body:`Hi ${l.name||'there'}, so excited to get started on your ${l.service||'project'}! I'll be in touch shortly to confirm the start date. Thank you for choosing ${company}!${sig?'\n\n'+sig:''}` },
+      { label:'Confirm Start Date', body:`Hi ${l.name||'there'}, hope you're doing well! Reaching out to confirm our start date for your ${l.service||'project'}. Does [DATE] work for you?${sig?'\n\n'+sig:''}` },
+    ],
+    'Review Request': [
+      { label:'Google Review Ask', body:`Hi ${l.name||'there'}, it was a real pleasure working on your ${l.service||'project'}! If you're happy with the results, would you mind leaving us a quick Google review? It helps our small business a lot. Thank you!${sig?'\n\n'+sig:''}` },
+      { label:'Thank You', body:`Hi ${l.name||'there'}, just wanted to say thank you for choosing ${company}. It was great working with you — please reach out any time for future projects!${sig?'\n\n'+sig:''}` },
+    ],
+    'General': [
+      { label:'Reschedule Appointment', body:`Hi ${l.name||'there'}, I need to reschedule our upcoming visit for your ${l.service||'project'}. Would [DATE/TIME] work for you? Sorry for any inconvenience.${sig?'\n\n'+sig:''}` },
+      { label:'We Are On Our Way', body:`Hi ${l.name||'there'}, just wanted to let you know we're on our way to your location and will be there in approximately [TIME]. See you soon!${sig?'\n\n'+sig:''}` },
+      { label:'Custom / Blank', body:sig?'\n\n'+sig:'' },
+    ],
+  };
+
+  set('tmpl-modal-body', `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-family:var(--hd);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">
+        <i class="fa fa-${type==='sms'?'comment-sms':'envelope'}" style="color:${type==='sms'?'#5DADE2':'var(--amber)'}"></i>
+        ${type==='sms'?'Text':'Email'} Templates
+      </div>
+      <button onclick="closeModal('tmpl-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Tap a template to open it in your ${type==='sms'?'Messages app':'email app'} — you can edit before sending.</p>
+    ${Object.entries(cats).map(([cat,tmpls])=>`
+      <div class="tmpl-section">
+        <div class="tmpl-header" onclick="this.querySelector('.tmpl-arrow').style.transform=this.nextElementSibling.classList.toggle('open')?'rotate(180deg)':'';"><span>${cat}</span><i class="fa fa-chevron-down tmpl-arrow"></i></div>
+        <div class="tmpl-body">
+          ${tmpls.map(t=>`<button class="tmpl-btn" onclick="selectTemplate('${type}','${leadId}',${JSON.stringify(t.body)})">${esc(t.label)}</button>`).join('')}
+        </div>
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  `);
+  document.getElementById('tmpl-modal').classList.add('open');
 }
 
 function selectTemplate(type, leadId, message) {
   const l = leads.find(x=>x.id===leadId); if(!l) return;
-  const p = getProfile();
   closeModal('tmpl-modal');
-
   if (type === 'sms' && l.phone) {
-    const encoded = encodeURIComponent(message);
-    // iOS uses &, Android uses ?
-    window.location.href = `sms:${l.phone}&body=${encoded}`;
+    window.location.href = `sms:${l.phone}&body=${encodeURIComponent(message)}`;
   } else if (type === 'email' && l.email) {
+    const p = getProfile();
     const subject = encodeURIComponent(`Re: Your ${l.service||'Project'} Inquiry — ${p.company||'Handy Pro Services'}`);
-    const body = encodeURIComponent(message);
-    window.location.href = `mailto:${l.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${l.email}?subject=${subject}&body=${encodeURIComponent(message)}`;
   } else {
-    // No contact info — copy to clipboard
-    navigator.clipboard.writeText(message).then(()=>showToast('Message copied to clipboard!')).catch(()=>showToast('No contact info on file'));
+    navigator.clipboard.writeText(message).then(()=>showToast('Message copied to clipboard!')).catch(()=>showToast('No contact info on file — message copied'));
   }
 }
 
 function buildSig(p) {
-  if (!p.yourName && !p.company) return '';
-  const lines = [];
-  lines.push('Best regards,');
-  if (p.yourName) lines.push(p.yourName);
-  if (p.company)  lines.push(p.company);
-  if (p.phone)    lines.push(p.phone);
-  if (p.email)    lines.push(p.email);
+  if (!p.yourName) return '';
+  const lines = ['Best regards,', p.yourName];
+  if (p.company) lines.push(p.company);
+  if (p.phone)   lines.push(p.phone);
+  if (p.email)   lines.push(p.email);
   return lines.join('\n');
 }
 
@@ -643,8 +879,7 @@ function openAddLead() {
     <div class="form-group"><label>Email</label><input type="email" id="nl-email" placeholder="john@email.com"/></div>
     <div class="form-group"><label>Address / Town</label><input type="text" id="nl-address" placeholder="Flemington, NJ or 123 Main St…"/></div>
     <div class="form-group"><label>Service</label>
-      <select id="nl-service">
-        <option value="">Select service…</option>
+      <select id="nl-service"><option value="">Select…</option>
         <option>Kitchen Remodel</option><option>Bathroom Remodel</option>
         <option>Interior Painting</option><option>Exterior Painting</option>
         <option>Deck / Porch</option><option>Basement Finishing</option>
@@ -663,11 +898,12 @@ function openAddLead() {
     <div style="height:16px"></div>
   `);
 }
-
 async function saveNewLead() {
   const name = document.getElementById('nl-name').value.trim();
   if (!name) { showToast('Name is required'); return; }
-  await saveLead({ name, phone: document.getElementById('nl-phone').value.trim(), email: document.getElementById('nl-email').value.trim(), address: document.getElementById('nl-address').value.trim(), service: document.getElementById('nl-service').value, source: document.getElementById('nl-source').value, message: document.getElementById('nl-msg').value.trim() });
+  const p = getProfile();
+  const who = p.yourName || currentUser?.email || 'Team';
+  await saveLead({ name, phone: document.getElementById('nl-phone').value.trim(), email: document.getElementById('nl-email').value.trim(), address: document.getElementById('nl-address').value.trim(), service: document.getElementById('nl-service').value, source: document.getElementById('nl-source').value, message: document.getElementById('nl-msg').value.trim(), created_by: who });
   closeModal('add-modal'); showToast('Lead added!');
 }
 
@@ -680,64 +916,50 @@ function renderReports() {
   const avgWon = s.won>0?Math.round(revWon/s.won):0;
   const recs = genRecs(s,total,wonRate);
   const rc = wonRate>=50?'var(--green)':wonRate>=30?'var(--amber)':'var(--red)';
-
-  // Source breakdown
-  const sources = {};
-  leads.forEach(l=>{ const src=l.source||'Unknown'; sources[src]=(sources[src]||0)+1; });
+  const sources = {}; leads.forEach(l=>{ const src=l.source||'Unknown'; sources[src]=(sources[src]||0)+1; });
   const srcEntries = Object.entries(sources).sort((a,b)=>b[1]-a[1]);
-
-  // Inbound vs Outbound calls
-  let inboundCalls=0, outboundCalls=0;
-  leads.forEach(l=>(l.call_log||[]).forEach(c=>{ if(c.direction==='inbound') inboundCalls++; else outboundCalls++; }));
+  let inbound=0,outbound=0;
+  leads.forEach(l=>(l.call_log||[]).forEach(c=>{ if(c.direction==='inbound') inbound++; else outbound++; }));
 
   set('app-main', `
     <div class="section-title"><i class="fa fa-chart-line" style="color:var(--orange)"></i> Business Report</div>
     <div class="rev-grid">
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--green)">$${revWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Revenue Won</div></div>
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--amber)">$${pipeline.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">In Pipeline</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--green)">$${revWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Revenue Won</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--amber)">$${pipeline.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">In Pipeline</div></div>
     </div>
     <div class="rev-grid">
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--orange)">${total}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Total Leads</div></div>
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--blue)">$${avgWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Avg Job Value</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--orange)">${total}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Total Leads</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--blue)">$${avgWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Avg Job Value</div></div>
     </div>
-
     <div class="card" style="text-align:center;margin-bottom:14px">
       <div style="font-family:var(--hd);font-size:54px;font-weight:800;color:${rc};line-height:1">${wonRate}%</div>
       <div style="color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-top:4px">Win Rate — ${s.won} won of ${total} total</div>
     </div>
-
-    <!-- Inbound vs Outbound -->
-    ${inboundCalls+outboundCalls>0?`
-    <div class="section-title" style="font-size:14px"><i class="fa fa-phone" style="color:var(--muted)"></i> Call Activity</div>
-    <div class="rev-grid" style="margin-bottom:14px">
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${inboundCalls}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Inbound</div></div>
-      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:#5DADE2">${outboundCalls}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Outbound</div></div>
+    ${inbound+outbound>0?`
+    <div class="rev-grid">
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${inbound}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Inbound Calls</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:#5DADE2">${outbound}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-top:3px">Outbound Calls</div></div>
     </div>`:''}
-
     <div class="section-title" style="font-size:14px"><i class="fa fa-filter" style="color:var(--muted)"></i> Lead Funnel</div>
     <div class="card" style="margin-bottom:14px"><div class="funnel">
       ${fBar('New',s.new,total,'#5DADE2')}${fBar('Called',s.called,total,'#F4A024')}
       ${fBar('Quoted',s.quoted,total,'#C39BD3')}${fBar('Won',s.won,total,'#52BE80')}${fBar('Lost',s.lost,total,'#EC7063')}
     </div></div>
-
     ${srcEntries.length?`
     <div class="section-title" style="font-size:14px"><i class="fa fa-magnifying-glass-chart" style="color:var(--muted)"></i> Lead Sources</div>
     <div class="card" style="margin-bottom:14px">
-      ${srcEntries.map(([src,cnt])=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
-          <div style="font-size:13px">${esc(src)}</div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="width:80px;background:var(--surf2);border-radius:4px;height:8px;overflow:hidden"><div style="width:${Math.round((cnt/total)*100)}%;background:var(--orange);height:100%;border-radius:4px"></div></div>
-            <div style="font-family:var(--hd);font-size:16px;font-weight:700;width:18px;text-align:right">${cnt}</div>
-          </div>
-        </div>`).join('')}
+      ${srcEntries.map(([src,cnt])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:13px">${esc(src)}</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:80px;background:var(--surf2);border-radius:4px;height:8px;overflow:hidden"><div style="width:${Math.round((cnt/total)*100)}%;background:var(--orange);height:100%;border-radius:4px"></div></div>
+          <div style="font-family:var(--hd);font-size:16px;font-weight:700;width:18px;text-align:right">${cnt}</div>
+        </div>
+      </div>`).join('')}
     </div>`:''}
-
     <div class="section-title" style="font-size:14px"><i class="fa fa-lightbulb" style="color:var(--amber)"></i> Recommendations</div>
     ${recs.map(r=>`<div class="rec-card"><h4>${r.title}</h4><p style="font-size:13px;color:var(--text);line-height:1.55">${r.text}</p></div>`).join('')}
-
     <hr class="div"/>
-    <div class="section-title" style="font-size:14px"><i class="fa fa-file-pdf" style="color:var(--red)"></i> Export PDF Report</div>
+    <div class="section-title" style="font-size:14px"><i class="fa fa-file-pdf" style="color:var(--red)"></i> Export PDF</div>
     <div class="lang-btns">
       <div class="lang-btn ${reportLang==='en'?'active':''}" onclick="setLang('en')">🇺🇸 English</div>
       <div class="lang-btn ${reportLang==='es'?'active':''}" onclick="setLang('es')">🇪🇸 Español</div>
@@ -748,30 +970,30 @@ function renderReports() {
   `);
 }
 
-function fBar(label,count,total,color){const pct=total>0?Math.round((count/total)*100):0;return`<div class="funnel-bar"><div class="funnel-label">${label}</div><div class="funnel-track"><div class="funnel-fill" style="width:${pct}%;background:${color}">${pct>12?pct+'%':''}</div></div><div class="funnel-count" style="color:${color}">${count}</div></div>`;}
+function fBar(l,c,t,color){const p=t>0?Math.round((c/t)*100):0;return`<div class="funnel-bar"><div class="funnel-label">${l}</div><div class="funnel-track"><div class="funnel-fill" style="width:${p}%;background:${color}">${p>12?p+'%':''}</div></div><div class="funnel-count" style="color:${color}">${c}</div></div>`;}
 function setLang(l){reportLang=l;renderReports();}
 
 function genRecs(s,total,wonRate){
   const r=[];
-  if(s.new>3) r.push({title:'⚠️ Unworked Leads Piling Up',text:`You have ${s.new} new leads sitting untouched. Calling within the first hour makes you 7× more likely to qualify a lead. Don't let them go cold — call today.`});
-  if(wonRate<30&&total>=5) r.push({title:'📉 Win Rate Needs Work',text:`Your ${wonRate}% close rate is below the 35–45% benchmark for home improvement. Try faster callbacks, always offer an in-person estimate, and follow up at least 3 times before giving up.`});
-  if(s.quoted>s.won&&s.quoted>=2) r.push({title:'💬 Follow Up On Your Quotes',text:`${s.quoted} quotes haven't been accepted yet. Call each one and ask: "Do you have any questions?" A 5% discount if booked within 7 days works very well.`});
-  if(s.called>3) r.push({title:'📋 Move Called Leads Forward',text:`${s.called} leads are stuck at "Called." The goal after every call is to book an on-site estimate. Once you're in their home, close rates jump dramatically.`});
-  if(s.won>=3) r.push({title:'⭐ Turn Wins Into Reviews',text:`You've won ${s.won} jobs — now collect reviews! Use the review request text template to ask each customer. One Google review = ~3 new leads.`});
-  if(s.lost>4) r.push({title:'🔍 Re-Engage Lost Leads',text:`${s.lost} leads went cold. Try texting them 30 days later. Reactivating old leads costs nothing and wins back ~15% of them.`});
-  if(!r.length) r.push({title:'✅ Looking Good!',text:`Pipeline is healthy. Keep responding quickly to new leads and following up consistently. Consistency is the #1 growth driver in home improvement.`});
+  if(s.new>3) r.push({title:'⚠️ Unworked Leads',text:`${s.new} new leads are untouched. Call within the first hour — you're 7× more likely to qualify them.`});
+  if(wonRate<30&&total>=5) r.push({title:'📉 Win Rate Needs Work',text:`${wonRate}% close rate is below the 35–45% industry benchmark. Faster callbacks + in-person estimates make the biggest difference.`});
+  if(s.quoted>s.won&&s.quoted>=2) r.push({title:'💬 Follow Up On Quotes',text:`${s.quoted} quotes pending. Call each one — ask if they have questions, then offer 5% off if booked within 7 days.`});
+  if(s.called>3) r.push({title:'📋 Push Called Leads Forward',text:`${s.called} stuck at "Called." Goal after every call: book an on-site estimate. Once you're in their home, close rates jump.`});
+  if(s.won>=3) r.push({title:'⭐ Get Google Reviews',text:`${s.won} jobs won — use the Review Request text template on each one. One Google review = ~3 new leads.`});
+  if(s.lost>4) r.push({title:'🔍 Re-Engage Lost Leads',text:`${s.lost} leads went cold. Text them 30 days later — reactivation costs nothing and wins back ~15%.`});
+  if(!r.length) r.push({title:'✅ Pipeline Healthy!',text:`Keep responding quickly and following up consistently. That's the #1 driver of growth.`});
   return r;
 }
 
 // ── PDF ──
 function exportPDF(){
-  if(!window.jspdf){showToast('PDF loading, try again');return;}
-  const{jsPDF}=window.jspdf; const doc=new jsPDF();
-  const s=getStats(); const total=leads.length;
+  if(!window.jspdf){showToast('PDF loading…');return;}
+  const{jsPDF}=window.jspdf;const doc=new jsPDF();
+  const s=getStats();const total=leads.length;
   const wonRate=total>0?Math.round((s.won/total)*100):0;
   const revWon=leads.filter(l=>l.estimate_value&&l.status==='won').reduce((a,l)=>a+(l.estimate_value||0),0);
   const pipeline=leads.filter(l=>l.estimate_value&&['new','called','quoted'].includes(l.status)).reduce((a,l)=>a+(l.estimate_value||0),0);
-  const T=TRANSLATIONS[reportLang]||TRANSLATIONS.en; const recs=genRecs(s,total,wonRate);
+  const T=TRANSLATIONS[reportLang]||TRANSLATIONS.en;const recs=genRecs(s,total,wonRate);
   doc.setFillColor(244,98,26);doc.rect(0,0,210,34,'F');
   doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(20);doc.text('HANDY PRO SERVICES',14,14);
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(T.title,14,24);doc.text(new Date().toLocaleDateString(),196,24,{align:'right'});
@@ -788,7 +1010,7 @@ function exportPDF(){
     doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(200,70,20);doc.text(r.title,14,y);y+=5;
     doc.setFont('helvetica','normal');doc.setTextColor(60,60,60);const lines=doc.splitTextToSize(r.text,182);doc.text(lines,14,y);y+=lines.length*4.5+5;
   });
-  if(leads.length>0){
+  if(leads.length){
     if(y>220){doc.addPage();y=20;}y+=4;
     doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(T.recentLeads,14,y);y+=7;
     doc.setFillColor(244,98,26);doc.rect(14,y-5,182,9,'F');doc.setTextColor(255,255,255);doc.setFontSize(9);
@@ -808,8 +1030,8 @@ function exportPDF(){
 
 const TRANSLATIONS={
   en:{title:'Lead Management Report',overview:'Business Overview',totalLeads:'Total Leads',newL:'New',called:'Called',quoted:'Quoted',won:'Won',lost:'Lost',winRate:'Win Rate',revWon:'Revenue Won',pipeline:'Pipeline Value',recs:'Recommendations',recentLeads:'Recent Leads',name:'Name',service:'Service',status:'Status',date:'Date'},
-  es:{title:'Reporte de Gestión de Clientes',overview:'Resumen del Negocio',totalLeads:'Total de Clientes',newL:'Nuevos',called:'Llamados',quoted:'Cotizados',won:'Ganados',lost:'Perdidos',winRate:'Tasa de Cierre',revWon:'Ingresos Ganados',pipeline:'Pipeline de Ventas',recs:'Recomendaciones',recentLeads:'Clientes Recientes',name:'Nombre',service:'Servicio',status:'Estado',date:'Fecha'},
-  pt:{title:'Relatório de Gestão de Leads',overview:'Visão Geral do Negócio',totalLeads:'Total de Leads',newL:'Novos',called:'Contatados',quoted:'Orçados',won:'Ganhos',lost:'Perdidos',winRate:'Taxa de Conversão',revWon:'Receita Ganha',pipeline:'Pipeline',recs:'Recomendações',recentLeads:'Leads Recentes',name:'Nome',service:'Serviço',status:'Status',date:'Data'},
+  es:{title:'Reporte de Clientes',overview:'Resumen del Negocio',totalLeads:'Total',newL:'Nuevos',called:'Llamados',quoted:'Cotizados',won:'Ganados',lost:'Perdidos',winRate:'Tasa de Cierre',revWon:'Ingresos',pipeline:'Pipeline',recs:'Recomendaciones',recentLeads:'Clientes Recientes',name:'Nombre',service:'Servicio',status:'Estado',date:'Fecha'},
+  pt:{title:'Relatório de Leads',overview:'Visão Geral',totalLeads:'Total',newL:'Novos',called:'Contatados',quoted:'Orçados',won:'Ganhos',lost:'Perdidos',winRate:'Taxa de Conversão',revWon:'Receita',pipeline:'Pipeline',recs:'Recomendações',recentLeads:'Leads Recentes',name:'Nome',service:'Serviço',status:'Status',date:'Data'},
 };
 
 // ── CALENDAR ──
@@ -817,7 +1039,7 @@ function addToGoogleCal(id){
   const l=leads.find(x=>x.id===id);if(!l)return;
   const d=(l.follow_up_date||new Date().toISOString().split('T')[0]).replace(/-/g,'');
   const title=encodeURIComponent(`Follow up: ${l.name} – ${l.service||'Handy Pro'}`);
-  const details=encodeURIComponent(`Phone: ${l.phone||'N/A'}\nEmail: ${l.email||'N/A'}\nAddress: ${l.address||'N/A'}\nService: ${l.service||'N/A'}\nStatus: ${l.status}`);
+  const details=encodeURIComponent(`Phone: ${l.phone||'N/A'}\nEmail: ${l.email||'N/A'}\nAddress: ${l.address||'N/A'}\nService: ${l.service||'N/A'}`);
   window.open(`https://calendar.google.com/calendar/r/eventedit?text=${title}&dates=${d}/${d}&details=${details}`,'_blank');
 }
 function addToAppleCal(id){
@@ -837,49 +1059,48 @@ function renderSettings() {
   set('app-main', `
     <div class="section-title">Settings</div>
 
-    <!-- PROFILE / SIGNATURE -->
     <div class="card" style="margin-bottom:12px">
-      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">✍️ Your Profile & Message Signature</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">This info is automatically added to the bottom of every text and email template so you don't have to type it every time.</div>
-      <div class="form-group"><label>Your Name</label><input type="text" id="p-name" placeholder="Damian" value="${esc(p.yourName||'')}" oninput="saveProfile({yourName:this.value})"/></div>
-      <div class="form-group"><label>Company Name</label><input type="text" id="p-company" placeholder="Handy Pro Services" value="${esc(p.company||'')}" oninput="saveProfile({company:this.value})"/></div>
-      <div class="form-group"><label>Business Phone</label><input type="tel" id="p-phone" placeholder="(908) 312-6506" value="${esc(p.phone||'')}" oninput="saveProfile({phone:this.value})"/></div>
-      <div class="form-group" style="margin-bottom:0"><label>Business Email</label><input type="email" id="p-email" placeholder="handyproservice20@gmail.com" value="${esc(p.email||'')}" oninput="saveProfile({email:this.value})"/></div>
-      ${p.yourName?`<div style="background:var(--surf2);border-radius:8px;padding:10px 12px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.7;font-style:italic">
-        Preview:<br/>Best regards,<br/>${esc(p.yourName||'')}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}
-      </div>`:''}
+      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">✍️ Profile & Message Signature</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Auto-added to every text and email so you don't have to type it every time.</div>
+      <div class="form-group"><label>Your Name</label><input type="text" id="p-name" placeholder="Damian" value="${esc(p.yourName||'')}" oninput="saveProfile({yourName:this.value});refreshSigPreview()"/></div>
+      <div class="form-group"><label>Company Name</label><input type="text" id="p-company" placeholder="Handy Pro Services" value="${esc(p.company||'')}" oninput="saveProfile({company:this.value});refreshSigPreview()"/></div>
+      <div class="form-group"><label>Business Phone</label><input type="tel" id="p-phone" placeholder="(908) 312-6506" value="${esc(p.phone||'')}" oninput="saveProfile({phone:this.value});refreshSigPreview()"/></div>
+      <div class="form-group" style="margin-bottom:10px"><label>Business Email</label><input type="email" id="p-email" placeholder="handyproservice20@gmail.com" value="${esc(p.email||'')}" oninput="saveProfile({email:this.value});refreshSigPreview()"/></div>
+      <div id="sig-preview" style="background:var(--surf2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);line-height:1.8;font-style:italic;display:${p.yourName?'block':'none'}">
+        ${p.yourName?`Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}` : ''}
+      </div>
     </div>
 
-    <!-- NOTIFICATIONS -->
     <div class="card" style="margin-bottom:12px">
       <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">🔔 Notifications</div>
-      <div class="settings-row">
-        <div><div class="settings-row-label">Follow-Up Reminders</div><div class="settings-row-sub">${notifOn?'Enabled ✓':'Tap to enable push notifications'}</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:14px;font-weight:500">Follow-Up Reminders</div>
+          <div style="color:var(--muted);font-size:12px">${notifOn?'Enabled ✓':'Tap to enable'}</div>
+        </div>
         <label class="toggle" onclick="requestNotifPermission()"><input type="checkbox" ${notifOn?'checked':''} readonly/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
     </div>
 
-    <!-- TEAM -->
     <div class="card" style="margin-bottom:12px">
       <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">👥 Team Access</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px">Add employees by going to <strong style="color:var(--text)">supabase.com → Authentication → Users → Add User</strong>. Give them the app URL and their login credentials.</div>
-      <div style="font-size:12px;color:var(--surf3);background:var(--surf2);padding:10px;border-radius:8px;font-family:monospace;word-break:break-all">${window.location.href.split('?')[0]}</div>
-      <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="navigator.clipboard.writeText(window.location.href.split('?')[0]).then(()=>showToast('App URL copied!'))"><i class="fa fa-copy"></i> Copy App URL</button>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px">Add employees at <strong style="color:var(--text)">supabase.com → Authentication → Users → Add User</strong>. Share the app URL below with their login.</div>
+      <div style="font-family:monospace;font-size:11px;background:var(--surf2);padding:10px;border-radius:8px;word-break:break-all;color:var(--muted)">${window.location.href.split('?')[0]}</div>
+      <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="navigator.clipboard.writeText(window.location.href.split('?')[0]).then(()=>showToast('URL copied!'))"><i class="fa fa-copy"></i> Copy App URL</button>
     </div>
 
-    <!-- ACCOUNT -->
     <div class="card" style="margin-bottom:12px">
       <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">🔐 Account</div>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-        <div style="width:44px;height:44px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:22px;font-weight:800;color:#fff;flex-shrink:0">${(currentUser?.email||'D')[0].toUpperCase()}</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:22px;font-weight:800;color:#fff;flex-shrink:0">${(p.yourName||currentUser?.email||'?')[0].toUpperCase()}</div>
         <div>
-          <div style="font-weight:600;font-size:14px">${esc(currentUser?.email||'Demo User')}</div>
-          <div style="color:var(--muted);font-size:12px">${demoMode?'Demo Mode':'Connected ✓'}</div>
+          <div style="font-weight:600;font-size:14px">${esc(p.yourName||currentUser?.email||'Demo')}</div>
+          <div style="color:var(--muted);font-size:12px">${esc(currentUser?.email||'demo mode')}</div>
         </div>
       </div>
+      <button class="btn btn-ghost btn-sm" onclick="localStorage.removeItem('hp_onboarded');showToast('Onboarding reset — sign out and back in')"><i class="fa fa-rotate-left"></i> Re-run Setup Wizard</button>
     </div>
 
-    <!-- STATS -->
     <div class="card" style="margin-bottom:16px">
       <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">📊 Quick Stats</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center">
@@ -891,6 +1112,16 @@ function renderSettings() {
 
     <button class="btn btn-ghost btn-full" onclick="doLogout()" style="margin-bottom:24px"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
   `);
+}
+
+function refreshSigPreview() {
+  const p = getProfile();
+  const el = document.getElementById('sig-preview');
+  if (!el) return;
+  if (p.yourName) {
+    el.style.display = 'block';
+    el.innerHTML = `Best regards,<br/>${esc(p.yourName)}${p.company?'<br/>'+esc(p.company):''}${p.phone?'<br/>'+esc(p.phone):''}${p.email?'<br/>'+esc(p.email):''}`;
+  } else { el.style.display = 'none'; }
 }
 
 // ── NOTIFICATIONS ──
@@ -928,11 +1159,11 @@ function showToast(msg,dur=2800){const t=document.getElementById('toast');t.text
 
 // ── SAMPLE DATA ──
 const SAMPLE_LEADS=[
-  {id:'s1',name:'Mike Johnson',phone:'(908) 555-0101',email:'mike@email.com',address:'Flemington, NJ',service:'Kitchen Remodel',status:'new',notes:[],call_log:[],estimate_value:8500,source:'Website Form',created_at:new Date(Date.now()-86400000).toISOString(),follow_up_date:''},
-  {id:'s2',name:'Sarah Williams',phone:'(908) 555-0202',email:'sarah@email.com',address:'124 Oak Lane, Clinton, NJ',service:'Bathroom Remodel',status:'called',notes:[{text:'Wants walk-in shower. Budget ~$6k.',by:'owner',created_at:new Date().toISOString()}],call_log:[{notes:'Called, very interested.',by:'owner',called_at:new Date().toISOString(),direction:'inbound'}],estimate_value:6200,source:'Referral',created_at:new Date(Date.now()-172800000).toISOString(),follow_up_date:new Date().toISOString().split('T')[0]},
-  {id:'s3',name:'Tom Garcia',phone:'(908) 555-0303',email:'',address:'Readington Township, NJ',service:'Exterior Painting',status:'quoted',notes:[],call_log:[{notes:'Called to discuss quote.',by:'owner',called_at:new Date().toISOString(),direction:'outbound'}],estimate_value:3800,source:'Google',created_at:new Date(Date.now()-259200000).toISOString(),follow_up_date:''},
-  {id:'s4',name:'Lisa Chen',phone:'(908) 555-0404',email:'lisa@email.com',address:'High Bridge, NJ',service:'Deck / Porch',status:'won',notes:[],call_log:[],estimate_value:5500,source:'Website Form',created_at:new Date(Date.now()-432000000).toISOString(),follow_up_date:''},
-  {id:'s5',name:'Bob Martinez',phone:'(908) 555-0505',email:'',address:'Annandale, NJ',service:'Basement Finishing',status:'lost',notes:[{text:'Price too high, went with another contractor.',by:'owner',created_at:new Date().toISOString()}],call_log:[],estimate_value:null,source:'Phone Call — Inbound',created_at:new Date(Date.now()-518400000).toISOString(),follow_up_date:''},
+  {id:'s1',name:'Mike Johnson',phone:'(908) 555-0101',email:'mike@email.com',address:'Flemington, NJ',service:'Kitchen Remodel',status:'new',notes:[],call_log:[],activity:[],estimate_value:8500,source:'Website Form',created_by:'Website',created_at:new Date(Date.now()-86400000).toISOString(),follow_up_date:''},
+  {id:'s2',name:'Sarah Williams',phone:'(908) 555-0202',email:'sarah@email.com',address:'124 Oak Lane, Clinton, NJ',service:'Bathroom Remodel',status:'called',notes:[{text:'Wants walk-in shower. Budget around $6k. John spoke with her first.',by:'John',created_at:new Date(Date.now()-80000000).toISOString()},{text:'Called back — confirmed she wants a quote this week.',by:'Tim',created_at:new Date(Date.now()-40000000).toISOString()}],call_log:[{notes:'First contact — she called us asking about bathroom remodel.',by:'John',called_at:new Date(Date.now()-80000000).toISOString(),direction:'inbound'},{notes:'Called to follow up, she is very interested and ready for estimate.',by:'Tim',called_at:new Date(Date.now()-40000000).toISOString(),direction:'outbound'}],activity:[{type:'status',text:'Status changed to: called',by:'John',at:new Date(Date.now()-80000000).toISOString()}],estimate_value:6200,source:'Phone Call — Inbound',created_by:'John',created_at:new Date(Date.now()-172800000).toISOString(),follow_up_date:new Date().toISOString().split('T')[0]},
+  {id:'s3',name:'Tom Garcia',phone:'(908) 555-0303',email:'',address:'Readington Township, NJ',service:'Exterior Painting',status:'quoted',notes:[],call_log:[{notes:'Called to discuss quote details.',by:'Damian',called_at:new Date(Date.now()-100000000).toISOString(),direction:'outbound'}],activity:[],estimate_value:3800,source:'Google',created_by:'Website',created_at:new Date(Date.now()-259200000).toISOString(),follow_up_date:''},
+  {id:'s4',name:'Lisa Chen',phone:'(908) 555-0404',email:'lisa@email.com',address:'High Bridge, NJ',service:'Deck / Porch',status:'won',notes:[],call_log:[],activity:[],estimate_value:5500,source:'Website Form',created_by:'Website',created_at:new Date(Date.now()-432000000).toISOString(),follow_up_date:''},
+  {id:'s5',name:'Bob Martinez',phone:'(908) 555-0505',email:'',address:'Annandale, NJ',service:'Basement Finishing',status:'lost',notes:[{text:'Price too high — went with another contractor.',by:'Tim',created_at:new Date(Date.now()-200000000).toISOString()}],call_log:[],activity:[],estimate_value:null,source:'Phone Call — Inbound',created_by:'Tim',created_at:new Date(Date.now()-518400000).toISOString(),follow_up_date:''},
 ];
 
 renderTab();
