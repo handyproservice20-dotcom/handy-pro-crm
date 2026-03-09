@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Handy Pro CRM</title>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#F4621A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="HP CRM"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surf:#1C1C1C;--surf2:#242424;--surf3:#2E2E2E;
+  --orange:#F4621A;--text:#EEE;--muted:#777;
+  --green:#27AE60;--red:#C0392B;--blue:#2980B9;--amber:#E67E22;
+  --border:#2A2A2A;--r:12px;
+  --hd:'Barlow Condensed',sans-serif;--bd:'Barlow',sans-serif;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--bd);font-size:15px}
+
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:24px;background:radial-gradient(ellipse at 50% 0%,#1E1E1E,#090909)}
+.login-logo{font-family:var(--hd);font-size:46px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-bottom:6px;line-height:1}
+.login-logo span{color:var(--orange)}
+
+#app{display:none;flex-direction:column;height:100vh;overflow:hidden}
+.app-header{background:var(--surf);border-bottom:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.app-logo{font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.app-logo span{color:var(--orange)}
+.app-main{flex:1;overflow-y:auto;padding:14px 14px 88px;-webkit-overflow-scrolling:touch}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 7px;background:none;border:none;color:var(--muted);font-family:var(--bd);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;transition:color .2s}
+.nav-btn.active{color:var(--orange)}
+.nav-btn i{font-size:19px}
+
+.fab{position:fixed;right:18px;bottom:76px;width:54px;height:54px;border-radius:27px;background:var(--orange);color:#fff;border:none;font-size:24px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(244,98,26,.6);z-index:150;transition:transform .15s}
+.fab:active{transform:scale(.92)}
+
+.card{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:12px;border:1px solid var(--border)}
+
+.stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:14px}
+.stat-box{background:var(--surf);border-radius:10px;padding:10px 4px;text-align:center;border:1px solid var(--border)}
+.stat-num{font-family:var(--hd);font-size:30px;font-weight:800;line-height:1}
+.stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.badge-new{background:rgba(41,128,185,.2);color:#5DADE2}
+.badge-called{background:rgba(230,126,34,.2);color:#F4A024}
+.badge-quoted{background:rgba(142,68,173,.2);color:#C39BD3}
+.badge-won{background:rgba(39,174,96,.2);color:#52BE80}
+.badge-lost{background:rgba(192,57,43,.2);color:#EC7063}
+
+.lead-card{background:var(--surf);border-radius:var(--r);padding:14px;margin-bottom:10px;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,transform .1s}
+.lead-card:active{transform:scale(.99);border-color:var(--orange)}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;overflow-y:auto}
+.modal-overlay.open{display:block}
+.modal{background:var(--surf);border-radius:var(--r) var(--r) 0 0;padding:20px 16px;position:absolute;bottom:0;left:0;right:0;max-height:92vh;overflow-y:auto;animation:slideUp .26s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+input,select,textarea{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--bd);font-size:15px;padding:10px 12px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--orange)}
+select option{background:var(--surf2)}
+label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.form-group{margin-bottom:14px}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;border-radius:8px;font-family:var(--hd);font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .1s;text-decoration:none;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-ghost{background:var(--surf2);color:var(--text);border:1px solid var(--border)}
+.btn-green{background:var(--green);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-full{width:100%;justify-content:center}
+.btn:hover{opacity:.85}
+.btn-sm{padding:7px 12px;font-size:13px}
+
+.status-pills{display:flex;gap:6px;flex-wrap:wrap}
+.status-pill{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;border:2px solid transparent;cursor:pointer;background:var(--surf2);color:var(--muted);transition:all .18s}
+.sp-new{background:rgba(41,128,185,.18);border-color:#5DADE2;color:#5DADE2}
+.sp-called{background:rgba(230,126,34,.18);border-color:#F4A024;color:#F4A024}
+.sp-quoted{background:rgba(142,68,173,.18);border-color:#C39BD3;color:#C39BD3}
+.sp-won{background:rgba(39,174,96,.18);border-color:#52BE80;color:#52BE80}
+.sp-lost{background:rgba(192,57,43,.18);border-color:#EC7063;color:#EC7063}
+
+.filter-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none}
+.filter-tabs::-webkit-scrollbar{display:none}
+.filter-tab{white-space:nowrap;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:600;background:var(--surf2);color:var(--muted);border:1px solid var(--border);cursor:pointer;transition:all .18s}
+.filter-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+
+.section-title{font-family:var(--hd);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+
+.search-wrap{position:relative;margin-bottom:12px}
+.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search-wrap input{padding-left:36px}
+
+.funnel{display:flex;flex-direction:column;gap:9px}
+.funnel-bar{display:flex;align-items:center;gap:10px}
+.funnel-label{width:56px;font-size:10px;color:var(--muted);text-align:right;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0}
+.funnel-track{flex:1;background:var(--surf2);border-radius:5px;height:28px;overflow:hidden}
+.funnel-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding:0 9px;font-family:var(--hd);font-size:13px;font-weight:700;color:#fff;transition:width .7s ease;min-width:4px}
+.funnel-count{width:28px;font-family:var(--hd);font-size:20px;font-weight:800;text-align:right;flex-shrink:0}
+
+.note-item{background:var(--surf2);border-radius:8px;padding:10px 12px;margin-bottom:7px}
+.note-meta{font-size:11px;color:var(--muted);margin-bottom:3px}
+
+.contact-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.contact-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 6px;border-radius:10px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .18s}
+.contact-btn i{font-size:20px}
+.contact-btn:active{border-color:var(--orange);color:var(--orange)}
+
+.cal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+
+.rec-card{background:rgba(244,98,26,.07);border:1px solid rgba(244,98,26,.22);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.rec-card h4{font-family:var(--hd);font-size:15px;font-weight:800;text-transform:uppercase;color:var(--orange);margin-bottom:5px;letter-spacing:.04em}
+
+.lang-btns{display:flex;gap:7px;margin-bottom:14px}
+.lang-btn{flex:1;padding:10px 6px;border-radius:8px;border:2px solid var(--border);background:var(--surf2);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .18s}
+.lang-btn.active{border-color:var(--orange);color:var(--orange);background:rgba(244,98,26,.1)}
+
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+
+.notif-badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 5px;min-width:17px;text-align:center;display:none;pointer-events:none}
+
+#toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:var(--surf3);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:30px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1}
+
+.toggle{position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0}
+.toggle input{display:none}
+.toggle-track{width:100%;height:100%;background:var(--border);border-radius:12px;transition:background .2s}
+.toggle input:checked~.toggle-track{background:var(--orange)}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;pointer-events:none}
+.toggle input:checked~.toggle-thumb{transform:translateX(20px)}
+
+hr.div{border:none;border-top:1px solid var(--border);margin:14px 0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state i{font-size:46px;margin-bottom:12px;display:block;opacity:.3}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.setup-banner{background:rgba(244,98,26,.1);border:1px solid rgba(244,98,26,.3);border-radius:var(--r);padding:14px;margin-bottom:14px;font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-logo"><span>Handy Pro</span><br/>CRM</div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:30px;text-align:center">Lead Management · Hunterdon County, NJ</p>
+  <div style="width:100%;max-width:340px">
+    <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="you@email.com" autocomplete="email"/></div>
+    <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div id="login-err" style="font-size:13px;margin-bottom:10px;display:none"></div>
+    <button class="btn btn-orange btn-full" onclick="doLogin()" id="login-btn"><i class="fa fa-sign-in-alt"></i> Sign In</button>
+    <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:14px">First time? <span style="color:var(--orange);cursor:pointer" onclick="doRegister()">Create account</span></p>
+    <hr class="div" style="margin:18px 0"/>
+    <button class="btn btn-ghost btn-full" onclick="enterDemoMode()"><i class="fa fa-eye"></i> Try Demo Mode</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header class="app-header">
+    <div class="app-logo"><span>HP</span> CRM</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="position:relative">
+        <button class="btn btn-ghost btn-sm" onclick="checkFollowUpsNow()"><i class="fa fa-bell"></i></button>
+        <span id="notif-badge" class="notif-badge">0</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()"><i class="fa fa-sign-out-alt"></i></button>
+    </div>
+  </header>
+  <main class="app-main" id="app-main">
+    <div class="empty-state"><i class="fa fa-circle-notch fa-spin"></i><div>Loading…</div></div>
+  </main>
+  <button class="fab" id="fab" onclick="openAddLead()"><i class="fa fa-plus"></i></button>
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-dashboard" onclick="showTab('dashboard')"><i class="fa fa-chart-bar"></i><span>Dashboard</span></button>
+    <button class="nav-btn" id="nav-leads" onclick="showTab('leads')"><i class="fa fa-users"></i><span>Leads</span></button>
+    <button class="nav-btn" id="nav-reports" onclick="showTab('reports')"><i class="fa fa-file-alt"></i><span>Reports</span></button>
+    <button class="nav-btn" id="nav-settings" onclick="showTab('settings')"><i class="fa fa-cog"></i><span>Settings</span></button>
+  </nav>
+</div>
+
+<div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal('lead-modal')">
+  <div class="modal" id="lead-modal-body"></div>
+</div>
+<div class="modal-overlay" id="add-modal" onclick="if(event.target===this)closeModal('add-modal')">
+  <div class="modal" id="add-modal-body"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════
+// SUPABASE CONFIG
+// 1. Go to supabase.com → New Project
+// 2. Settings → API → copy URL + anon key
+// 3. Paste below, then run the SQL in Settings tab
+// ════════════════════════════════════════════
+const SUPABASE_URL  = 'https://tfnsvscwlgadtpxtqjvv.supabase.co'
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmbnN2c2N3bGdhZHRweHRxanZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMzE5ODIsImV4cCI6MjA4ODYwNzk4Mn0.95Lq5m6hlF-m8Nd2gSPCequEqDGJeAUIokU_qJbDUIc'
+let sb = null;
+let currentUser = null;
+let leads = [];
+let activeTab = 'dashboard';
+let activeFilter = 'all';
+let searchQ = '';
+let reportLang = 'en';
+let demoMode = false;
+
+// Init
+try {
+  if (SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    sb.auth.getSession().then(({ data: { session } }) => {
+      if (session) { currentUser = session.user; showApp(); }
+    });
+    sb.auth.onAuthStateChange((_e, session) => {
+      if (session) { currentUser = session.user; showApp(); }
+      else if (!demoMode) { currentUser = null; showLogin(); }
+    });
+  }
+} catch(e) { console.warn('Supabase init:', e.message); }
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  loadLeads();
+  requestNotifPermission();
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+function showLogin() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function enterDemoMode() {
+  demoMode = true;
+  currentUser = { email: 'demo@handypro.com' };
+  leads = SAMPLE_LEADS;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  renderTab(); updateBadge();
+  showToast('Demo mode — data is not saved');
+}
+
+// AUTH
+async function doLogin() {
+  if (!sb) { showToast('Add your Supabase config first — see Settings tab'); return; }
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-err');
+  const btn   = document.getElementById('login-btn');
+  errEl.style.display = 'none';
+  btn.textContent = 'Signing in…'; btn.disabled = true;
+  const { error } = await sb.auth.signInWithPassword({ email, password: pwd });
+  btn.innerHTML = '<i class="fa fa-sign-in-alt"></i> Sign In'; btn.disabled = false;
+  if (error) { errEl.style.color='var(--red)'; errEl.textContent = error.message; errEl.style.display = 'block'; }
+}
+
+async function doRegister() {
+  if (!sb) { showToast('Add your Supabase config first'); return; }
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-err');
+  errEl.style.display = 'none';
+  if (!email || pwd.length < 6) { errEl.style.color='var(--red)'; errEl.textContent='Enter email + password (min 6 chars)'; errEl.style.display='block'; return; }
+  const { error } = await sb.auth.signUp({ email, password: pwd });
+  if (error) { errEl.style.color='var(--red)'; errEl.textContent=error.message; errEl.style.display='block'; }
+  else { errEl.style.color='var(--green)'; errEl.textContent='Account created! Check your email to confirm, then sign in.'; errEl.style.display='block'; }
+}
+
+function doLogout() {
+  demoMode = false; leads = []; currentUser = null;
+  if (sb) sb.auth.signOut();
+  showLogin();
+}
+
+// DATA
+async function loadLeads() {
+  if (demoMode || !sb) { renderTab(); updateBadge(); return; }
+  const { data, error } = await sb.from('leads').select('*').order('created_at', { ascending: false });
+  if (error) { showToast('Load error: ' + error.message); return; }
+  leads = data || [];
+  renderTab(); updateBadge();
+}
+
+async function saveLead(data) {
+  if (demoMode) {
+    leads.unshift({ id: Date.now()+'', created_at: new Date().toISOString(), status:'new', notes:[], call_log:[], ...data });
+    renderTab(); return;
+  }
+  const { error } = await sb.from('leads').insert({ ...data, status:'new', notes:[], call_log:[], created_by: currentUser?.email||'' });
+  if (error) { showToast('Save error: ' + error.message); return; }
+  await loadLeads();
+}
+
+async function updateLead(id, updates) {
+  if (demoMode) { const i=leads.findIndex(l=>l.id===id); if(i>=0) leads[i]={...leads[i],...updates}; return; }
+  const { error } = await sb.from('leads').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', id);
+  if (error) { showToast('Update error: ' + error.message); return; }
+  await loadLeads();
+}
+
+async function deleteLead(id) {
+  if (!confirm('Delete this lead permanently?')) return;
+  if (demoMode) { leads = leads.filter(l=>l.id!==id); }
+  else {
+    const { error } = await sb.from('leads').delete().eq('id', id);
+    if (error) { showToast('Delete error: ' + error.message); return; }
+    await loadLeads();
+  }
+  closeModal('lead-modal'); renderTab();
+  showToast('Lead deleted');
+}
+
+async function addNote(id, text) {
+  if (!text.trim()) return;
+  const lead = leads.find(l=>l.id===id); if (!lead) return;
+  const note = { text: text.trim(), created_at: new Date().toISOString(), by: currentUser?.email||'user' };
+  const newNotes = [...(lead.notes||[]), note];
+  await updateLead(id, { notes: newNotes });
+  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
+}
+
+async function logCall(id, notes) {
+  const lead = leads.find(l=>l.id===id); if (!lead) return;
+  const entry = { notes: notes.trim()||'(no notes)', called_at: new Date().toISOString(), by: currentUser?.email||'user' };
+  const newLog = [...(lead.call_log||[]), entry];
+  await updateLead(id, { call_log: newLog, status: 'called' });
+  const l = leads.find(l=>l.id===id); if(l) renderLeadModal(l);
+}
+
+// TABS
+function showTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nav-'+tab).classList.add('active');
+  document.getElementById('fab').style.display = tab==='leads' ? 'flex' : 'none';
+  renderTab();
+}
+
+function renderTab() {
+  if (activeTab==='dashboard') renderDashboard();
+  else if (activeTab==='leads') renderLeads();
+  else if (activeTab==='reports') renderReports();
+  else renderSettings();
+}
+
+// DASHBOARD
+function renderDashboard() {
+  const s = getStats();
+  const today = new Date().toISOString().split('T')[0];
+  const due = leads.filter(l=>l.follow_up_date&&l.follow_up_date<=today&&!['won','lost'].includes(l.status));
+  const recent = leads.slice(0,7);
+  set('app-main', `
+    ${!sb&&!demoMode?`<div class="setup-banner"><strong style="color:var(--orange)">⚙️ Not connected yet</strong> — tap <strong>Settings</strong> to set up Supabase and start saving leads.</div>`:''}
+    <div class="stats-strip">
+      <div class="stat-box"><div class="stat-num" style="color:#5DADE2">${s.new}</div><div class="stat-label">New</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:#F4A024">${s.called}</div><div class="stat-label">Called</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:#C39BD3">${s.quoted}</div><div class="stat-label">Quoted</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--green)">${s.won}</div><div class="stat-label">Won</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--red)">${s.lost}</div><div class="stat-label">Lost</div></div>
+    </div>
+    ${due.length?`
+      <div class="section-title" style="font-size:14px;color:var(--amber)"><i class="fa fa-clock"></i> Follow-Ups Due (${due.length})</div>
+      ${due.map(l=>`<div class="lead-card" onclick="openLead('${l.id}')">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-family:var(--hd);font-size:18px;font-weight:700">${esc(l.name)}</div>
+          <span class="badge badge-${l.status}">${l.status}</span>
+        </div>
+        <div style="color:var(--amber);font-size:12px;margin-top:3px"><i class="fa fa-calendar-day"></i> Due ${fmtDate(l.follow_up_date)}</div>
+      </div>`).join('')}
+      <hr class="div"/>`:''}
+    <div class="section-title" style="font-size:14px"><i class="fa fa-clock-rotate-left" style="color:var(--orange)"></i> Recent Leads</div>
+    ${recent.length?recent.map(l=>`<div class="lead-card" onclick="openLead('${l.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+        <div style="font-family:var(--hd);font-size:19px;font-weight:700">${esc(l.name)}</div>
+        <span class="badge badge-${l.status}">${l.status}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <div style="color:var(--muted);font-size:13px">${esc(l.service||'General Inquiry')}</div>
+        <div style="color:var(--muted);font-size:12px">${fmtDate(l.created_at)}</div>
+      </div>
+    </div>`).join(''):`<div class="empty-state"><i class="fa fa-inbox"></i><div>No leads yet</div><div style="font-size:13px;margin-top:6px">Tap Leads → + to add your first one</div></div>`}
+  `);
+}
+
+// LEADS LIST
+function renderLeads() {
+  let f = leads;
+  if (activeFilter!=='all') f=f.filter(l=>l.status===activeFilter);
+  if (searchQ) { const q=searchQ.toLowerCase(); f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.service||'').toLowerCase().includes(q)||(l.email||'').toLowerCase().includes(q)); }
+  set('app-main', `
+    <div class="search-wrap"><i class="fa fa-search"></i>
+      <input type="text" placeholder="Search name, phone, service…" value="${esc(searchQ)}" oninput="searchQ=this.value;renderLeads()"/>
+    </div>
+    <div class="filter-tabs">
+      ${['all','new','called','quoted','won','lost'].map(fi=>`
+        <div class="filter-tab ${activeFilter===fi?'active':''}" onclick="activeFilter='${fi}';renderLeads()">
+          ${fi==='all'?'All ('+leads.length+')':fi[0].toUpperCase()+fi.slice(1)+' ('+leads.filter(l=>l.status===fi).length+')'}
+        </div>`).join('')}
+    </div>
+    ${f.length?f.map(l=>`<div class="lead-card" onclick="openLead('${l.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px">
+        <div>
+          <div style="font-family:var(--hd);font-size:19px;font-weight:700">${esc(l.name)}</div>
+          <div style="color:var(--muted);font-size:12px">${esc(l.phone||'')}${l.phone&&l.service?' · ':''}${esc(l.service||'')}</div>
+        </div>
+        <span class="badge badge-${l.status}">${l.status}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-size:12px;color:var(--muted)">${(l.notes||[]).length} note${(l.notes||[]).length!==1?'s':''} · ${(l.call_log||[]).length} call${(l.call_log||[]).length!==1?'s':''}</span>
+        <span style="font-size:12px;color:var(--muted)">${fmtDate(l.created_at)}</span>
+      </div>
+    </div>`).join(''):`<div class="empty-state"><i class="fa fa-users-slash"></i><div>No leads found</div></div>`}
+  `);
+}
+
+// LEAD DETAIL
+function openLead(id) {
+  const l = leads.find(x=>x.id===id); if(!l) return;
+  document.getElementById('lead-modal').classList.add('open');
+  renderLeadModal(l);
+}
+
+function renderLeadModal(l) {
+  const notes = (l.notes||[]).slice().reverse();
+  const calls = (l.call_log||[]).slice().reverse();
+  set('lead-modal-body', `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+      <div>
+        <div style="font-family:var(--hd);font-size:27px;font-weight:800;line-height:1">${esc(l.name)}</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:3px">${esc(l.service||'General Inquiry')} · ${fmtDate(l.created_at)}</div>
+      </div>
+      <button onclick="closeModal('lead-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px"><i class="fa fa-times"></i></button>
+    </div>
+
+    <div class="form-group">
+      <label>Status — tap to change</label>
+      <div class="status-pills">
+        ${['new','called','quoted','won','lost'].map(s=>`<div class="status-pill ${l.status===s?'sp-'+s:''}" onclick="changeStatus('${l.id}','${s}')">${s}</div>`).join('')}
+      </div>
+    </div>
+
+    <div class="contact-actions">
+      ${l.phone?`<a href="tel:${l.phone}" class="contact-btn"><i class="fa fa-phone" style="color:var(--green)"></i>Call</a>`:'<div></div>'}
+      ${l.phone?`<a href="sms:${l.phone}" class="contact-btn"><i class="fa fa-comment-sms" style="color:var(--blue)"></i>Text</a>`:'<div></div>'}
+      ${l.email?`<a href="mailto:${l.email}" class="contact-btn"><i class="fa fa-envelope" style="color:var(--amber)"></i>Email</a>`:'<div></div>'}
+    </div>
+
+    ${l.message?`<div class="card" style="background:var(--surf2);margin-bottom:14px">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Lead Message</div>
+      <div style="font-size:14px;line-height:1.5">${esc(l.message)}</div></div>`:''}
+
+    <hr class="div"/>
+
+    <div class="form-group">
+      <label>Estimate Value ($)</label>
+      <input type="number" placeholder="e.g. 2500" value="${l.estimate_value||''}"
+        onchange="updateLead('${l.id}',{estimate_value:parseFloat(this.value)||null})"/>
+    </div>
+    <div class="form-group">
+      <label>Follow-Up Date</label>
+      <input type="date" value="${l.follow_up_date||''}"
+        onchange="updateLead('${l.id}',{follow_up_date:this.value||null})"/>
+    </div>
+    <div class="cal-btns">
+      <button class="btn btn-ghost" onclick="addToGoogleCal('${l.id}')"><i class="fab fa-google" style="color:#EA4335"></i> Google Cal</button>
+      <button class="btn btn-ghost" onclick="addToAppleCal('${l.id}')"><i class="fab fa-apple"></i> Apple Cal</button>
+    </div>
+
+    <hr class="div"/>
+
+    <div class="section-title" style="font-size:14px"><i class="fa fa-phone-volume" style="color:var(--green)"></i> Log a Call</div>
+    <div class="form-group"><textarea id="call-notes-${l.id}" rows="2" placeholder="What was discussed?"></textarea></div>
+    <button class="btn btn-green btn-full" onclick="logCallHandler('${l.id}')" style="margin-bottom:10px">
+      <i class="fa fa-phone"></i> Log Call + Set Status → Called
+    </button>
+    ${calls.map(c=>`<div class="note-item">
+      <div class="note-meta"><i class="fa fa-phone"></i> ${esc(c.by)} · ${fmtDateTime(c.called_at)}</div>
+      <div style="font-size:13px">${esc(c.notes)}</div>
+    </div>`).join('')}
+
+    <hr class="div"/>
+
+    <div class="section-title" style="font-size:14px"><i class="fa fa-sticky-note" style="color:var(--amber)"></i> Notes</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="text" id="note-input-${l.id}" placeholder="Add a note…" style="flex:1"
+        onkeydown="if(event.key==='Enter'){const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''}"/>
+      <button class="btn btn-orange btn-sm" onclick="const i=document.getElementById('note-input-${l.id}');addNote('${l.id}',i.value);i.value=''"><i class="fa fa-plus"></i></button>
+    </div>
+    ${notes.length?notes.map(n=>`<div class="note-item">
+      <div class="note-meta">${esc(n.by)} · ${fmtDateTime(n.created_at)}</div>
+      <div style="font-size:13px">${esc(n.text)}</div>
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px;margin-bottom:10px">No notes yet</div>`}
+
+    <hr class="div"/>
+    <button class="btn btn-red btn-full" onclick="deleteLead('${l.id}')"><i class="fa fa-trash"></i> Delete Lead</button>
+    <div style="height:20px"></div>
+  `);
+}
+
+async function changeStatus(id, status) {
+  await updateLead(id, { status });
+  const l = leads.find(x=>x.id===id); if(l) renderLeadModal(l);
+  renderTab(); showToast('Status → ' + status);
+}
+
+async function logCallHandler(id) {
+  const n = document.getElementById('call-notes-'+id);
+  await logCall(id, n?n.value:'');
+  showToast('Call logged!');
+}
+
+// ADD LEAD
+function openAddLead() {
+  document.getElementById('add-modal').classList.add('open');
+  set('add-modal-body', `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-family:var(--hd);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em">New Lead</div>
+      <button onclick="closeModal('add-modal')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="form-group"><label>Full Name *</label><input type="text" id="nl-name" placeholder="John Smith" autofocus/></div>
+    <div class="form-group"><label>Phone</label><input type="tel" id="nl-phone" placeholder="(908) 555-0000"/></div>
+    <div class="form-group"><label>Email</label><input type="email" id="nl-email" placeholder="john@email.com"/></div>
+    <div class="form-group"><label>Service</label>
+      <select id="nl-service">
+        <option value="">Select service…</option>
+        <option>Kitchen Remodel</option><option>Bathroom Remodel</option>
+        <option>Interior Painting</option><option>Exterior Painting</option>
+        <option>Deck / Porch</option><option>Basement Finishing</option>
+        <option>General Handyman</option><option>Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Source</label>
+      <select id="nl-source">
+        <option>Website Form</option><option>Phone Call</option>
+        <option>Referral</option><option>Google</option>
+        <option>Door Knock / In Person</option><option>Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Notes / Message</label><textarea id="nl-msg" rows="3" placeholder="What do they need?"></textarea></div>
+    <button class="btn btn-orange btn-full" onclick="saveNewLead()"><i class="fa fa-plus"></i> Add Lead</button>
+    <div style="height:16px"></div>
+  `);
+}
+
+async function saveNewLead() {
+  const name = document.getElementById('nl-name').value.trim();
+  if (!name) { showToast('Name is required'); return; }
+  await saveLead({ name, phone: document.getElementById('nl-phone').value.trim(), email: document.getElementById('nl-email').value.trim(), service: document.getElementById('nl-service').value, source: document.getElementById('nl-source').value, message: document.getElementById('nl-msg').value.trim() });
+  closeModal('add-modal'); showToast('Lead added!');
+}
+
+// REPORTS
+function renderReports() {
+  const s = getStats();
+  const total = leads.length;
+  const wonRate = total>0?Math.round((s.won/total)*100):0;
+  const revWon = leads.filter(l=>l.estimate_value&&l.status==='won').reduce((a,l)=>a+(l.estimate_value||0),0);
+  const pipeline = leads.filter(l=>l.estimate_value&&['new','called','quoted'].includes(l.status)).reduce((a,l)=>a+(l.estimate_value||0),0);
+  const avgWon = s.won>0?Math.round(revWon/s.won):0;
+  const recs = genRecs(s, total, wonRate);
+  const rc = wonRate>=50?'var(--green)':wonRate>=30?'var(--amber)':'var(--red)';
+  set('app-main', `
+    <div class="section-title"><i class="fa fa-chart-line" style="color:var(--orange)"></i> Business Report</div>
+    <div class="rev-grid">
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--green)">$${revWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Revenue Won</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--amber)">$${pipeline.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">In Pipeline</div></div>
+    </div>
+    <div class="rev-grid">
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--orange)">${total}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Total Leads</div></div>
+      <div class="card" style="text-align:center"><div style="font-family:var(--hd);font-size:28px;font-weight:800;color:var(--blue)">$${avgWon.toLocaleString()}</div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:3px">Avg Job Value</div></div>
+    </div>
+    <div class="card" style="text-align:center;margin-bottom:14px">
+      <div style="font-family:var(--hd);font-size:54px;font-weight:800;color:${rc};line-height:1">${wonRate}%</div>
+      <div style="color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-top:4px">Win Rate — ${s.won} won of ${total} total</div>
+    </div>
+    <div class="section-title" style="font-size:14px"><i class="fa fa-filter" style="color:var(--muted)"></i> Lead Funnel</div>
+    <div class="card" style="margin-bottom:14px"><div class="funnel">
+      ${fBar('New',s.new,total,'#5DADE2')}${fBar('Called',s.called,total,'#F4A024')}
+      ${fBar('Quoted',s.quoted,total,'#C39BD3')}${fBar('Won',s.won,total,'#52BE80')}${fBar('Lost',s.lost,total,'#EC7063')}
+    </div></div>
+    <div class="section-title" style="font-size:14px"><i class="fa fa-lightbulb" style="color:var(--amber)"></i> Recommendations</div>
+    ${recs.map(r=>`<div class="rec-card"><h4>${r.title}</h4><p style="font-size:13px;color:var(--text);line-height:1.55">${r.text}</p></div>`).join('')}
+    <hr class="div"/>
+    <div class="section-title" style="font-size:14px"><i class="fa fa-file-pdf" style="color:var(--red)"></i> Export PDF Report</div>
+    <div class="lang-btns">
+      <div class="lang-btn ${reportLang==='en'?'active':''}" onclick="setLang('en')">🇺🇸 English</div>
+      <div class="lang-btn ${reportLang==='es'?'active':''}" onclick="setLang('es')">🇪🇸 Español</div>
+      <div class="lang-btn ${reportLang==='pt'?'active':''}" onclick="setLang('pt')">🇧🇷 Português</div>
+    </div>
+    <button class="btn btn-red btn-full" onclick="exportPDF()"><i class="fa fa-download"></i> Download PDF Report</button>
+    <div style="height:20px"></div>
+  `);
+}
+
+function fBar(label,count,total,color){const pct=total>0?Math.round((count/total)*100):0;return`<div class="funnel-bar"><div class="funnel-label">${label}</div><div class="funnel-track"><div class="funnel-fill" style="width:${pct}%;background:${color}">${pct>12?pct+'%':''}</div></div><div class="funnel-count" style="color:${color}">${count}</div></div>`;}
+function setLang(l){reportLang=l;renderReports();}
+
+function genRecs(s,total,wonRate){
+  const r=[];
+  if(s.new>3) r.push({title:'⚠️ Unworked Leads Piling Up',text:`You have ${s.new} new leads sitting untouched. Calling within the first hour makes you 7× more likely to qualify a lead. Don't let them go cold — call today.`});
+  if(wonRate<30&&total>=5) r.push({title:'📉 Win Rate Needs Work',text:`Your ${wonRate}% close rate is below the 35–45% benchmark for home improvement contractors. Try: faster callbacks, always offering an in-person estimate, and following up at least 3 times before giving up.`});
+  if(s.quoted>s.won&&s.quoted>=2) r.push({title:'💬 Follow Up On Your Quotes',text:`${s.quoted} quotes haven't been accepted yet. Call each one and ask: "Do you have any questions about the estimate?" A light incentive helps — 5% off if booked within 7 days works very well.`});
+  if(s.called>3) r.push({title:'📋 Move Called Leads Forward',text:`${s.called} leads are stuck at "Called." The goal after every call is to book an on-site estimate. Once you're in their home, close rates jump dramatically.`});
+  if(s.won>=3) r.push({title:'⭐ Turn Wins Into Reviews',text:`You've won ${s.won} jobs — now collect reviews! Text each customer: "Working with you was a pleasure — would you leave us a quick Google review? It really helps!" One review = ~3 new leads.`});
+  if(s.lost>4) r.push({title:'🔍 Re-Engage Lost Leads',text:`${s.lost} leads went cold. Try texting them 30 days later: "Hey [Name], just checking if you're still looking to get that work done?" Reactivating old leads costs nothing and wins back ~15%.`});
+  if(!r.length) r.push({title:'✅ Looking Good!',text:`Pipeline is healthy. Keep responding quickly to new leads and following up consistently. Consistency is the #1 growth driver in home improvement.`});
+  return r;
+}
+
+// PDF EXPORT
+function exportPDF(){
+  if(!window.jspdf){showToast('PDF loading, try again in a moment');return;}
+  const{jsPDF}=window.jspdf;const doc=new jsPDF();
+  const s=getStats();const total=leads.length;
+  const wonRate=total>0?Math.round((s.won/total)*100):0;
+  const revWon=leads.filter(l=>l.estimate_value&&l.status==='won').reduce((a,l)=>a+(l.estimate_value||0),0);
+  const pipeline=leads.filter(l=>l.estimate_value&&['new','called','quoted'].includes(l.status)).reduce((a,l)=>a+(l.estimate_value||0),0);
+  const T=TRANSLATIONS[reportLang]||TRANSLATIONS.en;const recs=genRecs(s,total,wonRate);
+  doc.setFillColor(244,98,26);doc.rect(0,0,210,34,'F');
+  doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(20);doc.text('HANDY PRO SERVICES',14,14);
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(T.title,14,24);doc.text(new Date().toLocaleDateString(),196,24,{align:'right'});
+  doc.setTextColor(0,0,0);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(T.overview,14,48);
+  let y=56;
+  [[T.totalLeads,total],[T.newL,s.new],[T.called,s.called],[T.quoted,s.quoted],[T.won,s.won],[T.lost,s.lost],[T.winRate,wonRate+'%'],[T.revWon,'$'+revWon.toLocaleString()],[T.pipeline,'$'+pipeline.toLocaleString()]].forEach(([lbl,val],i)=>{
+    doc.setFillColor(i%2===0?248:255,i%2===0?248:255,i%2===0?248:255);doc.rect(14,y-5,182,9,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(80,80,80);doc.text(lbl,17,y);
+    doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(String(val),196,y,{align:'right'});y+=9;
+  });
+  y+=8;doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(T.recs,14,y);y+=8;
+  recs.forEach(r=>{
+    if(y>248){doc.addPage();y=20;}
+    doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(200,70,20);doc.text(r.title,14,y);y+=5;
+    doc.setFont('helvetica','normal');doc.setTextColor(60,60,60);const lines=doc.splitTextToSize(r.text,182);doc.text(lines,14,y);y+=lines.length*4.5+5;
+  });
+  if(leads.length>0){
+    if(y>220){doc.addPage();y=20;}y+=4;
+    doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(0,0,0);doc.text(T.recentLeads,14,y);y+=7;
+    doc.setFillColor(244,98,26);doc.rect(14,y-5,182,9,'F');doc.setTextColor(255,255,255);doc.setFontSize(9);
+    doc.text(T.name,16,y);doc.text(T.service,75,y);doc.text(T.status,140,y);doc.text(T.date,196,y,{align:'right'});y+=9;
+    leads.slice(0,20).forEach((l,i)=>{
+      if(y>270){doc.addPage();y=20;}
+      doc.setFillColor(i%2===0?248:255,i%2===0?248:255,i%2===0?248:255);doc.rect(14,y-5,182,9,'F');
+      doc.setTextColor(0,0,0);doc.setFont('helvetica','normal');
+      doc.text((l.name||'').substring(0,20),16,y);doc.text((l.service||'').substring(0,18),75,y);
+      doc.text(l.status||'',140,y);doc.text(fmtDate(l.created_at),196,y,{align:'right'});y+=9;
+    });
+  }
+  const pages=doc.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(7);doc.setTextColor(160,160,160);doc.text('Handy Pro Services · (908) 312-6506 · handyproservice20@gmail.com · home-improvement-pros.com',105,290,{align:'center'});}
+  doc.save(`HandyPro_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+  showToast('PDF downloaded!');
+}
+
+const TRANSLATIONS={
+  en:{title:'Lead Management Report',overview:'Business Overview',totalLeads:'Total Leads',newL:'New',called:'Called',quoted:'Quoted',won:'Won',lost:'Lost',winRate:'Win Rate',revWon:'Revenue Won',pipeline:'Pipeline Value',recs:'Recommendations',recentLeads:'Recent Leads',name:'Name',service:'Service',status:'Status',date:'Date'},
+  es:{title:'Reporte de Gestión de Clientes',overview:'Resumen del Negocio',totalLeads:'Total de Clientes',newL:'Nuevos',called:'Llamados',quoted:'Cotizados',won:'Ganados',lost:'Perdidos',winRate:'Tasa de Cierre',revWon:'Ingresos Ganados',pipeline:'Pipeline de Ventas',recs:'Recomendaciones',recentLeads:'Clientes Recientes',name:'Nombre',service:'Servicio',status:'Estado',date:'Fecha'},
+  pt:{title:'Relatório de Gestão de Leads',overview:'Visão Geral do Negócio',totalLeads:'Total de Leads',newL:'Novos',called:'Contatados',quoted:'Orçados',won:'Ganhos',lost:'Perdidos',winRate:'Taxa de Conversão',revWon:'Receita Ganha',pipeline:'Pipeline',recs:'Recomendações',recentLeads:'Leads Recentes',name:'Nome',service:'Serviço',status:'Status',date:'Data'},
+};
+
+// CALENDAR
+function addToGoogleCal(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  const d=(l.follow_up_date||new Date().toISOString().split('T')[0]).replace(/-/g,'');
+  const title=encodeURIComponent(`Follow up: ${l.name} – ${l.service||'Handy Pro'}`);
+  const details=encodeURIComponent(`Phone: ${l.phone||'N/A'}\nEmail: ${l.email||'N/A'}\nService: ${l.service||'N/A'}\nStatus: ${l.status}`);
+  window.open(`https://calendar.google.com/calendar/r/eventedit?text=${title}&dates=${d}/${d}&details=${details}`,'_blank');
+}
+
+function addToAppleCal(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  const d=(l.follow_up_date||new Date().toISOString().split('T')[0]).replace(/-/g,'');
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','BEGIN:VEVENT',`SUMMARY:Follow up: ${l.name}`,`DESCRIPTION:Service: ${l.service||'N/A'}\\nPhone: ${l.phone||'N/A'}\\nEmail: ${l.email||'N/A'}`,`DTSTART:${d}T090000`,`DTEND:${d}T093000`,`DTSTAMP:${new Date().toISOString().replace(/[-:.]/g,'').slice(0,15)}Z`,`UID:${id}-${Date.now()}@handypro`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download=`followup-${(l.name||'lead').replace(/\s+/g,'-')}.ics`;
+  a.click();
+  showToast('.ics downloaded — open to add to Apple Calendar');
+}
+
+// SETTINGS
+function renderSettings(){
+  const notifOn=typeof Notification!=='undefined'&&Notification.permission==='granted';
+  set('app-main',`
+    <div class="section-title">Settings</div>
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Account</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:22px;font-weight:800;color:#fff;flex-shrink:0">${(currentUser?.email||'D')[0].toUpperCase()}</div>
+        <div>
+          <div style="font-weight:600;font-size:14px">${esc(currentUser?.email||'Demo User')}</div>
+          <div style="color:var(--muted);font-size:12px">${sb?'Connected to Supabase ✓':demoMode?'Demo Mode':'Not connected yet'}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:14px;font-weight:500">Follow-Up Reminders</div><div style="color:var(--muted);font-size:12px">${notifOn?'Enabled ✓':'Tap to enable'}</div></div>
+        <label class="toggle" onclick="requestNotifPermission()"><input type="checkbox" ${notifOn?'checked':''} readonly/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div style="font-family:var(--hd);font-size:26px;font-weight:800">${leads.length}</div><div style="color:var(--muted);font-size:12px">Total Leads</div></div>
+        <div><div style="font-family:var(--hd);font-size:26px;font-weight:800;color:var(--green)">${leads.filter(l=>l.status==='won').length}</div><div style="color:var(--muted);font-size:12px">Jobs Won</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;border-color:rgba(244,98,26,.3)">
+      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚙️ Supabase Setup Guide</div>
+      <ol style="padding-left:18px;font-size:13px;color:var(--muted);line-height:2.1">
+        <li>Go to <strong style="color:var(--orange)">supabase.com</strong> → sign in with Google</li>
+        <li>Click <strong style="color:var(--text)">New Project</strong> → name it <strong style="color:var(--text)">handy-pro-crm</strong></li>
+        <li>Save the database password somewhere safe</li>
+        <li>Wait ~2 min for it to finish setting up</li>
+        <li>Left sidebar → <strong style="color:var(--text)">SQL Editor</strong> → paste & run the code below</li>
+        <li>Left sidebar → <strong style="color:var(--text)">Project Settings → API</strong></li>
+        <li>Copy <strong style="color:var(--text)">Project URL</strong> and <strong style="color:var(--text)">anon public</strong> key</li>
+        <li>Open <strong style="color:var(--text)">index.html</strong> → paste both at the top</li>
+        <li>Authentication → Users → <strong style="color:var(--text)">Add User</strong> → your email + password</li>
+      </ol>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">SQL — paste into Supabase SQL Editor, then click Run</div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;font-family:monospace;font-size:11px;color:#52BE80;line-height:1.8;overflow-x:auto;white-space:pre">${esc(`create table leads (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  created_by text,
+  name text not null,
+  phone text, email text,
+  service text, source text,
+  message text, status text default 'new',
+  notes jsonb default '[]',
+  call_log jsonb default '[]',
+  estimate_value numeric,
+  follow_up_date date
+);
+alter table leads enable row level security;
+create policy "Auth users only" on leads
+  for all using (auth.role() = 'authenticated');`)}</div>
+      <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="copySql()"><i class="fa fa-copy"></i> Copy SQL</button>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div style="font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">🔗 Auto-Connect Your Website</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Once Supabase is live, give Claude your Project URL + anon key and your website form at <strong style="color:var(--text)">home-improvement-pros.com</strong> will send new leads directly into this app automatically.</div>
+    </div>
+
+    <button class="btn btn-ghost btn-full" onclick="doLogout()" style="margin-bottom:24px"><i class="fa fa-sign-out-alt"></i> Sign Out</button>
+  `);
+}
+
+function copySql(){
+  const sql=`create table leads (\n  id uuid default gen_random_uuid() primary key,\n  created_at timestamptz default now(),\n  updated_at timestamptz default now(),\n  created_by text,\n  name text not null,\n  phone text, email text,\n  service text, source text,\n  message text, status text default 'new',\n  notes jsonb default '[]',\n  call_log jsonb default '[]',\n  estimate_value numeric,\n  follow_up_date date\n);\nalter table leads enable row level security;\ncreate policy "Auth users only" on leads\n  for all using (auth.role() = 'authenticated');`;
+  navigator.clipboard.writeText(sql).then(()=>showToast('SQL copied!')).catch(()=>showToast('Copy failed — select manually'));
+}
+
+// NOTIFICATIONS
+async function requestNotifPermission(){
+  if('Notification' in window&&Notification.permission!=='granted'){
+    const p=await Notification.requestPermission();
+    if(p==='granted')showToast('Reminders enabled!');
+    renderTab();
+  }
+}
+
+function checkFollowUps(){
+  const today=new Date().toISOString().split('T')[0];
+  const due=leads.filter(l=>l.follow_up_date&&l.follow_up_date<=today&&!['won','lost'].includes(l.status));
+  const badge=document.getElementById('notif-badge');
+  if(badge){badge.textContent=due.length;badge.style.display=due.length?'block':'none';}
+  return due;
+}
+
+function checkFollowUpsNow(){
+  const due=checkFollowUps();
+  if(!due.length){showToast('No follow-ups due ✓');return;}
+  showToast(`${due.length} follow-up${due.length>1?'s':''} due today!`);
+  if(typeof Notification!=='undefined'&&Notification.permission==='granted') new Notification('Handy Pro CRM',{body:`${due.length} follow-up${due.length>1?'s':''} due today!`});
+  activeFilter='all';showTab('leads');
+}
+
+function updateBadge(){checkFollowUps();}
+
+// HELPERS
+function getStats(){return{new:leads.filter(l=>l.status==='new').length,called:leads.filter(l=>l.status==='called').length,quoted:leads.filter(l=>l.status==='quoted').length,won:leads.filter(l=>l.status==='won').length,lost:leads.filter(l=>l.status==='lost').length};}
+function fmtDate(val){if(!val)return'';const d=new Date(val);if(isNaN(d))return'';return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function fmtDateTime(val){if(!val)return'';const d=new Date(val);if(isNaN(d))return'';return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function set(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function showToast(msg,dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),dur);}
+
+// SAMPLE DATA
+const SAMPLE_LEADS=[
+  {id:'s1',name:'Mike Johnson',phone:'(908) 555-0101',email:'mike@email.com',service:'Kitchen Remodel',status:'new',notes:[],call_log:[],estimate_value:8500,source:'Website Form',created_at:new Date(Date.now()-86400000).toISOString(),follow_up_date:''},
+  {id:'s2',name:'Sarah Williams',phone:'(908) 555-0202',email:'sarah@email.com',service:'Bathroom Remodel',status:'called',notes:[{text:'Wants walk-in shower. Budget ~$6k.',by:'owner',created_at:new Date().toISOString()}],call_log:[{notes:'Called, very interested. Scheduling estimate.',by:'owner',called_at:new Date().toISOString()}],estimate_value:6200,source:'Referral',created_at:new Date(Date.now()-172800000).toISOString(),follow_up_date:new Date().toISOString().split('T')[0]},
+  {id:'s3',name:'Tom Garcia',phone:'(908) 555-0303',email:'',service:'Exterior Painting',status:'quoted',notes:[],call_log:[],estimate_value:3800,source:'Google',created_at:new Date(Date.now()-259200000).toISOString(),follow_up_date:''},
+  {id:'s4',name:'Lisa Chen',phone:'(908) 555-0404',email:'lisa@email.com',service:'Deck / Porch',status:'won',notes:[],call_log:[],estimate_value:5500,source:'Website Form',created_at:new Date(Date.now()-432000000).toISOString(),follow_up_date:''},
+  {id:'s5',name:'Bob Martinez',phone:'(908) 555-0505',email:'',service:'Basement Finishing',status:'lost',notes:[{text:'Price too high, went with another contractor.',by:'owner',created_at:new Date().toISOString()}],call_log:[],estimate_value:null,source:'Phone Call',created_at:new Date(Date.now()-518400000).toISOString(),follow_up_date:''},
+];
+
+renderTab();
+</script>
+</body>
+</html>
