@@ -513,8 +513,17 @@ async function updateLead(id, updates){
   const i=leads.findIndex(l=>l.id===id);
   if(i>=0) leads[i]={...leads[i],...updates};
   if(demoMode) return;
-  const {error}=await sb.from('leads').update({...updates, updated_at:new Date().toISOString()}).eq('id',id);
-  if(error){ showToast('Save error: '+error.message); }
+  // Try with updated_at; if that column missing, retry without it
+  let {error}=await sb.from('leads').update({...updates, updated_at:new Date().toISOString()}).eq('id',id);
+  if(error && error.message && error.message.includes('updated_at')){
+    const r2=await sb.from('leads').update({...updates}).eq('id',id);
+    error=r2.error;
+  }
+  if(error){
+    // Roll back local change so UI matches reality
+    await loadLeads();
+    showToast('Save failed: '+error.message, 5000);
+  }
 }
 
 async function saveLead(data){
@@ -782,7 +791,21 @@ async function saveAddress(id){
   const input = document.getElementById('addr-input-'+id);
   if(!input) return;
   const addr = input.value.trim();
-  await updateLead(id, {address: addr});
+  // Save to Supabase directly so we know if it actually worked
+  if(!demoMode){
+    let {error}=await sb.from('leads').update({address:addr, updated_at:new Date().toISOString()}).eq('id',id);
+    if(error && error.message && error.message.includes('updated_at')){
+      const r2=await sb.from('leads').update({address:addr}).eq('id',id);
+      error=r2.error;
+    }
+    if(error){
+      showToast('Save failed: '+error.message, 5000);
+      return; // Don't update UI if save failed
+    }
+    // Also keep local array in sync
+    const i=leads.findIndex(l=>l.id===id);
+    if(i>=0) leads[i]={...leads[i], address:addr};
+  }
 
   // Rebuild map section in place
   const container = document.getElementById('map-container-'+id);
@@ -800,7 +823,7 @@ async function saveAddress(id){
   } else {
     container.innerHTML = `<div style="color:var(--muted);font-size:12px;margin-bottom:14px">Enter an address above and tap Save to see the map.</div>`;
   }
-  showToast('Address saved!');
+  showToast('\u2713 Address saved!');
 }
 
 // ── ACTIVITY HELPERS ──
